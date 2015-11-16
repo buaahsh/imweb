@@ -35,6 +35,8 @@ $(function(){
 		
 		ImageSilde();
 		CreateTree();
+		
+		PlotContainer();
 	});
  });
     

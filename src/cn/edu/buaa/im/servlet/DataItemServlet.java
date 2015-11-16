@@ -1,6 +1,7 @@
 package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +32,26 @@ public class DataItemServlet extends BaseServlet{
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws  IOException {
+		String arg = request.getParameter("arg");
+		if (arg != null)
+		{
+			String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
+			response.reset();
+			// 设置response的Header
+			response.setContentType("application/x-cortona");
+
+			byte[] result = Util.toByteArray(fileName);
+			response.addHeader("Content-Disposition", "attachment;filename="
+					+ fileName);
+			response.addHeader("Content-Length", "" + result.length);
+			OutputStream outputStream = null;
+			outputStream = response.getOutputStream();
+			outputStream.write(result, 0, result.length);
+			outputStream.close();
+			return;
+		}
+			
+		
 		List<DataItem> dataItems = new ArrayList<DataItem>();
 		
 		String title = "dataitem0";
@@ -100,6 +121,14 @@ public class DataItemServlet extends BaseServlet{
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
 				dataItems.add(dataitem);
 			}
+			else if (treeNode.type.equals("曲线")){
+				Random r = new Random();
+				CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
+				curveDataItem.table = getTable();
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
+				dataItems.add(dataitem);
+			}
+			
 		}
 		Gson gson = new Gson();
 		responseString(response, gson.toJson(dataItems));
@@ -116,8 +145,8 @@ public class DataItemServlet extends BaseServlet{
 		lists.add(list);
 		for (int i = 1; i < l; i++) {
 			list = new ArrayList<>();
-			list.add(String.valueOf(r.nextInt()));
-			list.add(String.valueOf(r.nextInt()));
+			list.add(String.valueOf(r.nextFloat() * 100));
+			list.add(String.valueOf(r.nextFloat() * 100));
 			lists.add(list);
 		}
 		
