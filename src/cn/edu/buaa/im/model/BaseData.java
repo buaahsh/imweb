@@ -9,6 +9,12 @@ public class BaseData {
 		return single;  
    }
 	
+	public class TitleDataItem extends BaseData{
+	}
+	
+	public class SubtitleDataItem extends BaseData{
+	}
+
 	public class ImageDataItem extends BaseData{
 		public List<String> urls;
 	}
@@ -32,6 +38,10 @@ public class BaseData {
 	
 	public class UrlDataItem extends BaseData{
 		public List<String> links;
+	}
+	
+	public class CurveDataItem extends BaseData{
+		public List<List<String>> table;
 	}
 }
 

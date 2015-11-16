@@ -32,7 +32,9 @@ $(function(){
 		$.each(data, function(idx, item){
 			$("#dataItems").append(DataItemProc(item));
 		});
+		
 		ImageSilde();
+		CreateTree();
 	});
  });
     

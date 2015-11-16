@@ -128,7 +128,10 @@ function DataItemProc(dataItem)
 	var html = getLittletitle(dataItem.id, dataItem.title);
 	html += "<div class=\"highlight\">";
 	switch(dataItem.type){ 
-	    case "subtitle":    
+		case "TitleDataItem":    
+			return getTitle(dataItem.id, dataItem.title)
+    	break; 
+	    case "SubtitleDataItem":    
 	    	return getSubtitle(dataItem.id, dataItem.title)
 	    	break; 
 	    case "ImageDataItem":
@@ -149,6 +152,9 @@ function DataItemProc(dataItem)
 	    case "UrlDataItem":
 	    	html += UrlDataItemProc(dataItem.id, dataItem.data);
 	    	break;
+	    case "CurveDataItem":
+	    	html += CurveDataItemProc(dataItem.id, dataItem.data);
+	    	break;
 	    default:
 	    	break;
 	}
@@ -156,8 +162,12 @@ function DataItemProc(dataItem)
 	return html;
 }
 
-function getSubtitle(id, title){
+function getTitle(id, title){
 	return "<h1 id=\""+id+"\"><span>"+title+"</span></h1>";
+}
+
+function getSubtitle(id, title){
+	return "<h2 id=\""+id+"\">"+title+"</h2>";
 }
 
 function getLittletitle(id, title){
@@ -172,6 +182,54 @@ function ImageSilde(){
 		      navigation: false
 	    });
 	});
+}
+
+function CurveDataItemProc(id, data)
+{
+	var tableid = id + "_table";
+	var plotid = id + "_plot";
+	var thead = "<tr>";
+	$.each(data.table[0], function(idx, item){
+		thead += "<th>"+item+"</th>";
+	});
+	thead += "</tr>";
+	
+	var tbody = "";
+	$.each(data.table, function(idx, item){
+		if (idx != 0){
+			tbody += "<tr>";
+			$.each(item, function(i, tem){
+				tbody += "<td>"+tem+"</td>";
+			});
+			tbody += "</tr>";
+		}
+	});
+	
+	var html = 
+		"<ul class=\"nav nav-tabs\">"
+		+"   <li class=\"active\">"
+		+"      <a href=\"#"+tableid+"\" data-toggle=\"tab\">"
+		+"         数据"
+		+"      </a>"
+		+"   </li>"
+		+"   <li><a href=\"#"+plotid+"\" data-toggle=\"tab\">曲线</a></li>"
+		+"</ul>"
+		+"<div  class=\"tab-content\">"
+		+"   <div class=\"tab-pane fade in active\" id=\""+tableid+"\">"
+		+"      <table class=\"table table-bordered\">"
+		+"          <thead>"
+		+ thead
+		+"          </thead>"
+		+"          <tbody>"
+		+ tbody
+		+"          </tbody>"
+		+"        </table>"
+		+"   </div>"
+		+"   <div class=\"tab-pane fade\" id=\""+plotid+"\">"
+		+"        <div id=\""+plotid+"_container\" style=\"min-width:700px;height:400px\"></div>   "
+		+"   </div>"
+		+"</div>";
+	return html;
 }
 
 function ImageDataItemProc(id, data)

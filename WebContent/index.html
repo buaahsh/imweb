@@ -43,7 +43,7 @@
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-        	<div style="height: 200px;">
+        	<div style="height: 200px; overflow-x: hidden;">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand" id="title_li">
                         	<a href="#">集中式气动特征</a>
@@ -296,39 +296,6 @@
       <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
 							</div>
 						</div>
-						<h3 id="qtgzl_thdqtzl">停火点气体质量</h3>
-						<div class="highlight">
-							<table class="table table-bordered">
-					      <thead>
-					        <tr>
-					          <th>项目</th>
-					          <th>与产品纵轴安装角</th>
-					          <th>摆动中心至理论定点距离(mm)</th>
-					          <th>摆动中心至纵轴距离(mm)</th>
-					        </tr>
-					      </thead>
-					      <tbody>
-					        <tr>
-					          <th scope="row">助推器发动机</th>
-					          <td>30</td>
-					          <td>12</td>
-					          <td>54</td>
-					        </tr>
-					        <tr>
-					          <th scope="row">芯一级发动机</th>
-					          <td>12</td>
-					          <td>54</td>
-					          <td>14</td>
-					        </tr>
-					        <tr>
-					          <th scope="row">二级发动机</th>
-					          <td>45</td>
-					          <td>23</td>
-					          <td>74</td>
-					        </tr>
-					      </tbody>
-					    </table>
-						</div>
 						</div>
                     </div>
                 </div>
@@ -402,11 +369,13 @@
 	<script src="js/jsplumb.js"></script>
 	
 	<script src="js/index.js"></script>
+	
+	<script src="js/jquery.scrollTo.js"></script>
 	  
     <!-- Menu Toggle Script -->
     <script>
     $(function(){
-    	window.location.hash = "index_pos";
+    	
     });
     
     $("#menu-toggle").click(function(e) {

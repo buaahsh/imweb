@@ -8,12 +8,9 @@ public class DataItem {
 	
 	public DataItem(String title, String id, BaseData baseData){
 		this.title = title;
-		this.id = id;
+		this.id = id.replace("#", "");
 		this.data = baseData;
-		if (baseData == null)
-			this.type = "subtitle";
-		else
-			this.type = baseData.getClass().getSimpleName();
+		this.type = baseData.getClass().getSimpleName();
 	}
 }
 

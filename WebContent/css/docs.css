@@ -12,11 +12,14 @@ body{
 	    padding: 0 8px 0 18px;
 	    background: #fff;
 }
+
+#docs h2{
+	font-size:24px;
+}
+
 #docs h3{
 	color: #F7A35C;
 }
-
-
 
 .highlight {
     padding: 9px 10px;
@@ -41,6 +44,10 @@ body{
 
 .highlight p .glyphicon{
 	margin-right: 8px;
+}
+
+.highlight .nav-tabs>li.active>a{
+	background-color: #F7F7F9;
 }
 
 .abs-table{

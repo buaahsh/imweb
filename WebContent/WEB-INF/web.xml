@@ -36,4 +36,15 @@
     <servlet-name>DataItem</servlet-name>
     <url-pattern>/DataItem</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>TreeNode</display-name>
+    <servlet-name>TreeNode</servlet-name>
+    <servlet-class>cn.edu.buaa.im.servlet.TreeNodeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TreeNode</servlet-name>
+    <url-pattern>/TreeNode</url-pattern>
+  </servlet-mapping>
 </web-app>
