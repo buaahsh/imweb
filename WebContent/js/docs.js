@@ -226,7 +226,7 @@ function CurveDataItemProc(id, data)
 		+"        </table>"
 		+"   </div>"
 		+"   <div class=\"tab-pane fade\" id=\""+plotid+"\">"
-		+"        <div id=\""+plotid+"_container\" style=\"min-width:700px;height:400px\"></div>   "
+		+"        <div id=\""+plotid+"_container\" class='plot_container' style=\"min-width:700px;height:400px\"></div>   "
 		+"   </div>"
 		+"</div>";
 	return html;
