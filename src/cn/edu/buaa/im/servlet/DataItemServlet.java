@@ -16,11 +16,11 @@ import cn.edu.buaa.im.model.BaseData;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
+import cn.edu.buaa.im.model.BaseData.D3DataItem;
 import cn.edu.buaa.im.model.BaseData.FileDataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
 import cn.edu.buaa.im.model.BaseData.ImageDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
-import cn.edu.buaa.im.model.BaseData.TitleDataItem;
 import cn.edu.buaa.im.model.BaseData.UrlDataItem;
 
 public class DataItemServlet extends BaseServlet{
@@ -28,6 +28,7 @@ public class DataItemServlet extends BaseServlet{
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request,
@@ -35,7 +36,8 @@ public class DataItemServlet extends BaseServlet{
 		String arg = request.getParameter("arg");
 		if (arg != null)
 		{
-			String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
+			//String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
+			String fileName = "/home/data/003.wrl";
 			response.reset();
 			// 设置response的Header
 			response.setContentType("application/x-cortona");
@@ -121,11 +123,11 @@ public class DataItemServlet extends BaseServlet{
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
 				dataItems.add(dataitem);
 			}
-			else if (treeNode.type.equals("曲线")){
+			else if (treeNode.type.equals("三维模型")){
 				Random r = new Random();
-				CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
-				curveDataItem.table = getTable();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
+				D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
+				d3.link = "/imweb/DataItem?arg=123";
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
 				dataItems.add(dataitem);
 			}
 			
@@ -140,11 +142,13 @@ public class DataItemServlet extends BaseServlet{
 		Random r = new Random();
 		List<List<String>> lists = new ArrayList<>();
 		List<String> list = new ArrayList<>();
-		list.add("键");
-		list.add("值");
+		list.add("质量");
+		list.add("转动惯量");
+		list.add("质心");
 		lists.add(list);
 		for (int i = 1; i < l; i++) {
 			list = new ArrayList<>();
+			list.add(String.valueOf(r.nextFloat() * 100));
 			list.add(String.valueOf(r.nextFloat() * 100));
 			list.add(String.valueOf(r.nextFloat() * 100));
 			lists.add(list);

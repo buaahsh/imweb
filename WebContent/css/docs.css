@@ -51,6 +51,10 @@ body{
 	background-color: #F7F7F9;
 }
 
+.highlight th label{
+	margin-left:10px;
+}
+
 .abs-table{
 	width: 95%;	
 	margin-bottom: 0px;

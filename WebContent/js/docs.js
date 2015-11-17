@@ -55,38 +55,43 @@ $(function(){
     });
   });
 
+function PlotOneContainer(ContainerId, x){
+	
+	var data = GetPlotData(ContainerId, x);
+	$('#' + ContainerId).highcharts({
+		chart: {
+			type : 'scatter',
+			zoomType : 'xy'
+		},
+	    xAxis: {
+//	        title: {
+//	            text: 'Temperature (°C)'
+//	        },
+	    },
+	    yAxis: {
+//	        title: {
+//	            text: 'Temperature (°C)'
+//	        },
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle',
+	        borderWidth: 0
+	    },
+	    series:  data
+	});
+}
+
 function PlotContainer(){
 	$.each($(".plot_container"), function(idx, item){
 		var ContainerId = $(item)[0].id;
-		var data = GetPlotData($(item)[0].id, 0);
-		$('#' + ContainerId).highcharts({
-			chart: {
-				type : 'scatter',
-				zoomType : 'xy'
-			},
-		    xAxis: {
-//		        title: {
-//		            text: 'Temperature (°C)'
-//		        },
-		    },
-		    yAxis: {
-//		        title: {
-//		            text: 'Temperature (°C)'
-//		        },
-		        plotLines: [{
-		            value: 0,
-		            width: 1,
-		            color: '#808080'
-		        }]
-		    },
-		    legend: {
-		        layout: 'vertical',
-		        align: 'right',
-		        verticalAlign: 'middle',
-		        borderWidth: 0
-		    },
-		    series:  data
-		});
+		PlotOneContainer(ContainerId, 0);
 	});
 }
 
@@ -120,8 +125,13 @@ function GetPlotData(ContainerId, xaxis){
 				}
 			});
 		});
+		var name = "";
+		$.each($("#" + tableid + " thead th span"), function(idx, item){
+			if (idx == j)
+				name = $(item).text();
+		});
 		data.push({
-			name : "test",
+			name : name,
 			data: subdata,
 		});
 	}
@@ -160,6 +170,9 @@ function DataItemProc(dataItem)
 	    case "CurveDataItem":
 	    	html += CurveDataItemProc(dataItem.id, dataItem.data);
 	    	break;
+	    case "D3DataItem":
+	    	html += D3DataItemProc(dataItem.id, dataItem.data);
+	    	break;	
 	    default:
 	    	break;
 	}
@@ -195,7 +208,9 @@ function CurveDataItemProc(id, data)
 	var plotid = id + "_plot";
 	var thead = "<tr>";
 	$.each(data.table[0], function(idx, item){
-		thead += "<th>"+item+"</th>";
+		thead += "<th><span>"+item
+		+"</span><label><input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
+		+"</th>";
 	});
 	thead += "</tr>";
 	
@@ -287,5 +302,13 @@ function UrlDataItemProc(id, data){
 	$.each(data.links, function(idx, item){
 		html += "<p><a>"+item+"</a></p>";
 	});
+  	return html;
+}
+
+function D3DataItemProc(id, data){
+	var html = ""
+		+ "<embed src=\""+data.link+"\" width=\"600\" height=\"400\" "
+		+" type=\"application/x-cortona\"   pluginspage=\"http://www.cortona3d.com/cortona\"   vrml_splashscreen=\"false\" "
+		+" vrml_dashboard=\"false\"   vrml_background_color=\"#CDCDCD\"   contextmenu=\"false\">"
   	return html;
 }

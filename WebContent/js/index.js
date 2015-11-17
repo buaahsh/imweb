@@ -39,4 +39,30 @@ $(function(){
 		PlotContainer();
 	});
  });
+
+$(document).ready(function(){
+	$("input.table_radio").click(function(){
+		
+	});
+});
+
+function RadioClick(obj){
+	var tokens = $(obj)[0].name.split("_")
+	var ContainerId = tokens[1] + "_" + tokens[2] + "_plot_container";
+	var x = GetXAxis(ContainerId);
+	PlotOneContainer(ContainerId, x);
+}
+
+function GetXAxis(ContainerId)
+{
+	var tokens = ContainerId.split("_")
+	var tableid = tokens[0] + "_" + tokens[1] + "_table";
+	
+	var r = 0;
+	$.each($("#" + tableid + " thead th input"), function(idx, item){
+		 if($(item)[0].checked)
+			 r = idx;
+	});
+	return r;
+}
     

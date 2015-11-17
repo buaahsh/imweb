@@ -43,6 +43,10 @@ public class BaseData {
 	public class CurveDataItem extends BaseData{
 		public List<List<String>> table;
 	}
+	
+	public class D3DataItem extends BaseData{
+		public String link;
+	}
 }
 
 
