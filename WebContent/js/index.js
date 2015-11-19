@@ -27,6 +27,8 @@ $(function(){
 		});
 	});
 	
+	CreateTree();
+	
 	// update the data items
 	$.getJSON("/imweb/DataItem", function(data){
 		$.each(data, function(idx, item){
@@ -34,7 +36,6 @@ $(function(){
 		});
 		
 		ImageSilde();
-		CreateTree();
 		
 		PlotContainer();
 	});

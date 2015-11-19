@@ -36,7 +36,7 @@ public class DataItemServlet extends BaseServlet{
 		String arg = request.getParameter("arg");
 		if (arg != null)
 		{
-			//String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
+//			String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
 			String fileName = "/home/data/003.wrl";
 			response.reset();
 			// 设置response的Header
@@ -142,12 +142,14 @@ public class DataItemServlet extends BaseServlet{
 		Random r = new Random();
 		List<List<String>> lists = new ArrayList<>();
 		List<String> list = new ArrayList<>();
+		list.add("时间");
 		list.add("质量");
 		list.add("转动惯量");
 		list.add("质心");
 		lists.add(list);
 		for (int i = 1; i < l; i++) {
 			list = new ArrayList<>();
+			list.add(String.valueOf(i));
 			list.add(String.valueOf(r.nextFloat() * 100));
 			list.add(String.valueOf(r.nextFloat() * 100));
 			list.add(String.valueOf(r.nextFloat() * 100));

@@ -21,7 +21,7 @@ public class TreeNodeReader {
 		HashMap<String, String> keys = new HashMap<>();
 		
 	    try { 
-	        //FileInputStream fis = new FileInputStream("C:/Users/Shaohan/workspace/imweb/src/cn/edu/buaa/im/data/data.csv");
+//	        FileInputStream fis = new FileInputStream("C:/Users/Shaohan/workspace/imweb/src/cn/edu/buaa/im/data/data.csv");
 	        FileInputStream fis = new FileInputStream("/home/data/data.csv");
 	        InputStreamReader isr = new InputStreamReader(fis, "UTF-8"); 
 	        BufferedReader br = new BufferedReader(isr); 
