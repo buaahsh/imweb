@@ -15,6 +15,7 @@ import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.BaseData;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.service.DataItemService;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.D3DataItem;
 import cn.edu.buaa.im.model.BaseData.FileDataItem;
@@ -24,7 +25,6 @@ import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.BaseData.UrlDataItem;
 
 public class DataItemServlet extends BaseServlet{
-
 	/**
 	 * 
 	 */
@@ -53,7 +53,45 @@ public class DataItemServlet extends BaseServlet{
 			return;
 		}
 			
+		String sid = request.getParameter("sid");
+		String cid = request.getParameter("cid");
+		if (sid == null || cid == null)
+			return;
 		
+		List<DataItem> dataItems = new ArrayList<DataItem>();
+		
+		DataItemService dataItemService = new DataItemService(sid, cid);
+		
+		dataItems = dataItemService.getDataItems();
+		
+		Gson gson = new Gson();
+		responseString(response, gson.toJson(dataItems));
+		//String arg = request.getParameter("arg");
+	}
+	
+	private List<List<String>> getTable() {
+		int l = 6;
+		Random r = new Random();
+		List<List<String>> lists = new ArrayList<>();
+		List<String> list = new ArrayList<>();
+		list.add("时间");
+		list.add("质量");
+		list.add("转动惯量");
+		list.add("质心");
+		lists.add(list);
+		for (int i = 1; i < l; i++) {
+			list = new ArrayList<>();
+			list.add(String.valueOf(i));
+			list.add(String.valueOf(r.nextFloat() * 100));
+			list.add(String.valueOf(r.nextFloat() * 100));
+			list.add(String.valueOf(r.nextFloat() * 100));
+			lists.add(list);
+		}
+		
+		return lists;
+	}
+	
+	private void sampleData() {
 		List<DataItem> dataItems = new ArrayList<DataItem>();
 		
 		String title = "dataitem0";
@@ -130,32 +168,10 @@ public class DataItemServlet extends BaseServlet{
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
 				dataItems.add(dataitem);
 			}
-			
-		}
-		Gson gson = new Gson();
-		responseString(response, gson.toJson(dataItems));
-		//String arg = request.getParameter("arg");
-	}
-	
-	private List<List<String>> getTable() {
-		int l = 6;
-		Random r = new Random();
-		List<List<String>> lists = new ArrayList<>();
-		List<String> list = new ArrayList<>();
-		list.add("时间");
-		list.add("质量");
-		list.add("转动惯量");
-		list.add("质心");
-		lists.add(list);
-		for (int i = 1; i < l; i++) {
-			list = new ArrayList<>();
-			list.add(String.valueOf(i));
-			list.add(String.valueOf(r.nextFloat() * 100));
-			list.add(String.valueOf(r.nextFloat() * 100));
-			list.add(String.valueOf(r.nextFloat() * 100));
-			lists.add(list);
 		}
 		
-		return lists;
+		Gson gson = new Gson();
+//		responseString(response, gson.toJson(dataItems));
+		
 	}
 }

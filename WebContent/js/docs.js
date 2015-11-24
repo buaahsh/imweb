@@ -251,7 +251,7 @@ function UrlDataItemProc(id, data){
 
 function D3DataItemProc(id, data){
 	var html = "<div style='text-align: center;'>"
-		+ "<embed src=\""+data.link+"\" width=\"600\" height=\"400\" "
+		+ "<embed src=\""+data.link+"\" width=\"80%\" height=\"400\" "
 		+" type=\"application/x-cortona\"   pluginspage=\"http://www.cortona3d.com/cortona\"   vrml_splashscreen=\"false\" "
 		+" vrml_dashboard=\"false\"   vrml_background_color=\"#f7f7f9\"   contextmenu=\"false\" ></div>"
   	return html;

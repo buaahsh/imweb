@@ -1,5 +1,5 @@
-function CreateTree() {
-	$.getJSON("/imweb/TreeNode", function(data){
+function CreateTree(sid) {
+	$.getJSON("/imweb/TreeNode?sid=" + sid, function(data){
 		$('#tree')
 			.jstree({
 				'core' : {

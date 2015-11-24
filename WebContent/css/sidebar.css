@@ -5,7 +5,7 @@
 
 #sidebar-wrapper {
 	border-right: 1px solid #ddd;
-	overflow-x: hidden;
+	overflow: hidden;
 	background-color : #F2F2F2;
 }
 

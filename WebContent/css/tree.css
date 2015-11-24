@@ -1,4 +1,13 @@
-#tree { float:left; min-width:250px; border-right:1px solid silver; overflow:auto; padding:0px 10px;     width: 250px;    overflow-y: hidden;}
+#tree { 
+	float:left; 
+	min-width:250px; 
+	border-right:1px solid silver; 
+	overflow:auto; 
+	padding:0px 10px;     
+	width: 250px; 
+	/*height: calc(95% - 200px);*/   
+	/*overflow-y: hidden;*/
+	}
 #data { margin-left:320px; }
 #data textarea { margin:0; padding:0; height:100%; width:100%; border:0; background:white; display:block; line-height:18px; resize:none; }
 #data, #code { font: normal normal normal 12px/18px 'Consolas', monospace !important; }

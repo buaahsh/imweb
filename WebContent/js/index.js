@@ -4,6 +4,28 @@
 */
 
 $(function(){
+	
+	var cid = getUrlParam('cid');
+	var sid = "";
+	
+	$.getJSON("/imweb/DataPacket?arg=sid&cid=" + cid, function(data){
+		$("#title_a").text(data.name);
+		sid = data.sid;
+		
+		CreateTree(sid);
+		
+		// update the data items
+		$.getJSON("/imweb/DataItem?cid=" + cid + "&sid=" + sid, function(data){
+			$.each(data, function(idx, item){
+				$("#dataItems").append(DataItemProc(item));
+			});
+			
+			ImageSilde();
+			
+			PlotContainer();
+		});
+	});  	
+	
 	//update the abstraction
 	$.getJSON("/imweb/DataPacket?arg=abs", function(data){
 		$("#abs_model").text(data.model);
@@ -25,19 +47,6 @@ $(function(){
 				+ "<td>" + item.abs + "</td></tr>";
 			$("#versions").append(itemStr);
 		});
-	});
-	
-	CreateTree();
-	
-	// update the data items
-	$.getJSON("/imweb/DataItem", function(data){
-		$.each(data, function(idx, item){
-			$("#dataItems").append(DataItemProc(item));
-		});
-		
-		ImageSilde();
-		
-		PlotContainer();
 	});
  });
 
@@ -67,3 +76,9 @@ function GetXAxis(ContainerId)
 	return r;
 }
     
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
