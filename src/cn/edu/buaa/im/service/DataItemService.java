@@ -18,6 +18,30 @@ import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.BaseData.TitleDataItem;
 
+/**
+	FIELD_GROUP = 16,
+	FIELD_FLOAT = 17,
+	FIELD_TEXT = 18,
+	FIELD_CURVE = 19,
+	FIELD_ATTACHMENT = 20,
+	FIELD_MODEL = 21,
+	FIELD_FLOATSELECT = 22,
+	FIELD_CURVEGROUP = 23,
+	FIELD_DATETIME = 24,
+	FIELD_CASELINK = 25
+	{ NodeType.FIELD_GROUP, "数据项分类" },
+    { NodeType.FIELD_FLOAT, "浮点数" },
+    { NodeType.FIELD_TEXT, "文本" },
+    { NodeType.FIELD_CURVE, "曲线" },
+    { NodeType.FIELD_ATTACHMENT, "图片" },
+    { NodeType.FIELD_MODEL, "3D模型" },
+    { NodeType.FIELD_FLOATSELECT, "浮点数选项"},
+    { NodeType.FIELD_CURVEGROUP, "曲线簇模型" },
+    { NodeType.FIELD_DATETIME, "日期时间" },
+    { NodeType.FIELD_CASELINK, "实例链接" }
+ * @author Shaohan
+ *
+ */
 public class DataItemService {
 	private String sid;
 	private String cid;
@@ -76,23 +100,22 @@ public class DataItemService {
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}
-		else if (treeNode.type.equals("标题")){
+		else if (treeNode.type.equals("16")){
 			baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}
-		else if (treeNode.type.equals("文本")){
-			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
-			textDataItem.text = new ArrayList<String>();
-			textDataItem.text.add("推进剂又称推进药，有规律地燃烧释放出能量，产生气体，推送火箭和导弹的火药。");
-			textDataItem.text.add("推进剂具有下列特性：①比冲量高；②密度大；③燃烧产物的气体（或蒸气）分子量小，离解度小，无毒、无烟、无腐蚀性，不含有凝聚态物质；④火焰温度不应过高，以免烧蚀喷管；⑤应有较宽的温度适应范围；");
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
-		}
-		else if (treeNode.type.equals("浮点数")){
+		else if (treeNode.type.equals("17")){
 			Random r = new Random();
 			FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 			floatDataItem.unit = treeNode.unit;
-			floatDataItem.value = r.nextFloat() * 100;
+			floatDataItem.value = value;
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
+		}
+		else if (treeNode.type.equals("18")){
+			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
+			textDataItem.text = new ArrayList<String>();
+			textDataItem.text.add(value);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
 		}
 		else if (treeNode.type.equals("曲线")){
 			CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();

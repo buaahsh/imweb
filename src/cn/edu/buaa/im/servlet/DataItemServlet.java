@@ -150,7 +150,7 @@ public class DataItemServlet extends BaseServlet{
 				Random r = new Random();
 				FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 				floatDataItem.unit = treeNode.unit;
-				floatDataItem.value = r.nextFloat() * 100;
+				floatDataItem.value = String.valueOf(r.nextFloat() * 100);
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
 				dataItems.add(dataitem);
 			}

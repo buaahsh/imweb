@@ -24,6 +24,21 @@ $(function(){
 			
 			PlotContainer();
 		});
+		
+		//update the versions
+		$.getJSON("/imweb/DataPacket?arg=version&cid=" + cid + "&sid=" + sid, function(data){
+			$("#versions").empty();
+			$.each(data, function(idx, item){
+				var href = "/imweb/?cid=" + item.id;
+				var itemStr = "<tr>" 
+					+  "<th scope='row'><a target='_blank' href=\""+ href
+					+"\">"+ item.name +"</a></th>"
+					+ "<td>" + item.date + "</td>"
+					+ "<td>" + item.person + "</td>"
+					+ "<td>" + item.abs + "</td></tr>";
+				$("#versions").append(itemStr);
+			});
+		});
 	});  	
 	
 	//update the abstraction
@@ -36,18 +51,7 @@ $(function(){
 		$("#abs_abs").text(data.abs);
 	});  	
 	
-	//update the versions
-	$.getJSON("/imweb/DataPacket?arg=version", function(data){
-		$("#versions").empty();
-		$.each(data, function(idx, item){
-			var itemStr = "<tr>" 
-				+  "<th scope='row'><a href='#'>"+ item.name +"</a></th>"
-				+ "<td>" + item.date + "</td>"
-				+ "<td>" + item.person + "</td>"
-				+ "<td>" + item.abs + "</td></tr>";
-			$("#versions").append(itemStr);
-		});
-	});
+	
  });
 
 $(document).ready(function(){

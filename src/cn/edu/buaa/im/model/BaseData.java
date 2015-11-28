@@ -29,7 +29,7 @@ public class BaseData {
 	
 	public class FloatDataItem extends BaseData{
 		public String unit;
-		public float value;
+		public String value;
 	}
 	
 	public class RadioDataItem extends BaseData{

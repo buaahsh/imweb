@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.service.CaseService;
+import cn.edu.buaa.im.service.VersionService;
 import cn.edu.buaa.im.model.DPVersion;
 
 public class DataPacketServlet extends BaseServlet{
@@ -35,17 +36,10 @@ public class DataPacketServlet extends BaseServlet{
 			responseString(response, gson.toJson(dataPacket));
 		}
 		else if (arg.equals("version")){
-			List<DPVersion> versions = new ArrayList<DPVersion>();		
-			for (int i = 1; i < 6; i ++)
-			{
-				DPVersion version = new DPVersion();
-				version.setAbs("对气动特征进行了重新计算");
-				version.setDate("2014-11-20");
-				version.setPerson("王恩泽");
-				version.setName("集中式气动特征 v" + String.valueOf(i));
-				
-				versions.add(version);
-			}
+			String cid = request.getParameter("cid");
+			String sid = request.getParameter("sid");
+			VersionService version = new VersionService(sid, cid);
+			List<DPVersion> versions = version.getVersions();
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(versions));
 		}

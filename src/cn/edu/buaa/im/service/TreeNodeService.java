@@ -60,6 +60,7 @@ public class TreeNodeService {
 		int fidIdx = getIdx(names, "ID");
 		int typeIdx = getIdx(names, "Type");
 		int pidIdx = getIdx(names, "PID");
+		int remarkIdx = getIdx(names, "remark");
 		
 		for (Vector<Object> vector : vectors) {
 			String name = String.valueOf(vector.get(nameIdx));
@@ -68,9 +69,12 @@ public class TreeNodeService {
 			String pid = "fid" + String.valueOf(vector.get(pidIdx));
 			String parent = GetParent(pid);
 			String icon = GetIcon(type);
+			String unit = String.valueOf(vector.get(remarkIdx));
 			
 			TreeNode treeNode = new TreeNode(fid, parent, name, icon);
 			treeNode.type = type;
+			treeNode.unit = unit;
+			
 			if (pid.equals("fid0"))
 				roots.add(treeNode);
 			
