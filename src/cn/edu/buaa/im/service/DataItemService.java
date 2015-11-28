@@ -13,6 +13,7 @@ import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.D3DataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
+import cn.edu.buaa.im.model.BaseData.ImageDataItem;
 import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.BaseData.TitleDataItem;
@@ -31,7 +32,7 @@ public class DataItemService {
 	}
 	
 	private void init() {
-		TreeNodeService treeNodeService = new TreeNodeService("68");
+		TreeNodeService treeNodeService = new TreeNodeService(this.sid);
 		List<TreeNode> treeNodes = treeNodeService.geTreeNodes();
 		buildDataItems(treeNodes);
 	}
@@ -71,7 +72,7 @@ public class DataItemService {
 	private DataItem Convert2DataItem(TreeNode treeNode, String value) {
 		DataItem dataitem = null;
 		BaseData baseData = null;
-		if (treeNode.parent.equals("#")){
+		if (treeNode.parent.equals("#")){	
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}

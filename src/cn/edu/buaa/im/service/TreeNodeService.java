@@ -31,27 +31,14 @@ public class TreeNodeService {
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
 			String table = "FieldsDefinition";
-			String key = "Sid";
-			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(table, key, this.sid);
+			String sql = String.format("select * from %s as A where A.[Sid] = %s ORDER BY A.[Level], A.[Order];", table,
+					this.sid);
+			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(sql);
+			
 			List<String> names = sqLiteCRUD.getFields(table);
 			
-			int nameIdx = getIdx(names, "Name");
-			int fidIdx = getIdx(names, "ID");
-			int typeIdx = getIdx(names, "Type");
-			int pidIdx = getIdx(names, "PID");
+			Convert2TreeNodes(vectors, names);
 			
-			for (Vector<Object> vector : vectors) {
-				String name = String.valueOf(vector.get(nameIdx));
-				String fid = "fid" + String.valueOf(vector.get(fidIdx));
-				String type = String.valueOf(vector.get(typeIdx));
-				String pid = "fid" + String.valueOf(vector.get(pidIdx));
-				String parent = GetParent(pid);
-				String icon = GetIcon(type);
-				
-				TreeNode treeNode = new TreeNode(fid, parent, name, icon);
-				treeNode.type = type;
-				treeNodes.add(treeNode);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,6 +46,56 @@ public class TreeNodeService {
 	
 	public List<TreeNode> geTreeNodes() {
 		return this.treeNodes;
+	}
+	
+	/**
+	 * 把vector转化为nodes，按照树的顺序
+	 * @return
+	 */
+	private void Convert2TreeNodes(Vector<Vector<Object>> vectors, List<String> names) {
+		HashMap<String, List<TreeNode>> hashMap = new HashMap<>();
+		List<TreeNode> roots = new ArrayList<>();
+		
+		int nameIdx = getIdx(names, "Name");
+		int fidIdx = getIdx(names, "ID");
+		int typeIdx = getIdx(names, "Type");
+		int pidIdx = getIdx(names, "PID");
+		
+		for (Vector<Object> vector : vectors) {
+			String name = String.valueOf(vector.get(nameIdx));
+			String fid = "fid" + String.valueOf(vector.get(fidIdx));
+			String type = String.valueOf(vector.get(typeIdx));
+			String pid = "fid" + String.valueOf(vector.get(pidIdx));
+			String parent = GetParent(pid);
+			String icon = GetIcon(type);
+			
+			TreeNode treeNode = new TreeNode(fid, parent, name, icon);
+			treeNode.type = type;
+			if (pid.equals("fid0"))
+				roots.add(treeNode);
+			
+			if (hashMap.containsKey(pid) == false)
+				hashMap.put(pid, new ArrayList<TreeNode>());
+			hashMap.get(pid).add(treeNode);
+		}
+		
+		OrderTreeNodes(hashMap, roots);
+	}
+	
+	private void OrderTreeNodes(HashMap<String, List<TreeNode>> hashMap, List<TreeNode> roots) {
+		if (roots.size() == 0)
+			return;
+		for (TreeNode treeNode : roots) {
+			treeNodes.add(treeNode);
+			int i = treeNodes.size() - 1;
+			while (i != treeNodes.size()) {
+				TreeNode now = treeNodes.get(i);
+				if(hashMap.containsKey(now.id))
+					treeNodes.addAll(hashMap.get(now.id));
+				i += 1;
+			}
+		}
+		
 	}
 	
 	private int getIdx(List<String> names, String name) {

@@ -140,7 +140,15 @@ function ImageSilde(){
 		$(item).slidesjs({
 		      width: 940,
 		      height: 528,
-		      navigation: false
+		      //navigation: false
+		      play: {
+		          active: true,
+		          auto: true,
+		          interval: 4000,
+		          swap: true,
+		          pauseOnHover: true,
+		          restartDelay: 2500
+		      }
 	    });
 	});
 }
@@ -202,10 +210,6 @@ function ImageDataItemProc(id, data)
 	$.each(data.urls, function(idx, item){
 		html += "<img src=\""+item+"\">";
 	});
-    html += "<a href=\"#\" class=\"slidesjs-previous slidesjs-navigation\">"
-    	+"<i class=\"icon-chevron-left icon-large\"></i></a>"
-    	+"<a href=\"#\" class=\"slidesjs-next slidesjs-navigation\">"
-    	+"<i class=\"icon-chevron-right icon-large\"></i></a></div>";
     return html;
 }
 
