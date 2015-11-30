@@ -39,6 +39,7 @@ public class TreeNodeService {
 			
 			Convert2TreeNodes(vectors, names);
 			
+			sqLiteCRUD.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

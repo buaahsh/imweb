@@ -16,7 +16,13 @@ public class BaseData {
 	}
 
 	public class ImageDataItem extends BaseData{
+		public int flag;
 		public List<String> urls;
+		
+		public ImageDataItem()
+		{
+			this.flag = 0;
+		}
 	}
 	
 	public class FileDataItem extends BaseData{

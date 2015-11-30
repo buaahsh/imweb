@@ -31,7 +31,7 @@ public class SQLiteConn implements Serializable {
 		}
 		return connection;
 	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		String s = "C:\\Users\\Shaohan\\Documents\\project\\enze\\DatabaseItem_pack.db"; 

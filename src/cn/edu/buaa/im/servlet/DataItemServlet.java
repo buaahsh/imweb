@@ -36,8 +36,8 @@ public class DataItemServlet extends BaseServlet{
 		String arg = request.getParameter("arg");
 		if (arg != null)
 		{
-			String fileName = "C:\\Users\\Shaohan\\Documents\\project\\enze\\003.wrl";
-//			String fileName = "/home/data/003.wrl";
+			String fileName = request.getParameter("file");
+
 			response.reset();
 			// 设置response的Header
 			response.setContentType("application/x-cortona");

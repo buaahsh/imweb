@@ -437,4 +437,12 @@ public class SQLiteCRUD {
 			System.out.println("异常时回滚错误 : " + e.getLocalizedMessage());
 		}
 	}
+	
+	public void close() {
+		try {
+			this.connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

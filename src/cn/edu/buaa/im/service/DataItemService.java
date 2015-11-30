@@ -2,7 +2,6 @@ package cn.edu.buaa.im.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Vector;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
@@ -14,9 +13,7 @@ import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.D3DataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
 import cn.edu.buaa.im.model.BaseData.ImageDataItem;
-import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
-import cn.edu.buaa.im.model.BaseData.TitleDataItem;
 
 /**
 	FIELD_GROUP = 16,
@@ -84,6 +81,8 @@ public class DataItemService {
 				
 				this.dataItems.add(dataItem);
 			}
+			
+			sqLiteCRUD.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -105,7 +104,6 @@ public class DataItemService {
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}
 		else if (treeNode.type.equals("17")){
-			Random r = new Random();
 			FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 			floatDataItem.unit = treeNode.unit;
 			floatDataItem.value = value;
@@ -117,15 +115,55 @@ public class DataItemService {
 			textDataItem.text.add(value);
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
 		}
-		else if (treeNode.type.equals("曲线")){
+		else if (treeNode.type.equals("19")){
 			CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
 			curveDataItem.table = null;
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
 		}
-		else if (treeNode.type.equals("三维模型")){
+		else if (treeNode.type.equals("20")){ // figure
+			ImageDataItem imageDataItem = BaseData.getInstanceBaseData().new ImageDataItem();
+			imageDataItem.flag = 1;
+			String[] strings = value.split(";");
+			List<String> urls = new ArrayList<>();
+			for (String string : strings) {
+				if (string.isEmpty() == false)
+					urls.add(string);
+			}
+			imageDataItem.urls = urls;
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, imageDataItem);
+		}
+		else if (treeNode.type.equals("21")){ //model
 			D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
-			d3.link = "/imweb/DataItem?arg=123";
+			String[] strings = value.split(";");
+			d3.link = strings[0];
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
+		}
+		// TODO : 浮点数选项
+		else if (treeNode.type.equals("22")){
+			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
+			textDataItem.text = new ArrayList<String>();
+			textDataItem.text.add(value);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+		}
+		// TODO : 曲线簇模型
+		else if (treeNode.type.equals("23")){
+			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
+			textDataItem.text = new ArrayList<String>();
+			textDataItem.text.add(value);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+		}
+		else if (treeNode.type.equals("24")){
+			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
+			textDataItem.text = new ArrayList<String>();
+			textDataItem.text.add(value);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+		}
+		// TODO : 实例链接
+		else if (treeNode.type.equals("25")){
+			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
+			textDataItem.text = new ArrayList<String>();
+			textDataItem.text.add(value);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
 		}
 		else{
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();

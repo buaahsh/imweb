@@ -48,7 +48,7 @@ public class VersionService {
 				
 				versions.add(version);
 			}
-			
+			sqLiteCRUD.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -34,7 +34,7 @@ public class CaseService {
 				this.sid =  String.valueOf(vector.get(sidIdx));
 				this.name = String.valueOf(vector.get(nameIdx));
 			}
-			
+			sqLiteCRUD.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
