@@ -42,7 +42,7 @@ $(function(){
 	});  	
 	
 	//update the abstraction
-	$.getJSON("/imweb/DataPacket?arg=abs", function(data){
+	$.getJSON("/imweb/DataPacket?arg=abs&cid=" + cid, function(data){
 		$("#abs_model").text(data.model);
 		$("#abs_cat").text(data.cat);
 		$("#abs_sub").text(data.sub);

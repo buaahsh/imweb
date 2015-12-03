@@ -1,7 +1,6 @@
 package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,7 @@ import com.google.gson.Gson;
 
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.service.CaseService;
+import cn.edu.buaa.im.service.DataPacketService;
 import cn.edu.buaa.im.service.VersionService;
 import cn.edu.buaa.im.model.DPVersion;
 
@@ -25,13 +25,11 @@ public class DataPacketServlet extends BaseServlet{
 			HttpServletResponse response) throws  IOException {
 		String arg = request.getParameter("arg");
 		if (arg.equals("abs")){
-			DataPacketAbs dataPacket = new DataPacketAbs();
-			dataPacket.setAbs("结合最新版本的三维原理，图V3.0版本重新进行了集中式气动特性的计算，其中XX数值变化较大");
-			dataPacket.setCat("方案设计阶段");
-			dataPacket.setDeadline("根据任务状态自动判断");
-			dataPacket.setKeyword("方案阶段、总体");
-			dataPacket.setModel("第二轮");
-			dataPacket.setSub("动力学");
+			String cid = request.getParameter("cid");
+			DataPacketService dataPacketService = new DataPacketService(cid);
+			
+			DataPacketAbs dataPacket = dataPacketService.getDataPacketAbs();
+			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(dataPacket));
 		}
