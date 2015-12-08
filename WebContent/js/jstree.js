@@ -1,3 +1,8 @@
+function CreateView(){
+	$("#select_view").html(
+		"<option>视图</option>"
+		+ "<option>视图</option>");
+}
 function CreateTree(sid) {
 	$.getJSON("/imweb/TreeNode?sid=" + sid, function(data){
 		$('#tree')
@@ -20,6 +25,7 @@ function CreateTree(sid) {
 	            location.href= data.node.a_attr.href
 //				$("#page-content-wrapper").scrollTo(document.getElementById(data.node.a_attr.href), 800);
 	        });
+		CreateView();
 		//window.location.hash = "index_pos";
 	});
 }
