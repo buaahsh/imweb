@@ -28,7 +28,7 @@ public class DataPacketServlet extends BaseServlet{
 			String cid = request.getParameter("cid");
 			DataPacketService dataPacketService = new DataPacketService(cid);
 			
-			DataPacketAbs dataPacket = dataPacketService.getDataPacketAbs();
+			List<DataPacketAbs> dataPacket = dataPacketService.getDataPacketAbs();
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(dataPacket));

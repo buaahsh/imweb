@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
-import cn.edu.buaa.im.model.TreeNode;
 
 public class CaseService {
 	public String cid;

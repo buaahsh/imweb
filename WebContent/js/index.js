@@ -43,14 +43,18 @@ $(function(){
 	
 	//update the abstraction
 	$.getJSON("/imweb/DataPacket?arg=abs&cid=" + cid, function(data){
-		$("#abs_model").text(data.model);
-		$("#abs_cat").text(data.cat);
-		$("#abs_sub").text(data.sub);
-		$("#abs_keyword").text(data.keyword);
-		$("#abs_deadline").text(data.deadline);
-		$("#abs_abs").text(data.abs);
+		var html = "<tr>";
+		$.each(data, function(idx, item){
+			if (idx > 0 && idx % 2 == 0){
+				html += "</tr><tr>";
+			}
+			html += "<th class=\"col-md-3\">"+item.name+":</th>"
+				+ "<td class=\"col-md-3\">"+item.value+"</td>";		
+		});
+		html += "</tr>";
+		
+		$("#abs_table").html(html);
 	});  	
-	
 	
  });
 

@@ -155,14 +155,12 @@ public class DataItemServlet extends BaseServlet{
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("曲线")){
-				Random r = new Random();
 				CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
 				curveDataItem.table = getTable();
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("三维模型")){
-				Random r = new Random();
 				D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
 				d3.link = "/imweb/DataItem?arg=123";
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
@@ -170,7 +168,7 @@ public class DataItemServlet extends BaseServlet{
 			}
 		}
 		
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
 //		responseString(response, gson.toJson(dataItems));
 		
 	}

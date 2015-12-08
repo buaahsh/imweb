@@ -42,7 +42,7 @@ public class SQLiteConn implements Serializable {
 			String key = "id";
 			String value = "56";
 			Vector<Vector<Object>> objects = sqLiteCRUD.selectVector(table,key, value);
-			System.out.println("fs");
+			System.out.println(objects);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

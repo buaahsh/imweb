@@ -1,5 +1,6 @@
 package cn.edu.buaa.im.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -15,7 +16,7 @@ public class DataPacketService {
 	private String pcid;
 	private String psid;
 	
-	DataPacketAbs dataPacket = new DataPacketAbs();
+	List<DataPacketAbs> dataPacket = new ArrayList<DataPacketAbs>();
 	
 	public DataPacketService(String cid){
 		this.cid = cid;
@@ -60,15 +61,14 @@ public class DataPacketService {
 					value = String.valueOf(vectors.get(0).get(0));
 				}
 				
-				if (treeNode.text.equals("数据包承担人")){
-					dataPacket.setKeyword(value);
-				}
+				DataPacketAbs item = new DataPacketAbs();
+				item.name = treeNode.text;
+				item.value = value;
+				
+				dataPacket.add(item);
+				
 			}
-			dataPacket.setAbs("结合最新版本的三维原理，图V3.0版本重新进行了集中式气动特性的计算，其中XX数值变化较大");
-			dataPacket.setCat("方案设计阶段");
-			dataPacket.setDeadline("根据任务状态自动判断");
-			dataPacket.setModel("第二轮");
-			dataPacket.setSub("动力学");
+
 			sqLiteCRUD.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class DataPacketService {
 		
 	}
 	
-	public DataPacketAbs getDataPacketAbs() {
+	public List<DataPacketAbs> getDataPacketAbs() {
 		return this.dataPacket;
 	}
 	
