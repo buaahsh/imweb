@@ -38,4 +38,9 @@ root
   在fielddefinition remark fid (type 26)
 
   schemadefinition where remark = <cid>
+
+
+昨天讨论的，表示版本的case在表中用remark属性存储对应数据包的cid和主模型的sid，我和白瑞雪讨论了一下，计划用json的格式存。
+
+格式是 {sid: 123, cid: 123}
   
