@@ -1,5 +1,6 @@
 package cn.edu.buaa.im.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -127,7 +128,7 @@ public class DataItemService {
 			List<String> urls = new ArrayList<>();
 			for (String string : strings) {
 				if (string.isEmpty() == false)
-					urls.add(string);
+					urls.add(getAbsPath(string));
 			}
 			imageDataItem.urls = urls;
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, imageDataItem);
@@ -135,7 +136,7 @@ public class DataItemService {
 		else if (treeNode.type.equals("21")){ //model
 			D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
 			String[] strings = value.split(";");
-			d3.link = strings[0];
+			d3.link = getAbsPath(strings[0]);
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
 		}
 		// TODO : 浮点数选项
@@ -173,4 +174,19 @@ public class DataItemService {
 		}
 		return dataitem;
 	}
+	
+	private String getAbsPath(String path){
+		String db = Utility.getSQLite();
+		File dbFile = new File(db);
+		File parent = new File(dbFile.getParent());
+		File p = new File(parent, path);
+		System.out.println(p.getAbsolutePath());
+		return p.getAbsolutePath();
+	}
+	
+	public static void main(String[] args) {
+		//DataItemService d = new DataItemService("", "");
+		
+	}
+
 }
