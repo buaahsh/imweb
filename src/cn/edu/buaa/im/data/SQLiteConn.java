@@ -33,19 +33,6 @@ public class SQLiteConn implements Serializable {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		String s = "C:\\Users\\Shaohan\\Documents\\project\\enze\\DatabaseItem_pack.db"; 
-		SQLiteConn sqLiteConn = new SQLiteConn(s);
-		try {
-			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
-			String table = "CasesDefinition";
-			String key = "id";
-			String value = "56";
-			Vector<Vector<Object>> objects = sqLiteCRUD.selectVector(table,key, value);
-			System.out.println(objects);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 	}
 

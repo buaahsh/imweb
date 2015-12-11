@@ -55,8 +55,10 @@ public class DataItemServlet extends BaseServlet{
 			
 		String sid = request.getParameter("sid");
 		String cid = request.getParameter("cid");
-		if (sid == null || cid == null)
+		if (sid == null || cid == null || sid.equals("undefined")){
+			sampleData(response);
 			return;
+		}
 		
 		List<DataItem> dataItems = new ArrayList<DataItem>();
 		
@@ -66,7 +68,6 @@ public class DataItemServlet extends BaseServlet{
 		
 		Gson gson = new Gson();
 		responseString(response, gson.toJson(dataItems));
-		//String arg = request.getParameter("arg");
 	}
 	
 	private List<List<String>> getTable() {
@@ -91,37 +92,28 @@ public class DataItemServlet extends BaseServlet{
 		return lists;
 	}
 	
-	private void sampleData() {
+	private void sampleData(HttpServletResponse response) {
 		List<DataItem> dataItems = new ArrayList<DataItem>();
 		
 		String title = "dataitem0";
 		String id = "dataitem0";
 		ImageDataItem di0 =  BaseData.getInstanceBaseData().new ImageDataItem();
 		di0.urls = new ArrayList<String>();
-		di0.urls.add("./img/ex_1.jpg");
-		di0.urls.add("./img/ex_2.jpg");
-		di0.urls.add("./img/ex_3.jpg");
-		di0.urls.add("./img/ex_4.jpg");		
+		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_1.jpg");
+		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_2.jpg");
+		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_3.jpg");
+		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_4.jpg");		
 		DataItem dataItem = new DataItem(title, id, di0);
 		dataItems.add(dataItem);
-		
-		title = "dataitem2";
-		id = "dataitem2";
-		FileDataItem di2 =  BaseData.getInstanceBaseData().new FileDataItem();
-		di2.filePaths = new ArrayList<String>();
-		di2.filePaths.add("./img/ex_1.jpg");
-		di2.filePaths.add("./img/ex_2.jpg");
-		dataItem = new DataItem(title, id, di2);
-		dataItems.add(dataItem);
 
-		title = "dataitem8";
-		id = "dataitem8";
-		UrlDataItem di8 =  BaseData.getInstanceBaseData().new UrlDataItem();
-		di8.links = new ArrayList<String>();
-		di8.links.add("http://baidu.com");
-		di8.links.add("http://baidu.com");
-		dataItem = new DataItem(title, id, di8);
-		dataItems.add(dataItem);
+//		title = "dataitem8";
+//		id = "dataitem8";
+//		UrlDataItem di8 =  BaseData.getInstanceBaseData().new UrlDataItem();
+//		di8.links = new ArrayList<String>();
+//		di8.links.add("http://baidu.com");
+//		di8.links.add("http://baidu.com");
+//		dataItem = new DataItem(title, id, di8);
+//		dataItems.add(dataItem);
 		
 		List<TreeNode> treeNodes = TreeNodeReader.ReadTreeNodes();
 		
@@ -168,8 +160,8 @@ public class DataItemServlet extends BaseServlet{
 			}
 		}
 		
-//		Gson gson = new Gson();
-//		responseString(response, gson.toJson(dataItems));
+		Gson gson = new Gson();
+		responseString(response, gson.toJson(dataItems));
 		
 	}
 }

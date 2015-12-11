@@ -13,6 +13,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.service.Utility;
+import cn.edu.buaa.im.servlet.Util;
 
 public class TreeNodeReader {
 	public static List<TreeNode> ReadTreeNodes(){
@@ -21,8 +23,8 @@ public class TreeNodeReader {
 		HashMap<String, String> keys = new HashMap<>();
 		
 	    try { 
-	        FileInputStream fis = new FileInputStream("C:/Users/Shaohan/workspace/imweb/src/cn/edu/buaa/im/data/data.csv");
-//	        FileInputStream fis = new FileInputStream("/home/data/data.csv");
+	    	String filePath = Utility.getParameter("sample");
+	        FileInputStream fis = new FileInputStream(filePath);
 	        InputStreamReader isr = new InputStreamReader(fis, "UTF-8"); 
 	        BufferedReader br = new BufferedReader(isr); 
 	        int line = -2; 
@@ -32,7 +34,7 @@ public class TreeNodeReader {
             	if (line < 1)
             		continue;
             	
-            	System.out.println(line);
+//            	System.out.println(line);
             	String[] tokens = StringUtils.splitPreserveAllTokens(tempString, ",");
             	
             	String text = tokens[0];

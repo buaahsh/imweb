@@ -23,6 +23,12 @@ public class DataPacketServlet extends BaseServlet{
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws  IOException {
+		
+		if (request.getParameter("cid") == null || request.getParameter("cid").equals("null")){
+			Fake(request, response);
+			return;
+		}
+		
 		String arg = request.getParameter("arg");
 		if (arg.equals("abs")){
 			String cid = request.getParameter("cid");
@@ -46,6 +52,22 @@ public class DataPacketServlet extends BaseServlet{
 			CaseService caseService = new CaseService(cid);
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(caseService));
+		}
+	}
+	
+	private void Fake(HttpServletRequest request, HttpServletResponse response){
+		String arg = request.getParameter("arg");
+		if (arg.equals("abs")){
+			String fake = "[{\"name\":\"所属主模型\",\"value\":\"总体数据包\"},{\"name\":\"关键字\",\"value\":\"王恩泽\"},{\"name\":\"主模型所属分类\",\"value\":\"空气动力学\"},{\"name\":\"完成日期\",\"value\":\"2015-12-20\"},{\"name\":\"所属专业\",\"value\":\"飞行器设计\"},{\"name\":\"数据更新说明\",\"value\":\"王恩泽\"}]";
+			responseString(response, fake);
+		}
+		else if (arg.equals("version")){
+			String fake = "[{\"name\":\"总体数据包结构化数据v1\",\"date\":\"\",\"person\":\"\",\"abs\":\"总体数据包结构化数据v1\",\"id\":\"12648\"},{\"name\":\"总体数据包结构化数据v2\",\"date\":\"\",\"person\":\"\",\"abs\":\"总体数据包结构化数据v2\",\"id\":\"12653\"}]";
+			responseString(response, fake);
+		}
+		else if (arg.equals("sid")){
+			String fake = "{\"name\":\"总体数据包结构化数据v3\"}";
+			responseString(response, fake);
 		}
 	}
 }

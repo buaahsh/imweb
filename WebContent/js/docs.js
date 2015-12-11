@@ -141,14 +141,6 @@ function ImageSilde(){
 		      width: 940,
 		      height: 528,
 		      //navigation: false
-		      play: {
-		          active: true,
-		          auto: true,
-		          interval: 4000,
-		          swap: true,
-		          pauseOnHover: true,
-		          restartDelay: 2500
-		      }
 	    });
 	});
 }

@@ -26,13 +26,15 @@ public class TreeNodeServlet extends BaseServlet{
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws  IOException {
-//		List<TreeNode> treeNodes = TreeNodeReader.ReadTreeNodes();
+		List<TreeNode> treeNodes;
 	
 		String sid = request.getParameter("sid");
-		if (sid == null)
-			return;
-		TreeNodeService treeNodeService = new TreeNodeService(sid);
-		List<TreeNode> treeNodes = treeNodeService.geTreeNodes();
+		if (sid == null || sid.equals("undefined"))
+			treeNodes = TreeNodeReader.ReadTreeNodes();
+		else{
+			TreeNodeService treeNodeService = new TreeNodeService(sid);
+			treeNodes = treeNodeService.geTreeNodes();
+		}
 		Gson gson = new Gson();
 		responseString(response, gson.toJson(treeNodes));
 	}
