@@ -1,3 +1,19 @@
+/*
+.slidesjs-slide{
+	height: 100%;
+	overflow: auto;  
+  	margin: auto;
+	top : 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	width: initial !important;
+}
+
+.slidesjs-control{
+	text-align: center;	
+}
+*/
+
 .slidesjs-pagination {
    margin: 6px 0 0;
    float: right;
