@@ -154,7 +154,7 @@ public class DataItemServlet extends BaseServlet{
 			}
 			else if (treeNode.type.equals("三维模型")){
 				D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
-				d3.link = "/imweb/DataItem?arg=123";
+				d3.link = "/home/hsh/data/003.wrl";
 				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
 				dataItems.add(dataitem);
 			}
