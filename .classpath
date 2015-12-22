@@ -9,5 +9,9 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/Users/hsh/Downloads/axis2-1.6.3/lib/axiom-api-1.2.14.jar"/>
+	<classpathentry kind="lib" path="/Users/hsh/Downloads/axis2-1.6.3/lib/axiom-impl-1.2.14.jar"/>
+	<classpathentry kind="lib" path="/Users/hsh/Downloads/axis2-1.6.3/lib/axis2-adb-1.6.3.jar"/>
+	<classpathentry kind="lib" path="/Users/hsh/Downloads/axis2-1.6.3/lib/axis2-kernel-1.6.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
