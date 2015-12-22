@@ -15,12 +15,8 @@ public class WSDLClient {
 		return instance;
 	}
 
-	public void getS() {
+	public void getS(String methodName, String[] args) {
 		try {
-			// axis1 服务端
-			// String url =
-			// "http://localhost:8080/StockQuote/services/StockQuoteServiceSOAP11port?wsdl";
-			// axis2 服务端
 			String url = "http://202.112.140.210/MainModel/services/IDataService?wsdl";
 
 			JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory
@@ -28,8 +24,8 @@ public class WSDLClient {
 			org.apache.cxf.endpoint.Client client = dcf
 					.createClient(url);
 			// sayHello 为接口中定义的方法名称 张三为传递的参数 返回一个Object数组
-			QName opName = new QName("http://service.webservice.cssrc.com/", "getNodeHistory"); 
-			Object[] objects = client.invoke(opName, "pdd", "123456", "1444");
+			QName opName = new QName("http://service.webservice.cssrc.com/", methodName); 
+			Object[] objects = client.invoke(opName, args);
 			// 输出调用结果
 			System.out.println(objects[0].toString());
 
@@ -40,7 +36,14 @@ public class WSDLClient {
 
 	public static void main(String[] args) {
 		WSDLClient w = WSDLClient.getInstance();
-		w.getS();
+		
+//		String method = "getNodeHistory";
+//		String[] arg = new String[]{"pdd", "123456", "1444"};
+//		w.getS(method, arg);
+//		
+		String method = "getNodeDetail";
+		String[] arg = new String[]{"pdd", "123456", "1444", "75"};
+		w.getS(method, arg);
 	}
 
 }
