@@ -7,6 +7,7 @@ import java.util.Vector;
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.DPVersion;
+import cn.edu.buaa.im.wsdl.WSDLClient;
 
 public class VersionService {
 	private String sid;
@@ -19,6 +20,19 @@ public class VersionService {
 		this.cid = cid;
 		versions = new ArrayList<DPVersion>();	
 		init();
+	}
+	
+	public VersionService(String userId, String passWord, String nodeId){
+		versions = new ArrayList<DPVersion>();	
+		init(userId, passWord, nodeId);
+	}
+	
+	private void init(String userId, String passWord, String nodeId) {
+		WSDLClient w = WSDLClient.getInstance();
+		
+		String method = "getNodeHistory";
+		String[] arg = new String[]{userId, passWord, nodeId};
+		w.getS(method, arg);
 	}
 	
 	private void init() {
@@ -52,7 +66,6 @@ public class VersionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public List<DPVersion> getVersions() {

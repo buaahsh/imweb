@@ -47,4 +47,16 @@
     <servlet-name>TreeNode</servlet-name>
     <url-pattern>/TreeNode</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <description></description>
+    <display-name>MainModelServlet</display-name>
+    <servlet-name>MainModelServlet</servlet-name>
+    <servlet-class>cn.edu.buaa.im.servlet.MainModelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MainModelServlet</servlet-name>
+    <url-pattern>/MainModelServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

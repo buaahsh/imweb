@@ -4,6 +4,8 @@ import javax.xml.namespace.QName;
 
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 
+import cn.edu.buaa.im.service.Utility;
+
 public class WSDLClient {
 
 	private static WSDLClient instance = new WSDLClient();
@@ -17,7 +19,7 @@ public class WSDLClient {
 
 	public void getS(String methodName, String[] args) {
 		try {
-			String url = "http://202.112.140.210/MainModel/services/IDataService?wsdl";
+			String url = Utility.getParameter("wsdl_url");
 
 			JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory
 					.newInstance();
