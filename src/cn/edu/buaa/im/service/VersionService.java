@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.DPVersion;
@@ -32,7 +38,30 @@ public class VersionService {
 		
 		String method = "getNodeHistory";
 		String[] arg = new String[]{userId, passWord, nodeId};
-		w.getS(method, arg);
+		String xml = w.getS(method, arg);
+		Element root = Utility.getElementFromXml(xml);
+		if (root == null)
+			return;
+		List<Element> elements = root.elements("history");
+		for (Element element : elements) {
+			DPVersion version = new DPVersion();
+			List<Attribute> list = element.attributes();
+			for (Attribute attribute : list) {
+				if (attribute.getName().equals("version"))
+				{
+					version.setId(attribute.getValue());
+					version.setName(attribute.getValue());
+				}
+				else if (attribute.getName().equals("versionRemark"))
+					version.setAbs(attribute.getValue());
+				else if (attribute.getName().equals("submitDate"))
+					version.setDate(attribute.getValue());
+				else if (attribute.getName().equals("submitUser"))
+					version.setPerson(attribute.getValue());
+			}
+			versions.add(version);
+		}
+        
 	}
 	
 	private void init() {

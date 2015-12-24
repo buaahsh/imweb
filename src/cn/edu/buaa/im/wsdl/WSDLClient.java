@@ -3,7 +3,6 @@ package cn.edu.buaa.im.wsdl;
 import javax.xml.namespace.QName;
 
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
-
 import cn.edu.buaa.im.service.Utility;
 
 public class WSDLClient {
@@ -17,7 +16,7 @@ public class WSDLClient {
 		return instance;
 	}
 
-	public void getS(String methodName, String[] args) {
+	public String getS(String methodName, String[] args) {
 		try {
 			String url = Utility.getParameter("wsdl_url");
 
@@ -29,11 +28,13 @@ public class WSDLClient {
 			QName opName = new QName("http://service.webservice.cssrc.com/", methodName); 
 			Object[] objects = client.invoke(opName, args);
 			// 输出调用结果
-			System.out.println(objects[0].toString());
+			Utility.Log(objects[0].toString());
+			return objects[0].toString();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	public static void main(String[] args) {
