@@ -12,7 +12,24 @@ $(function(){
 		$("#title_a").text(data.name);
 		sid = data.sid;
 		
-		CreateTree(sid);
+		
+		$.getJSON("/imweb/TreeNode?arg=all", function(data){
+			CreateTree(data.TreeNode);
+			
+			$.each(data.DataItem, function(idx, item){
+				$("#dataItems").append(DataItemProc(item));
+			});
+			
+			ImageSilde();
+			
+			PlotContainer();
+		});
+		
+		/*
+		// update the node tree
+		$.getJSON("/imweb/TreeNode?sid=" + sid, function(data){
+			CreateTree(data);
+		});
 		
 		// update the data items
 		$.getJSON("/imweb/DataItem?cid=" + cid + "&sid=" + sid, function(data){
@@ -24,6 +41,7 @@ $(function(){
 			
 			PlotContainer();
 		});
+		*/
 		
 		//update the versions
 		$.getJSON("/imweb/DataPacket?arg=version&cid=" + cid + "&sid=" + sid, function(data){
@@ -83,7 +101,6 @@ function GetXAxis(ContainerId)
 	});
 	return r;
 }
-    
 
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
