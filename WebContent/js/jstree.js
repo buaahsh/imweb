@@ -1,8 +1,12 @@
-function CreateView(){
-	$("#select_view").html(
-		"<option>视图</option>"
-		+ "<option>视图</option>");
+function CreateView(data){
+	var html = "<option value=-1>无视图</option>";
+	$.each(data.viewItems, function(idx, item){
+		html += "<option value=" + item.sid + ">" 
+		+ item.name + "</option>"
+	});
+	$("#select_view").html(html);
 }
+
 function CreateTree(data) {
 	$('#tree')
 		.jstree({
@@ -24,6 +28,5 @@ function CreateTree(data) {
             location.href= data.node.a_attr.href
 //				$("#page-content-wrapper").scrollTo(document.getElementById(data.node.a_attr.href), 800);
         });
-		CreateView();
 		//window.location.hash = "index_pos";
 }

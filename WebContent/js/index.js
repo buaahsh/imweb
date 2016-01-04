@@ -6,68 +6,57 @@
 $(function(){
 	
 	var cid = getUrlParam('cid');
-	var sid = "";
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
 	
-	$.getJSON("/imweb/DataPacket?arg=sid&cid=" + cid, function(data){
-		$("#title_a").text(data.name);
-		sid = data.sid;
+	$.getJSON("/imweb/TreeNode?arg=all&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd, function(data){
+		CreateTree(data.TreeNode);
 		
-		
-		$.getJSON("/imweb/TreeNode?arg=all", function(data){
-			CreateTree(data.TreeNode);
-			
-			$.each(data.DataItem, function(idx, item){
-				$("#dataItems").append(DataItemProc(item));
-			});
-			
-			ImageSilde();
-			
-			PlotContainer();
+		$.each(data.DataItem, function(idx, item){
+			$("#dataItems").append(DataItemProc(item));
 		});
 		
-		/*
-		// update the node tree
-		$.getJSON("/imweb/TreeNode?sid=" + sid, function(data){
-			CreateTree(data);
-		});
+		ImageSilde();
 		
-		// update the data items
-		$.getJSON("/imweb/DataItem?cid=" + cid + "&sid=" + sid, function(data){
-			$.each(data, function(idx, item){
-				$("#dataItems").append(DataItemProc(item));
-			});
-			
-			ImageSilde();
-			
-			PlotContainer();
+		PlotContainer();
+	});
+	
+	//update the views
+	$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid, function(data){
+		CreateView(data);
+	});
+	
+	//update the versions
+	$.getJSON("/imweb/MainModel?arg=version&id=" + id 
+			+ "&user=" + user + "&pwd=" + pwd , function(data){
+		$("#versions").empty();
+		$.each(data, function(idx, item){
+			var href = "/imweb/?cid=" + item.id;
+			var itemStr = "<tr>" 
+				+  "<th scope='row'><a target='_blank' href=\""+ href
+				+"\">"+ item.name +"</a></th>"
+				+ "<td>" + item.date + "</td>"
+				+ "<td>" + item.person + "</td>"
+				+ "<td>" + item.abs + "</td></tr>";
+			$("#versions").append(itemStr);
 		});
-		*/
-		
-		//update the versions
-		$.getJSON("/imweb/DataPacket?arg=version&cid=" + cid + "&sid=" + sid, function(data){
-			$("#versions").empty();
-			$.each(data, function(idx, item){
-				var href = "/imweb/?cid=" + item.id;
-				var itemStr = "<tr>" 
-					+  "<th scope='row'><a target='_blank' href=\""+ href
-					+"\">"+ item.name +"</a></th>"
-					+ "<td>" + item.date + "</td>"
-					+ "<td>" + item.person + "</td>"
-					+ "<td>" + item.abs + "</td></tr>";
-				$("#versions").append(itemStr);
-			});
-		});
-	});  	
+	});
 	
 	//update the abstraction
-	$.getJSON("/imweb/DataPacket?arg=abs&cid=" + cid, function(data){
+	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd, function(data){
 		var html = "<tr>";
 		$.each(data, function(idx, item){
 			if (idx > 0 && idx % 2 == 0){
 				html += "</tr><tr>";
 			}
 			html += "<th class=\"col-md-3\">"+item.name+":</th>"
-				+ "<td class=\"col-md-3\">"+item.value+"</td>";		
+				+ "<td class=\"col-md-3\">"+item.value+"</td>";	
+			if (item.name=="数据包名称")
+				$("#title_a").text(item.value);
 		});
 		html += "</tr>";
 		

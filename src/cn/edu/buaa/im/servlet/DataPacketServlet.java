@@ -12,6 +12,7 @@ import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.service.CaseService;
 import cn.edu.buaa.im.service.DataPacketService;
 import cn.edu.buaa.im.service.VersionService;
+import cn.edu.buaa.im.service.ViewService;
 import cn.edu.buaa.im.model.DPVersion;
 
 public class DataPacketServlet extends BaseServlet{
@@ -52,6 +53,12 @@ public class DataPacketServlet extends BaseServlet{
 			CaseService caseService = new CaseService(cid);
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(caseService));
+		}
+		else if (arg.equals("view")){
+			String cid = request.getParameter("cid");
+			ViewService viewService = new ViewService(cid);
+			Gson gson = new Gson();
+			responseString(response, gson.toJson(viewService));
 		}
 	}
 	

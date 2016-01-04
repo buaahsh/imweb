@@ -1,11 +1,14 @@
 package cn.edu.buaa.im.servlet;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 public class Util {
 	public static byte[] toByteArray(String filename) throws IOException {
@@ -38,19 +41,27 @@ public class Util {
 		}
 	}
 
-	public static String readToString(File file) {
-		Long filelength = file.length(); // 获取文件长度
-		byte[] filecontent = new byte[filelength.intValue()];
-		try {
-			FileInputStream in = new FileInputStream(file);
-			in.read(filecontent);
-			in.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new String(filecontent);// 返回文件内容,默认编码
-	}
+	public static String readToString(String fileName) {
+	        String encoding = "UTF-8";  
+	        File file = new File(fileName);  
+	        Long filelength = file.length();  
+	        byte[] filecontent = new byte[filelength.intValue()];  
+	        try {  
+	            FileInputStream in = new FileInputStream(file);  
+	            in.read(filecontent);  
+	            in.close();  
+	        } catch (FileNotFoundException e) {  
+	            e.printStackTrace();  
+	        } catch (IOException e) {  
+	            e.printStackTrace();  
+	        }  
+	        try {  
+	            return new String(filecontent, encoding);  
+	        } catch (UnsupportedEncodingException e) {  
+	            System.err.println("The OS does not support " + encoding);  
+	            e.printStackTrace();  
+	            return null;  
+	        }  
+	    }  
 
 }

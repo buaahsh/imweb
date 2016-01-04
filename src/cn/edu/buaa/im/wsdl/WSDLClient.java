@@ -18,9 +18,9 @@ public class WSDLClient {
 
 	public String getS(String methodName, String[] args) {
 		try {
-//			String url = Utility.getParameter("wsdl_url");
+			String url = Utility.getParameter("wsdl_url");
 
-			String url = "http://202.112.140.210/MainModel/services/IDataService?wsdls";
+//			String url = "http://202.112.140.210/MainModel/services/IDataService?wsdl";
 					
 			JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory
 					.newInstance();
@@ -47,8 +47,9 @@ public class WSDLClient {
 //		w.getS(method, arg);
 //		
 		String method = "getNodeDetail";
-		String[] arg = new String[]{"pdd", "123456", "1444", "75"};
+		String[] arg = new String[]{"pdd", "123456", "1445", "77"};
 		System.out.println(w.getS(method, arg));
+		
 	}
 
 }

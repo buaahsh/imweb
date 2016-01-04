@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import org.dom4j.Attribute;
+import org.dom4j.Element;
+
 import com.google.gson.Gson;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
+import cn.edu.buaa.im.model.DPVersion;
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.wsdl.WSDLClient;
 
 public class DataPacketService {
 	private String cid;
@@ -20,8 +25,11 @@ public class DataPacketService {
 	
 	public DataPacketService(String cid){
 		this.cid = cid;
-		
 		init();
+	}
+	
+	public DataPacketService(String id, String version, String user, String pwd){
+		init(id, version, user, pwd);
 	}
 	
 	private void init() {
@@ -75,6 +83,57 @@ public class DataPacketService {
 		}
 		
 	}
+	
+	private void init(String id, String version, String user, String pwd) {
+		WSDLClient w = WSDLClient.getInstance();
+		
+		String method = "getNodeDetail";
+		String[] arg = new String[]{user, pwd, id, version};
+		String xml = w.getS(method, arg);
+		Element root = Utility.getElementFromXml(xml);
+		if (root == null)
+			return;
+		List<Element> elements = root.elements("node");
+		for (Element element : elements) {	
+			List<Attribute> list = element.attributes();
+			for (Attribute attribute : list) {
+				DataPacketAbs item = new DataPacketAbs();
+				if (attribute.getName().equals("name"))
+				{
+					item.name = "数据包名称";
+					item.value = attribute.getValue();
+					dataPacket.add(item);
+				}
+				else if (attribute.getName().equals("version"))
+				{
+					item.name = "数据包版本";
+					item.value = attribute.getValue();
+					dataPacket.add(item);
+				}
+				
+			}
+			List<Element> subelements = element.elements("extra");
+			for (Element e : subelements) {	
+				list = e.attributes();
+				for (Attribute attribute : list) {
+					DataPacketAbs item = new DataPacketAbs();
+					if (attribute.getName().equals("techStatus"))
+					{
+						item.name = "技术状态";
+						item.value = attribute.getValue();
+						dataPacket.add(item);
+					}
+					else if (attribute.getName().equals("principal"))
+					{
+						item.name = "负责人";
+						item.value = attribute.getValue();
+						dataPacket.add(item);
+					}
+				}
+			}
+		}
+	}
+	
 	
 	public List<DataPacketAbs> getDataPacketAbs() {
 		return this.dataPacket;

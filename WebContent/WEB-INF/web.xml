@@ -50,13 +50,13 @@
   
     <servlet>
     <description></description>
-    <display-name>MainModelServlet</display-name>
-    <servlet-name>MainModelServlet</servlet-name>
+    <display-name>MainModel</display-name>
+    <servlet-name>MainModel</servlet-name>
     <servlet-class>cn.edu.buaa.im.servlet.MainModelServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>MainModelServlet</servlet-name>
-    <url-pattern>/MainModelServlet</url-pattern>
+    <servlet-name>MainModel</servlet-name>
+    <url-pattern>/MainModel</url-pattern>
   </servlet-mapping>
   
 </web-app>

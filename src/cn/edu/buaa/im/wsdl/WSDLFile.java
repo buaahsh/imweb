@@ -22,15 +22,7 @@ import cn.edu.buaa.im.servlet.Util;
 
 public class WSDLFile {
 	
-	public HashMap<String, Object> test() {
-//		String filePath = Utility.getParameter("sample");
-        
-		String filePath = "/Users/hsh/Desktop/json.txt";
-		
-		File file=new File(filePath); 
-		
-		String json = Util.readToString(file);
-		
+	public HashMap<String, Object> GetHashMap(String json) {		
 		Gson gson = new Gson();
 		DataPacketJson dataPacketJson = gson.fromJson(json, DataPacketJson.class);
 		
