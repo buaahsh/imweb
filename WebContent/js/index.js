@@ -34,7 +34,8 @@ $(function(){
 			+ "&user=" + user + "&pwd=" + pwd , function(data){
 		$("#versions").empty();
 		$.each(data, function(idx, item){
-			var href = "/imweb/?cid=" + item.id;
+			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + data.cid
+				+ "&user=" + user + "&pwd=" + pwd;
 			var itemStr = "<tr>" 
 				+  "<th scope='row'><a target='_blank' href=\""+ href
 				+"\">"+ item.name +"</a></th>"
