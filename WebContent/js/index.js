@@ -34,7 +34,7 @@ $(function(){
 			+ "&user=" + user + "&pwd=" + pwd , function(data){
 		$("#versions").empty();
 		$.each(data, function(idx, item){
-			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + data.cid
+			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + item.id
 				+ "&user=" + user + "&pwd=" + pwd;
 			var itemStr = "<tr>" 
 				+  "<th scope='row'><a target='_blank' href=\""+ href
@@ -62,7 +62,13 @@ $(function(){
 		html += "</tr>";
 		
 		$("#abs_table").html(html);
-	});  	
+	}); 
+	
+	//update the abstraction
+	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd, function(data){
+		CreateJsplumb(data);
+	});
 	
  });
 

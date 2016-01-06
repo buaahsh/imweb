@@ -1,4 +1,5 @@
-;(function() {
+function CreateJsplumb(data) {
+	AddHtml(data);
 	
 	jsPlumb.ready(function() {
 						
@@ -54,13 +55,7 @@
 			});
 			
 			// and finally, make a couple of connections
-			instance.connect({ source:"token1", target:"token3" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			instance.connect({ source:"token2", target:"token3" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			instance.connect({ source:"token3", target:"token4" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			instance.connect({ source:"token3", target:"token5" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			instance.connect({ source:"token3", target:"token6" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			instance.connect({ source:"token3", target:"token7" , connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
-			
+	        ConncetJs(data, instance);
 		});
 		
 		$.each($("div._jsPlumb_overlay"), function(idx, item){
@@ -70,6 +65,71 @@
 			$(item).hide();
 		});
 	});
+}
 
+function AddHtml(data){
+	var t1 = "<div class=\"w\" id=\"";
+	var t2 = "\"><table class=\"table\"><thead><tr><th colspan=\"2\">" +
+			"<a href=>";
+	var t3 = "</a></th></tr></thead></table><div class=\"ep\"></div></div>";
+	var html = "";
+	var id = 1;
+	var self = 0;
+	$.each(data.upper, function(idx, item){
+		html += t1 + "token" + id + t2 + item + t3;
+		id += 1;
+	});
+	html += t1 + "token" + id + t2 + data.self + t3;
+	self = id;
+	id += 1;
+	$.each(data.down, function(idx, item){
+		html += t1 + "token" + id + t2 + item + t3;
+		id += 1;
+	});
+	
+	$("#statemachine-demo").html(html);
+	
+	// css
+	id = 1;
+	var top = 5;
+	$.each(data.upper, function(idx, item){
+		$("#token" + id).css("left", "8em");
+		$("#token" + id).css("top",  top + "em");
+		id += 1;
+		top += 10;
+	});
+	top = 5;
+	$("#token" + id).css("left", "28em");
+	$("#token" + id).css("top",  top + "em");
+	id += 1;
+	$.each(data.down, function(idx, item){
+		$("#token" + id).css("left", "60em");
+		$("#token" + id).css("top",  top + "em");
+		id += 1;
+		top += 10;
+	});
+}
 
-})();
+function ConncetJs(data, instance){
+	var id = 1;
+	var self = 0;
+	$.each(data.upper, function(idx, item){
+		id += 1;
+	});
+	self = id;
+	
+	// css
+	id = 1;
+	var top = 5;
+	$.each(data.upper, function(idx, item){
+		instance.connect({ source:"token" + id, target:"token" + self , 
+			connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
+		id += 1;
+	});
+	id += 1;
+	$.each(data.down, function(idx, item){
+		instance.connect({ source:"token" + self , target:"token" + id, 
+			connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
+		id += 1;
+	});
+}

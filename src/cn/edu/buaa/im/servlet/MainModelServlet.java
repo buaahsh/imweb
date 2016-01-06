@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.buaa.im.model.DPVersion;
 import cn.edu.buaa.im.model.DataPacketAbs;
-import cn.edu.buaa.im.service.CaseService;
 import cn.edu.buaa.im.service.DataPacketService;
 import cn.edu.buaa.im.service.VersionService;
 import cn.edu.buaa.im.wsdl.WSDLClient;
@@ -46,6 +45,16 @@ public class MainModelServlet extends BaseServlet{
 			List<DPVersion> versions = version.getVersions();
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(versions));
+		}else if (arg.equals("relation")){
+			String nodeId = request.getParameter("id");
+			String version = request.getParameter("version");
+			String user = request.getParameter("user");
+			String pwd = request.getParameter("pwd");
+			
+			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd);
+			
+			Gson gson = new Gson();
+			responseString(response, gson.toJson(dataPacketService.getPedigree()));
 		}
 		else if (arg.equals("debug")){
 			String nodeId = request.getParameter("id");

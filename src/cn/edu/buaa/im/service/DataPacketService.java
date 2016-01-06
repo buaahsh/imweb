@@ -22,6 +22,7 @@ public class DataPacketService {
 	private String psid;
 	
 	List<DataPacketAbs> dataPacket = new ArrayList<DataPacketAbs>();
+	Pedigree pedigree = new Pedigree();
 	
 	public DataPacketService(String cid){
 		this.cid = cid;
@@ -103,6 +104,7 @@ public class DataPacketService {
 					item.name = "数据包名称";
 					item.value = attribute.getValue();
 					dataPacket.add(item);
+					this.pedigree.self = attribute.getValue();
 				}
 				else if (attribute.getName().equals("version"))
 				{
@@ -130,6 +132,35 @@ public class DataPacketService {
 						dataPacket.add(item);
 					}
 				}
+				
+				// 解析上下游
+				Element pedigreeelements = e.element("pedigree");
+				Element upper = pedigreeelements.element("upper");
+				List<String> upperList = new ArrayList<String>();
+				List<Element> dataPacks = upper.elements("dataPack");
+				for (Element element2 : dataPacks) {
+					list = element2.attributes();
+					for (Attribute attribute : list) {
+						if (attribute.getName().equals("name"))
+						{
+							upperList.add(attribute.getValue());
+						}
+					}
+				}
+				Element down = pedigreeelements.element("down");
+				List<String> downList = new ArrayList<String>();
+				dataPacks = down.elements("dataPack");
+				for (Element element2 : dataPacks) {
+					list = element2.attributes();
+					for (Attribute attribute : list) {
+						if (attribute.getName().equals("name"))
+						{
+							downList.add(attribute.getValue());
+						}
+					}
+				}
+				this.pedigree.upper = upperList;
+				this.pedigree.down = downList;
 			}
 		}
 	}
@@ -139,8 +170,18 @@ public class DataPacketService {
 		return this.dataPacket;
 	}
 	
+	public Pedigree getPedigree() {
+		return this.pedigree;
+	}
+	
 	private class DPRemark{
 		public String sid;
 		public String cid;
+	}
+	
+	public class Pedigree{
+		public List<String> upper;
+		public String self;
+		public List<String> down;
 	}
 }
