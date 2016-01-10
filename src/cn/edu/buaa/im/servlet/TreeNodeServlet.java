@@ -66,25 +66,17 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
 		}
-<<<<<<< Updated upstream
 		else if (arg.endsWith("view")) {
-=======
-		else if (arg.endsWith("mm")) {
->>>>>>> Stashed changes
 			String id_702 = request.getParameter("id");
 			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");
-<<<<<<< Updated upstream
 			String sid = request.getParameter("sid");
-=======
->>>>>>> Stashed changes
 			
 			WSDLHttpClient client = new WSDLHttpClient();
 			
 			client.login(username, password);
 			
-<<<<<<< Updated upstream
 			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
 			
 			TreeNodeService treeNodeService = new TreeNodeService(sid);
@@ -99,13 +91,20 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(result));
 		}
-
-=======
+		else if (arg.endsWith("mm")) {
+			String id_702 = request.getParameter("id");
+			String v_702 = request.getParameter("version");
+			String username = request.getParameter("user");
+			String password = request.getParameter("pwd");
+			
+			WSDLHttpClient client = new WSDLHttpClient();
+			
+			client.login(username, password);
+			
 			HashMap<String, Object> hashMap = client.getMMDataItems(id_702);
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
 		}
->>>>>>> Stashed changes
 	}
 }
