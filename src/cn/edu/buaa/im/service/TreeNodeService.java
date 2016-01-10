@@ -8,6 +8,7 @@ import java.util.Vector;
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.model.TreeNode.A_attr;
 
 /**
  * 通过一个sid，从数据库FieldsDefinition中找到相关的Fields，构建出整个树
@@ -81,10 +82,49 @@ public class TreeNodeService {
 			
 			if (hashMap.containsKey(pid) == false)
 				hashMap.put(pid, new ArrayList<TreeNode>());
+			
+			if (type.equals("26"))
+				Redirect(treeNode, unit);
 			hashMap.get(pid).add(treeNode);
 		}
 		
 		OrderTreeNodes(hashMap, roots);
+	}
+	
+	private void Redirect(TreeNode treeNode, String fid) {
+		String s = Utility.getSQLite();
+		SQLiteConn sqLiteConn = new SQLiteConn(s);
+		try {
+			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
+			String table = "FieldsDefinition";
+			String sql = String.format("select * from %s as A where A.[ID] = %s;", table,
+					fid);
+			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(sql);
+			
+			List<String> names = sqLiteCRUD.getFields(table);
+			
+			int fidIdx = getIdx(names, "ID");
+			int typeIdx = getIdx(names, "Type");
+			int remarkIdx = getIdx(names, "remark");
+			
+			for (Vector<Object> vector : vectors) {
+				String fidStr = "fid" + String.valueOf(vector.get(fidIdx));
+				String type = String.valueOf(vector.get(typeIdx));
+				String icon = GetIcon(type);
+				String unit = String.valueOf(vector.get(remarkIdx));
+				
+				treeNode.id = fidStr;
+				treeNode.type = type;
+				treeNode.unit = unit;
+				treeNode.icon = icon;
+				treeNode.a_attr = treeNode.new A_attr("#" + treeNode.id + "_target");
+			}
+			
+			sqLiteCRUD.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	private void OrderTreeNodes(HashMap<String, List<TreeNode>> hashMap, List<TreeNode> roots) {

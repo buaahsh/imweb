@@ -115,6 +115,9 @@ function DataItemProc(dataItem)
 	    	break;
 	    case "D3DataItem":
 	    	html += D3DataItemProc(dataItem.id, dataItem.data);
+	    	break;
+	    case "TableDataItem":
+	    	html += TableDataItemProc(dataItem.id, dataItem.data);
 	    	break;	
 	    default:
 	    	break;
@@ -260,4 +263,53 @@ function D3DataItemProc(id, data){
 		+" type=\"application/x-cortona\"   pluginspage=\"http://www.cortona3d.com/cortona\"   vrml_splashscreen=\"false\" "
 		+" vrml_dashboard=\"false\"   vrml_background_color=\"#f7f7f9\"   contextmenu=\"false\" ></div>"
   	return html;
+}
+
+function TableDataItemProc(id, data){
+	data = $.parseJSON(data.value)
+	var tableid = id + "_table";
+	var plotid = id + "_plot";
+	var thead = "<tr>";
+	$.each(data.header, function(idx, item){
+		thead += "<th><span>"+item
+		+"</span><label><input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
+		+"</th>";
+	});
+	thead += "</tr>";
+	
+	var tbody = "";
+	$.each(data.body, function(idx, item){
+		tbody += "<tr>";
+		$.each(item, function(i, tem){
+			tbody += "<td>"+tem+"</td>";
+		});
+		tbody += "</tr>";
+	});
+	
+	var html = 
+		"<ul class=\"nav nav-tabs\">"
+		+"   <li class=\"active\">"
+		+"      <a href=\"#"+tableid+"\" data-toggle=\"tab\">"
+		+"         数据"
+		+"      </a>"
+		+"   </li>"
+		+"   <li><a href=\"#"+plotid+"\" data-toggle=\"tab\">曲线</a></li>"
+		+"</ul>"
+		+"<div  class=\"tab-content\">"
+		+"   <div class=\"tab-pane fade in active\" id=\""+tableid+"\">"
+		+"      <table class=\"table table-bordered\"> " 
+		+"          <thead>"
+		+ thead
+		+"          </thead>"
+		+"          <tbody>"
+		+ tbody
+		+"          </tbody>"
+		+"        </table>"
+		+"   </div>"
+		+"   <div class=\"tab-pane fade\" id=\""+plotid+"\">"
+		+"        <div id=\""+plotid+"_container\" class='plot_container' style=\"min-width:1000px; height:400px\"></div>   "
+		+"   </div>"
+		+"</div>";
+	//min-width:700px;
+	return html;
 }

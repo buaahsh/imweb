@@ -1,11 +1,22 @@
 package cn.edu.buaa.im.wsdl;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import com.google.gson.Gson;
+
+import cn.edu.buaa.im.data.SQLiteCRUD;
+import cn.edu.buaa.im.data.SQLiteConn;
+import cn.edu.buaa.im.model.BaseData;
+import cn.edu.buaa.im.model.DataItem;
+import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
+import cn.edu.buaa.im.model.BaseData.TitleDataItem;
+import cn.edu.buaa.im.service.Utility;
 
 
 public class WSDLHttpClient {
@@ -59,6 +70,9 @@ public class WSDLHttpClient {
 	}
 	
 	private String[] getJsonId(String nodeId, int start, int limit) {
+		if (start > 1000)
+			return null;
+		
 		String urlstr = String.format("%s/node/loadNodeGrid.mm",
 				baseURL);
 		Map<String, String> params = new HashMap<String, String>();
@@ -75,10 +89,47 @@ public class WSDLHttpClient {
 				return new String[]{String.valueOf(node.id), 
 						String.valueOf(node.version)};
 		}
+		if (wNodes.totalProperty == 0)
+			return null;
 		if (wNodes.totalProperty < limit)
 			return getJsonId(nodeId, start + limit, limit);
 		
 		return null;
+	}
+	
+	public List<DataItem> buildDataItems(List<TreeNode> treeNodes, List<DataItem> oldDataItems) {
+		List<DataItem> dataItems = new ArrayList<>();
+		try {
+			for (TreeNode treeNode : treeNodes) {
+				String fid = treeNode.id;
+				
+				DataItem dataitem = null;
+				BaseData baseData = null;
+				if (treeNode.parent.equals("#")){	
+					baseData = BaseData.getInstanceBaseData().new TitleDataItem();
+					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+					dataItems.add(dataitem);
+					continue;
+				}
+				else if (treeNode.type.equals("16")){
+					baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
+					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+					dataItems.add(dataitem);
+					continue;
+				}
+				
+				for (DataItem dataItem : oldDataItems) {
+					if (dataItem.id.split("_")[0].equals(fid))
+					{
+						dataItems.add(dataItem);
+						break;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dataItems;
 	}
 	
 	public class WSDLNodes{

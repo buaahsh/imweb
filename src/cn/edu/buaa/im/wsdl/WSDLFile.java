@@ -15,6 +15,7 @@ import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
 import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
+import cn.edu.buaa.im.model.BaseData.TableDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.BaseData.TitleDataItem;
 import cn.edu.buaa.im.service.Utility;
@@ -128,6 +129,11 @@ public class WSDLFile {
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+		}
+		else if (treeNode.type.equals("27")){ //二维表
+			TableDataItem tableItem = BaseData.getInstanceBaseData().new TableDataItem();
+			tableItem.value = value;
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, tableItem);
 		}
 		else{
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();

@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 
 import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.DataItem;
+import cn.edu.buaa.im.model.DataItemJson;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.TreeNode.A_attr;
 import cn.edu.buaa.im.service.DataItemService;
@@ -64,6 +65,31 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
+		}
+		else if (arg.endsWith("view")) {
+			String id_702 = request.getParameter("id");
+			String v_702 = request.getParameter("version");
+			String username = request.getParameter("user");
+			String password = request.getParameter("pwd");
+			String sid = request.getParameter("sid");
+			
+			WSDLHttpClient client = new WSDLHttpClient();
+			
+			client.login(username, password);
+			
+			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
+			
+			TreeNodeService treeNodeService = new TreeNodeService(sid);
+			treeNodes = treeNodeService.geTreeNodes();
+
+			List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));
+			
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("TreeNode", treeNodes);
+			result.put("DataItem", dataItems);
+			
+			Gson gson = new Gson();
+			responseString(response, gson.toJson(result));
 		}
 
 	}

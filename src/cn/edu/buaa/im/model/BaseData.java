@@ -53,6 +53,10 @@ public class BaseData {
 	public class D3DataItem extends BaseData{
 		public String link;
 	}
+	
+	public class TableDataItem extends BaseData{
+		public String value;
+	}
 }
 
 
