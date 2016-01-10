@@ -42,7 +42,7 @@ public class Util {
 	}
 
 	public static String readToString(String fileName) {
-	        String encoding = "UTF-8";  
+	        String encoding = "GBK";  
 	        File file = new File(fileName);  
 	        Long filelength = file.length();  
 	        byte[] filecontent = new byte[filelength.intValue()];  
@@ -62,6 +62,15 @@ public class Util {
 	            e.printStackTrace();  
 	            return null;  
 	        }  
-	    }  
+	    }
 
+	public static String recover(String str) {        
+		try {
+			return new String(str.getBytes("GBK"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    
+		return "";
+	}
 }

@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import cn.edu.buaa.im.model.DataItem;
+import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.servlet.Util;
+
 import com.google.gson.Gson;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
@@ -28,6 +32,42 @@ public class WSDLHttpClient {
 		baseURL = "http://202.112.140.210/MainModel";
 		
 		client = new HttpClientUtils();
+	}
+	
+	public HashMap<String, Object> getMMDataItems(String nodeId){
+		
+		int start = 0;
+		int limit = 25;
+		String resultString = getJsonStr(nodeId, start, limit);
+		Gson gson = new Gson();
+		List<TreeNode> treeNodes = new ArrayList<TreeNode>();
+		List<DataItem> dataItems = new ArrayList<DataItem>();
+		WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
+		for (WSDLNode wsdlnode : wNodes.results) {
+			getOneNode(treeNodes, dataItems, "#", wsdlnode);
+		}
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("TreeNode", treeNodes);
+		result.put("DataItem", dataItems);
+		
+		return result;
+	}
+	
+	private void getOneNode(List<TreeNode> treeNodes, 
+			List<DataItem> dataItems, String pid, WSDLNode wsdlnode) {
+		// 如果为数据包
+		if (wsdlnode.dataPack != null && wsdlnode.dataPack.isEmpty() == false)
+		{
+			HashMap<String, Object> result =  getDataItems(String.valueOf(wsdlnode.id), 
+					String.valueOf(wsdlnode.version));
+			treeNodes.add((TreeNode) result.get("TreeNode"));
+			dataItems.add((DataItem) result.get("DataItem"));
+		}
+		else{ //如果不是数据包
+			for (WSDLNode node : wsdlnode.children) {
+				getOneNode(treeNodes, dataItems, "#", node);
+			}
+		}
 	}
 	
 	public HashMap<String, Object> getDataItems(String nodeId, String version){
@@ -61,12 +101,26 @@ public class WSDLHttpClient {
 				baseURL, nodeId, version);
 		byte[] bytes = client.getDoGetURL(urlstr);
 		try {
-			return new String(bytes,"UTF-8");
+			String s = new String(bytes,"GBK");  
+			
+			return s;
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	private String getJsonStr(String nodeId, int start, int limit) {
+		String urlstr = String.format("%s/node/loadNodeGrid.mm",
+				baseURL);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("start", String.valueOf(start));
+		params.put("limit", String.valueOf(limit));
+		params.put("pid", String.valueOf(nodeId));
+
+		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
+				"utf-8", false);
+		return resultString;
 	}
 	
 	private String[] getJsonId(String nodeId, int start, int limit) {
@@ -141,6 +195,8 @@ public class WSDLHttpClient {
 		public int id;
 		public String text;
 		public int version;
+		public List<WSDLNode> children;
+		public String dataPack;
 	}
 	
 	

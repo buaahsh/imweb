@@ -6,14 +6,14 @@ public class DataPacketJson {
 	public String name;
 	public int type;
 	public int pid;
-	public int sid;
+	public String sid;
 	public int order;
 	public int level;
 	public int childcount;
 	public String remark;
 	public int closed;
-	public long created_datetime;
-	public long update_datetime;
+	public String created_datetime;
+	public String update_datetime;
 	public List<DataItemJson> data;
 
 }

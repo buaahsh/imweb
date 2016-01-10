@@ -60,8 +60,10 @@ public class WSDLFile {
 		
 		dataItems.add(dataItem);
 		
-		for (DataItemJson dataItemJson2 : dataItemJson.data) {
-			GenDataItem(treeNodes, dataItems, dataItemJson2, fid);
+		if (dataItemJson.data != null){
+			for (DataItemJson dataItemJson2 : dataItemJson.data) {
+				GenDataItem(treeNodes, dataItems, dataItemJson2, fid);
+			}
 		}
 	}
 
@@ -147,6 +149,9 @@ public class WSDLFile {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 //		test();
+		String s = Util.readToString("/Users/hsh/Desktop/json.txt");
+		WSDLFile wsdlFile = new WSDLFile();
+		wsdlFile.GetHashMap(s);
 	}
 
 }

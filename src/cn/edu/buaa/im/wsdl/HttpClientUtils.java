@@ -150,8 +150,7 @@ public class HttpClientUtils extends HttpClient {
 				return null;
 			}
 			// 返回响应消息
-			byte[] responseBody = method.getResponseBodyAsString().getBytes(
-					method.getResponseCharSet());
+			byte[] responseBody = method.getResponseBody();
 			// 在返回响应消息使用编码(utf-8或gb2312)
 			return responseBody;
 		} catch (IOException e) {
