@@ -56,6 +56,7 @@ public class DataPacketServlet extends BaseServlet{
 		}
 		else if (arg.equals("view")){
 			String cid = request.getParameter("cid");
+			cid = Util.byte2str(cid);
 			ViewService viewService = new ViewService(cid);
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(viewService));

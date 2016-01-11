@@ -48,7 +48,7 @@ public class WSDLFile {
 		String fid = "fid" + String.valueOf(dataItemJson.fid);
 		String type = String.valueOf(dataItemJson.type);
 		String icon = GetIcon(type);
-		String unit = dataItemJson.Remark;
+		String unit = dataItemJson.remark;
 		
 		TreeNode treeNode = new TreeNode(fid, pid, name, icon);
 		treeNode.type = type;
@@ -68,7 +68,8 @@ public class WSDLFile {
 	}
 
 	private String GetIcon(String type) {
-		if (type.equals("16"))
+		// 对应小白的type进行调整
+		if (type.equals("4"))
 			return "folder";
 		return "file";
 	}
@@ -80,17 +81,17 @@ public class WSDLFile {
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}
-		else if (treeNode.type.equals("16")){
+		else if (treeNode.type.equals("4")){ //分类
 			baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
 		}
-		else if (treeNode.type.equals("17")){
+		else if (treeNode.type.equals("8")){ //浮点数
 			FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 			floatDataItem.unit = treeNode.unit;
 			floatDataItem.value = value;
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
 		}
-		else if (treeNode.type.equals("18")){
+		else if (treeNode.type.equals("19")){ //文本 
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
@@ -132,9 +133,12 @@ public class WSDLFile {
 			textDataItem.text.add(value);
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
 		}
-		else if (treeNode.type.equals("27")){ //二维表
+		else if (treeNode.type.equals("10")){ //二维表
 			TableDataItem tableItem = BaseData.getInstanceBaseData().new TableDataItem();
+			// 根据小白的设计，value可能为空，表头放在remark里面
 			tableItem.value = value;
+			if (value == null || value.isEmpty())
+				tableItem.value = treeNode.unit;
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, tableItem);
 		}
 		else{

@@ -73,6 +73,8 @@ public class TreeNodeServlet extends BaseServlet{
 			String password = request.getParameter("pwd");
 			String sid = request.getParameter("sid");
 			
+			sid = Util.byte2str(sid);
+			
 			WSDLHttpClient client = new WSDLHttpClient();
 			
 			client.login(username, password);

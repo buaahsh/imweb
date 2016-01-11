@@ -1,6 +1,9 @@
 $("#select_view").change(function(){
 	var sid = $('#select_view').val();
 	
+	
+	
+	
 	var cid = getUrlParam('cid');
 	var id = getUrlParam('id');
 	var version = getUrlParam('version');
@@ -26,6 +29,7 @@ $("#select_view").change(function(){
 		});
 	}
 	else{
+		sid = stringToBytes(sid);
 		$.getJSON("/imweb/TreeNode?arg=view&id=" + id + "&version=" + version
 				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid, function(data){
 			CreateTree(data.TreeNode);

@@ -29,7 +29,7 @@ public class WSDLHttpClient {
 	private HttpClientUtils client;
 	
 	public WSDLHttpClient(){
-		baseURL = "http://202.112.140.210/MainModel";
+		baseURL = Utility.getParameter("httpclienturl");;
 		
 		client = new HttpClientUtils();
 	}
@@ -56,12 +56,12 @@ public class WSDLHttpClient {
 	private void getOneNode(List<TreeNode> treeNodes, 
 			List<DataItem> dataItems, String pid, WSDLNode wsdlnode) {
 		// 如果为数据包
-		if (wsdlnode.dataPack != null && wsdlnode.dataPack.isEmpty() == false)
+		if (wsdlnode.dataPack != null)
 		{
 			HashMap<String, Object> result =  getDataItems(String.valueOf(wsdlnode.id), 
 					String.valueOf(wsdlnode.version));
-			treeNodes.add((TreeNode) result.get("TreeNode"));
-			dataItems.add((DataItem) result.get("DataItem"));
+			treeNodes.addAll((List<TreeNode>) result.get("TreeNode"));
+			dataItems.addAll((List<DataItem>) result.get("DataItem"));
 		}
 		else{ //如果不是数据包
 			for (WSDLNode node : wsdlnode.children) {
@@ -72,11 +72,12 @@ public class WSDLHttpClient {
 	
 	public HashMap<String, Object> getDataItems(String nodeId, String version){
 		int start = 0;
-		int limit = 25;
-		String[] results = getJsonId(nodeId, start, limit);
+		int limit = 50;
+		String[] results = getJsonId(nodeId, start, limit, Integer.parseInt(version));
 		String json = "";
-		if (results != null)
-			json = download(results[0], results[1]);
+		if (results == null)
+			return null;
+		json = download(results[0], results[1]);
 		WSDLFile wsdlFile = new WSDLFile();
 		HashMap<String, Object> result = wsdlFile.GetHashMap(json);
 		return result;
@@ -123,32 +124,49 @@ public class WSDLHttpClient {
 		return resultString;
 	}
 	
-	private String[] getJsonId(String nodeId, int start, int limit) {
-		if (start > 1000)
-			return null;
-		
-		String urlstr = String.format("%s/node/loadNodeGrid.mm",
-				baseURL);
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("start", String.valueOf(start));
-		params.put("limit", String.valueOf(limit));
-		params.put("pid", String.valueOf(nodeId));
+	private String[] getJsonId(String nodeId, int start, int limit, int version) {
+		int n = 0;
+		int tempid = -1;
+		int tempversion = -1;
+				
+		while (true) {
+			n += 1;
+			if (n >= 100)
+				break;
+			
+			String urlstr = String.format("%s/node/loadNodeGrid.mm",
+					baseURL);
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("start", String.valueOf(start));
+			params.put("limit", String.valueOf(limit));
+			params.put("pid", String.valueOf(nodeId));
 
-		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
-				"utf-8", false);
-		Gson gson = new Gson();
-		WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
-		for (WSDLNode node : wNodes.results) {
-			if (node.text.equals("json.txt"))
-				return new String[]{String.valueOf(node.id), 
-						String.valueOf(node.version)};
+			String resultString = client.getDoPostResponseDataByURL(urlstr, params,
+					"utf-8", false);
+			Gson gson = new Gson();
+			WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
+			for (WSDLNode node : wNodes.results) {
+				if (node.text.equals("json.txt"))
+				{
+					if (tempversion == -1 && node.version >= version)
+					{
+						tempversion = node.version;
+						tempid = node.id;
+					}
+					else if (node.version >= version && node.version < tempversion) {
+						tempversion = node.version;
+						tempid = node.id;
+					}
+				}
+			}
+			if (wNodes.totalProperty == 0)
+				break;
+			if (wNodes.totalProperty < limit)
+				break;
+			start = start + limit;
 		}
-		if (wNodes.totalProperty == 0)
-			return null;
-		if (wNodes.totalProperty < limit)
-			return getJsonId(nodeId, start + limit, limit);
-		
-		return null;
+		return new String[]{String.valueOf(tempid), 
+				String.valueOf(tempversion)};
 	}
 	
 	public List<DataItem> buildDataItems(List<TreeNode> treeNodes, List<DataItem> oldDataItems) {
@@ -196,9 +214,13 @@ public class WSDLHttpClient {
 		public String text;
 		public int version;
 		public List<WSDLNode> children;
-		public String dataPack;
+		public WSDLDataPack dataPack;
 	}
 	
+	public class WSDLDataPack{
+		public int id;
+		public String name;
+	}
 	
 	public static void main(String[] args) {
 		WSDLHttpClient w = new WSDLHttpClient();

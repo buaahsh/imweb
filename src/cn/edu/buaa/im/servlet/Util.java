@@ -73,4 +73,31 @@ public class Util {
 		}    
 		return "";
 	}
+	
+	public static String byte2str(String hexStr) {
+		// String hexStr = "e68891e698afe6b58be8af95313233e696b0e5b9b4e5a5bd";
+		if (hexStr == null)
+			return "";
+		int length = hexStr.length();
+		if (length % 2 != 0) {
+			System.out.println("hex error,长度必须是偶数");
+		}
+		byte[] bytes = new byte[length / 2];
+		for (int i = 0, j = 0; i < length; i += 2, j++) {
+			String elementHex = String.format("%c%c", hexStr.charAt(i),
+					hexStr.charAt(i + 1));
+			int value = Integer.parseInt(elementHex, 16);
+			System.out.println(elementHex + ":" + value);
+			bytes[j] = (byte) (value & 0xFF);
+		}
+		try {
+			String str = new String(bytes, "utf-8");
+			System.out.println(str);
+			return str;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
 }

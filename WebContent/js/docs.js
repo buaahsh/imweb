@@ -48,8 +48,11 @@ function GetPlotData(ContainerId, xaxis){
 		var tds = $(item).children("td");
 		num = tds.length;
 		$.each(tds, function(i, tem){
-			if (i == xaxis){
-				x_group.push(parseFloat($(tem).text()));
+			if ($(tem).text() != "")
+			{
+				if (i == xaxis){
+					x_group.push(parseFloat($(tem).text()));
+				}
 			}
 		});
 	});
@@ -63,8 +66,11 @@ function GetPlotData(ContainerId, xaxis){
 			var tds = $(item).children("td");
 			num = tds.length;
 			$.each(tds, function(i, tem){
-				if (i == j){
-					subdata.push([x_group[idx], parseFloat($(tem).text())]);
+				if ($(tem).text() != "")
+				{
+					if (i == j){
+						subdata.push([x_group[idx], parseFloat($(tem).text())]);
+					}
 				}
 			});
 		});

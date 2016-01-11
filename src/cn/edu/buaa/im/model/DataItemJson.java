@@ -7,7 +7,7 @@ public class DataItemJson {
 	public int type;
 	public String name;
 	public String value;
-	public String Remark;
+	public String remark;
 	public String Attachment;
     public List<DataItemJson> data;
 }

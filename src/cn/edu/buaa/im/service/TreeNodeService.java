@@ -32,7 +32,7 @@ public class TreeNodeService {
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
 			String table = "FieldsDefinition";
-			String sql = String.format("select * from %s as A where A.[Sid] = %s ORDER BY A.[Level], A.[Order];", table,
+			String sql = String.format("select * from %s as A where A.[Sid] = '%s' ORDER BY A.[Level], A.[Order];", table,
 					this.sid);
 			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(sql);
 			

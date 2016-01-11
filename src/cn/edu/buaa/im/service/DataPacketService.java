@@ -1,6 +1,7 @@
 package cn.edu.buaa.im.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -171,6 +172,31 @@ public class DataPacketService {
 	}
 	
 	public Pedigree getPedigree() {
+		//去重
+		
+		List<String> temp = new ArrayList<>();
+		Iterator<String> sIterator = this.pedigree.down.iterator();
+		while (sIterator.hasNext()) {
+			String string = (String) sIterator.next();
+			if (temp.contains(string))
+			{
+				sIterator.remove();
+			}
+			else {
+				temp.add(string);
+			}
+		}
+		sIterator = this.pedigree.upper.iterator();
+		while (sIterator.hasNext()) {
+			String string = (String) sIterator.next();
+			if (temp.contains(string))
+			{
+				sIterator.remove();
+			}
+			else {
+				temp.add(string);
+			}
+		}
 		return this.pedigree;
 	}
 	
