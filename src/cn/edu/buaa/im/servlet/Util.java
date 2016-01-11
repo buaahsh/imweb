@@ -87,12 +87,12 @@ public class Util {
 			String elementHex = String.format("%c%c", hexStr.charAt(i),
 					hexStr.charAt(i + 1));
 			int value = Integer.parseInt(elementHex, 16);
-			System.out.println(elementHex + ":" + value);
+//			System.out.println(elementHex + ":" + value);
 			bytes[j] = (byte) (value & 0xFF);
 		}
 		try {
 			String str = new String(bytes, "utf-8");
-			System.out.println(str);
+//			System.out.println(str);
 			return str;
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block

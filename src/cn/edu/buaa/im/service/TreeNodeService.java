@@ -27,7 +27,8 @@ public class TreeNodeService {
 	}
 	
 	private void init() {
-		String s = Utility.getSQLite();
+		// TODO: 下载db
+		String s = Utility.getSQLite(null);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
@@ -92,7 +93,7 @@ public class TreeNodeService {
 	}
 	
 	private void Redirect(TreeNode treeNode, String fid) {
-		String s = Utility.getSQLite();
+		String s = Utility.getSQLite(null);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());

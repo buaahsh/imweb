@@ -1,5 +1,8 @@
 package cn.edu.buaa.im.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -12,10 +15,30 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import cn.edu.buaa.im.wsdl.HttpClientUtils;
+
 public class Utility {
 
-	public static String getSQLite() {
-		return getParameter("sqlile_url");
+	public static String getSQLite(String sid) {
+		//Get SQLite, 对db文件进行下载
+		String url = "";
+		HttpClientUtils client = new HttpClientUtils();
+		byte[] bs = client.getDoGetURL(url);
+
+		String filePath = sid + ".db";
+		
+		File file = new File(sid + ".db");
+
+		FileOutputStream fos;
+		try {
+			fos = new FileOutputStream(file);
+			fos.write(bs);
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return filePath;
 	}
 	
 	/**

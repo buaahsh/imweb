@@ -17,7 +17,7 @@ public class CaseService {
 	}
 	
 	private void init() {
-		String s = Utility.getSQLite();
+		String s = Utility.getSQLite(null);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());

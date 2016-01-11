@@ -60,7 +60,7 @@ public class DataItemService {
 	}
 	
 	private void buildDataItems(List<TreeNode> treeNodes) {
-		String s = Utility.getSQLite();
+		String s = Utility.getSQLite(null);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
@@ -176,7 +176,7 @@ public class DataItemService {
 	}
 	
 	private String getAbsPath(String path){
-		String db = Utility.getSQLite();
+		String db = Utility.getSQLite(null);
 		File dbFile = new File(db);
 		File parent = new File(dbFile.getParent());
 		File p = new File(parent, path);

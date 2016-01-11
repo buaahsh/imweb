@@ -222,17 +222,17 @@ public class WSDLHttpClient {
 		public String name;
 	}
 	
-	public static void main(String[] args) {
-		WSDLHttpClient w = new WSDLHttpClient();
+	public static void main(String[] args) throws UnsupportedEncodingException {
+//		WSDLHttpClient w = new WSDLHttpClient();
 		
 //		String method = "getNodeHistory";
-//		String[] arg = new String[]{"pdd", "123456", "1444"};
-//		w.getS(method, arg);
+////		String[] arg = new String[]{"pdd", "123456", "1444"};
+////		w.getS(method, arg);
+////		
+//		w.login("pdd", "123456");
 //		
-		w.login("pdd", "123456");
-		
-//		w.download("1502", "76");
-		w.getDataItems("1445", "75");
+////		w.download("1502", "76");
+//		w.getDataItems("1445", "75");
 	}
 	
 }
