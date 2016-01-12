@@ -5,7 +5,7 @@ $("#select_view").change(function(){
 	var version = getUrlParam('version');
 	var user = getUrlParam('user');
 	var pwd = getUrlParam('pwd');
-	var sid = getUrlParam('sid');
+	var sid_702 = getUrlParam('sid');
 	
 	$("#tree").remove();
 	$("#dataItems").empty();
