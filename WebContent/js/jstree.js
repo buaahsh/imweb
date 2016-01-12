@@ -1,10 +1,12 @@
 function CreateView(data){
 	var html = "<option value=-1>无视图</option>";
+	$("#select_view").append(html);
+	html = "";
 	$.each(data.viewItems, function(idx, item){
 		html += "<option value=" + item.sid + ">" 
 		+ item.name + "</option>"
 	});
-	$("#select_view").html(html);
+	$("#select_view").append(html);
 }
 
 function CreateTree(data) {

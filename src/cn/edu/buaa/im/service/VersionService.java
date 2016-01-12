@@ -34,7 +34,7 @@ public class VersionService {
 	}
 	
 	private void init(String userId, String passWord, String nodeId) {
-		WSDLClient w = WSDLClient.getInstance();
+		WSDLClient w = new WSDLClient();
 		
 		String method = "getNodeHistory";
 		String[] arg = new String[]{userId, passWord, nodeId};

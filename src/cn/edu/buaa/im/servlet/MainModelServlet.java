@@ -59,15 +59,7 @@ public class MainModelServlet extends BaseServlet{
 			responseString(response, gson.toJson(dataPacketService.getPedigree()));
 		}
 		else if (arg.equals("debug")){
-			String nodeId = request.getParameter("id");
-			String user = request.getParameter("user");
-			String pwd = request.getParameter("pwd");
-			WSDLClient w = WSDLClient.getInstance();
-			
-			String method = "getNodeHistory";
-			String[] args = new String[]{user, pwd, nodeId};
-			String xml = w.getS(method, args);
-			responseString(response, xml);
+
 		}
 	}
 }

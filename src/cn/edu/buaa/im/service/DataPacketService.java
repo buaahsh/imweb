@@ -87,7 +87,7 @@ public class DataPacketService {
 	}
 	
 	private void init(String id, String version, String user, String pwd, String uid) {
-		WSDLClient w = WSDLClient.getInstance();
+		WSDLClient w = new WSDLClient();
 		
 		String method = "getNodeDetail";
 		String[] arg = new String[]{uid, pwd, id, version};

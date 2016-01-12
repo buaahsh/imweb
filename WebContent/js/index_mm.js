@@ -11,6 +11,8 @@ $(function(){
 	var version = getUrlParam('version');
 	var user = getUrlParam('user');
 	var pwd = getUrlParam('pwd');
+	var cid = getUrlParam('cid');
+	var uid = getUrlParam('uid');
 	
 	$.getJSON("/imweb/TreeNode?arg=mm&id=" + id + "&version=" + version
 			+ "&user=" + user + "&pwd=" + pwd, function(data){
@@ -49,7 +51,7 @@ $(function(){
 	
 	//update the abstraction
 	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd, function(data){
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
 		var html = "<tr>";
 		$.each(data, function(idx, item){
 			if (idx > 0 && idx % 2 == 0){

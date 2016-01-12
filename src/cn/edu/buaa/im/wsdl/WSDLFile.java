@@ -74,7 +74,7 @@ public class WSDLFile {
 		return "file";
 	}
 	
-	private DataItem Convert2DataItem(TreeNode treeNode, String value) {
+	public DataItem Convert2DataItem(TreeNode treeNode, String value) {
 		DataItem dataitem = null;
 		BaseData baseData = null;
 		if (treeNode.parent.equals("#")){	

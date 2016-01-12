@@ -28,7 +28,7 @@ $("#select_view").change(function(){
 	else{
 		sid = stringToBytes(sid);
 		$.getJSON("/imweb/TreeNode?arg=view&id=" + id + "&version=" + version
-				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&sid_702" + sid_702, function(data){
+				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&sid_702=" + sid_702, function(data){
 			CreateTree(data.TreeNode);
 			
 			$.each(data.DataItem, function(idx, item){

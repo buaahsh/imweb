@@ -60,12 +60,52 @@ public class WSDLHttpClient {
 		{
 			HashMap<String, Object> result =  getDataItems(String.valueOf(wsdlnode.id), 
 					String.valueOf(wsdlnode.version));
-			treeNodes.addAll((List<TreeNode>) result.get("TreeNode"));
-			dataItems.addAll((List<DataItem>) result.get("DataItem"));
+			if (result != null){
+				List<TreeNode> treeNodes2 =(List<TreeNode>) result.get("TreeNode");
+				for (TreeNode tr : treeNodes2) {
+					if (tr.parent.equals("#"))
+						tr.parent = pid;
+				}
+				treeNodes.addAll(treeNodes2);
+				dataItems.addAll((List<DataItem>) result.get("DataItem"));
+			}
 		}
 		else{ //如果不是数据包
+			String name = wsdlnode.text;
+			String fid = "fid" + String.valueOf(wsdlnode.id);
+			String type = "";
+			String icon = "folder";
+			String unit = "";
+			
+			TreeNode treeNode = new TreeNode(fid, pid, name, icon);
+			treeNode.type = type;
+			treeNode.unit = unit;
+			DataItem dataitem = null;
+			BaseData baseData = null;
+			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			
+			treeNodes.add(treeNode);
+			dataItems.add(dataitem);
 			for (WSDLNode node : wsdlnode.children) {
-				getOneNode(treeNodes, dataItems, "#", node);
+				name = node.text;
+				fid = "fid" + String.valueOf(node.id);
+				type = "";
+				icon = "folder";
+				unit = "";
+				
+				treeNode = new TreeNode(fid, "fid" + String.valueOf(wsdlnode.id), name, icon);
+				treeNode.type = type;
+				treeNode.unit = unit;
+				dataitem = null;
+				baseData = null;
+				baseData = BaseData.getInstanceBaseData().new TitleDataItem();
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+				
+				treeNodes.add(treeNode);
+				dataItems.add(dataitem);
+				
+				getOneNode(treeNodes, dataItems, fid, node);
 			}
 		}
 	}
@@ -78,6 +118,8 @@ public class WSDLHttpClient {
 		if (results == null)
 			return null;
 		json = download(results[0], results[1]);
+		if (json == null)
+			return null;
 		WSDLFile wsdlFile = new WSDLFile();
 		HashMap<String, Object> result = wsdlFile.GetHashMap(json);
 		return result;
@@ -101,6 +143,8 @@ public class WSDLHttpClient {
 		String urlstr = String.format("%s/file/download.mm?nodeId=%s&version=%s", 
 				baseURL, nodeId, version);
 		byte[] bytes = client.getDoGetURL(urlstr);
+		if (bytes == null)
+			return null;
 		try {
 			String s = new String(bytes,"GBK");  
 			
