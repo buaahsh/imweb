@@ -23,12 +23,18 @@ public class TreeNodeService {
 	public TreeNodeService(String sid){
 		this.sid = sid;
 		treeNodes = new ArrayList<>();
-		init();
+		init(null);
 	}
 	
-	private void init() {
+	public TreeNodeService(String sid, String sid_702){
+		this.sid = sid;
+		treeNodes = new ArrayList<>();
+		init(sid_702);
+	}
+	
+	private void init(String sid_702) {
 		// TODO: 下载db
-		String s = Utility.getSQLite(null);
+		String s = Utility.getSQLite(sid_702);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());

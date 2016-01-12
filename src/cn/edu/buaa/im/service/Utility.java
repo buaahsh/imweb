@@ -1,9 +1,9 @@
 package cn.edu.buaa.im.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -13,21 +13,37 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import cn.edu.buaa.im.wsdl.HttpClientUtils;
 
 public class Utility {
 
 	public static String getSQLite(String sid) {
-		//Get SQLite, 对db文件进行下载
-		String url = "";
-		HttpClientUtils client = new HttpClientUtils();
-		byte[] bs = client.getDoGetURL(url);
-
+		
+		if (sid == null)
+			return getParameter("sqlile_url");
+		
 		String filePath = sid + ".db";
 		
-		File file = new File(sid + ".db");
+		String ROOTString = null;
+		try {
+			ROOTString = Utility.class.getClassLoader().getResource("")
+					.toURI().getPath();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		filePath = ROOTString + "userPrivacy.txt";
+		
+		File file = new File(filePath);
+		
+		if (file.isFile())
+			return filePath;
+	
+		//Get SQLite, 对db文件进行下载
+		String url = getParameter("db_url");
+		
+		HttpClientUtils client = new HttpClientUtils();
+		byte[] bs = client.getDoGetURL(url + sid);
 
 		FileOutputStream fos;
 		try {

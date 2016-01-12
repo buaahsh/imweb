@@ -11,14 +11,14 @@ public class ViewService {
 	public String cid;
 	public List<ViewItem> viewItems;
 	
-	public ViewService(String cid) {
+	public ViewService(String cid, String sid_702) {
 		this.cid = cid;
 		this.viewItems = new ArrayList<>();
-		init();
+		init(sid_702);
 	}
 	
-	private void init() {
-		String s = Utility.getSQLite(null);
+	private void init(String sid_702) {
+		String s = Utility.getSQLite(sid_702);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 //			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());

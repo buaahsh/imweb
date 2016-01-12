@@ -14,6 +14,9 @@ $(function(){
 	var user = getUrlParam('user');
 	var pwd = getUrlParam('pwd');
 	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
 	$.getJSON("/imweb/TreeNode?arg=all&id=" + id + "&version=" + version
 			+ "&user=" + user + "&pwd=" + pwd, function(data){
 		CreateTree(data.TreeNode);
@@ -33,7 +36,7 @@ $(function(){
 		$("#versions").empty();
 		$.each(data, function(idx, item){
 			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + item.id
-				+ "&user=" + user + "&pwd=" + pwd;
+				+ "&user=" + user + "&pwd=" + pwd + "&sid" + sid  + "&uid=" + uid;
 			var itemStr = "<tr>" 
 				+  "<th scope='row'><a target='_blank' href=\""+ href
 				+"\">"+ item.name +"</a></th>"
@@ -45,7 +48,7 @@ $(function(){
 		
 		cid = stringToBytes(cid);
 		//update the views
-		$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid, function(data){
+		$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid + "&sid_702=" + sid, function(data){
 			CreateView(data);
 		});
 	});
@@ -54,7 +57,7 @@ $(function(){
 	
 	//update the abstraction
 	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd, function(data){
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
 		var html = "<tr>";
 		$.each(data, function(idx, item){
 			if (idx > 0 && idx % 2 == 0){
@@ -72,7 +75,7 @@ $(function(){
 	
 	//update the abstraction
 	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd, function(data){
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
 		CreateJsplumb(data);
 	});
 	

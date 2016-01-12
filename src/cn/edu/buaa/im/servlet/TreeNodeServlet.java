@@ -73,6 +73,8 @@ public class TreeNodeServlet extends BaseServlet{
 			String password = request.getParameter("pwd");
 			String sid = request.getParameter("sid");
 			
+			String sid_702 = request.getParameter("sid_702");
+			
 			sid = Util.byte2str(sid);
 			
 			WSDLHttpClient client = new WSDLHttpClient();
@@ -81,7 +83,7 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
 			
-			TreeNodeService treeNodeService = new TreeNodeService(sid);
+			TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
 			treeNodes = treeNodeService.geTreeNodes();
 
 			List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));

@@ -29,8 +29,9 @@ public class MainModelServlet extends BaseServlet{
 			String version = request.getParameter("version");
 			String user = request.getParameter("user");
 			String pwd = request.getParameter("pwd");
+			String uid = request.getParameter("uid");
 			
-			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd);
+			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
 			
 			List<DataPacketAbs> dataPacket = dataPacketService.getDataPacketAbs();
 			
@@ -50,8 +51,9 @@ public class MainModelServlet extends BaseServlet{
 			String version = request.getParameter("version");
 			String user = request.getParameter("user");
 			String pwd = request.getParameter("pwd");
+			String uid = request.getParameter("uid");
 			
-			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd);
+			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(dataPacketService.getPedigree()));

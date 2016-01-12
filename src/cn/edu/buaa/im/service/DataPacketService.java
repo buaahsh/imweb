@@ -30,8 +30,8 @@ public class DataPacketService {
 		init();
 	}
 	
-	public DataPacketService(String id, String version, String user, String pwd){
-		init(id, version, user, pwd);
+	public DataPacketService(String id, String version, String user, String pwd, String uid){
+		init(id, version, user, pwd, uid);
 	}
 	
 	private void init() {
@@ -86,11 +86,11 @@ public class DataPacketService {
 		
 	}
 	
-	private void init(String id, String version, String user, String pwd) {
+	private void init(String id, String version, String user, String pwd, String uid) {
 		WSDLClient w = WSDLClient.getInstance();
 		
 		String method = "getNodeDetail";
-		String[] arg = new String[]{user, pwd, id, version};
+		String[] arg = new String[]{uid, pwd, id, version};
 		String xml = w.getS(method, arg);
 		Element root = Utility.getElementFromXml(xml);
 		if (root == null)
