@@ -11,8 +11,11 @@ $(function(){
 	var version = getUrlParam('version');
 	var user = getUrlParam('user');
 	var pwd = getUrlParam('pwd');
-	var cid = getUrlParam('cid');
 	var uid = getUrlParam('uid');
+	
+	var cid = getUrlParam('cid');
+	cid = decodeURIComponent(cid);
+	cid = cid.split("_")[0];
 	
 	$.getJSON("/imweb/TreeNode?arg=mm&id=" + id + "&version=" + version
 			+ "&user=" + user + "&pwd=" + pwd, function(data){
@@ -25,11 +28,6 @@ $(function(){
 		ImageSilde();
 		
 		PlotContainer();
-	});
-	
-	//update the views
-	$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid, function(data){
-		CreateView(data);
 	});
 	
 	//update the versions
@@ -46,6 +44,12 @@ $(function(){
 				+ "<td>" + item.person + "</td>"
 				+ "<td>" + item.abs + "</td></tr>";
 			$("#versions").append(itemStr);
+		});
+		
+		cid = stringToBytes(cid);
+		//update the views
+		$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid + "&sid_702=" + sid, function(data){
+			CreateView(data);
 		});
 	});
 	

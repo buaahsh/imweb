@@ -97,7 +97,7 @@ public class TreeNodeServlet extends BaseServlet{
 		}
 		else if (arg.endsWith("mm")) {
 			String id_702 = request.getParameter("id");
-			String v_702 = request.getParameter("version");
+//			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");
 			
@@ -109,6 +109,35 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
+		}
+		else if (arg.endsWith("mmview")) {
+			String id_702 = request.getParameter("id");
+			String username = request.getParameter("user");
+			String password = request.getParameter("pwd");
+			
+			String sid = request.getParameter("sid");
+			
+			String sid_702 = request.getParameter("sid_702");
+			
+			sid = Util.byte2str(sid);
+			
+			WSDLHttpClient client = new WSDLHttpClient();
+			
+			client.login(username, password);
+			
+			HashMap<String, Object> hashMap = client.getMMDataItems(id_702);
+			
+			TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
+			treeNodes = treeNodeService.geTreeNodes();
+
+			List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));
+			
+			HashMap<String, Object> result = new HashMap<String, Object>();
+			result.put("TreeNode", treeNodes);
+			result.put("DataItem", dataItems);
+			
+			Gson gson = new Gson();
+			responseString(response, gson.toJson(result));
 		}
 	}
 }

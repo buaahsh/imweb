@@ -32,7 +32,7 @@ public class Utility {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		filePath = ROOTString + "userPrivacy.txt";
+		filePath = ROOTString + filePath;
 		
 		File file = new File(filePath);
 		
@@ -45,16 +45,22 @@ public class Utility {
 		HttpClientUtils client = new HttpClientUtils();
 		byte[] bs = client.getDoGetURL(url + sid);
 
-		FileOutputStream fos;
-		try {
-			fos = new FileOutputStream(file);
-			fos.write(bs);
-			fos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (bs != null){
+			FileOutputStream fos;
+			try {
+				fos = new FileOutputStream(file);
+				fos.write(bs);
+				fos.close();
+			} catch (IOException e) {
+				file.delete();
+				e.printStackTrace();
+			}
+			return filePath;
 		}
-
-		return filePath;
+		else{
+			file.delete();
+			return null;
+		}
 	}
 	
 	/**
