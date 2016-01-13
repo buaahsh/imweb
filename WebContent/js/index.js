@@ -1,10 +1,10 @@
 /*
 	填写内容
+	
 	@author: Shaohan
 */
 
 $(function(){
-	
 	var cid = getUrlParam('cid');
 	cid = decodeURIComponent(cid);
 	cid = cid.split("_")[0];
