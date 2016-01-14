@@ -45,7 +45,7 @@ public class TreeNodeService {
 			
 			List<String> names = sqLiteCRUD.getFields(table);
 			
-			Convert2TreeNodes(vectors, names);
+			Convert2TreeNodes(vectors, names, sid_702);
 			
 			sqLiteCRUD.close();
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class TreeNodeService {
 	 * 把vector转化为nodes，按照树的顺序
 	 * @return
 	 */
-	private void Convert2TreeNodes(Vector<Vector<Object>> vectors, List<String> names) {
+	private void Convert2TreeNodes(Vector<Vector<Object>> vectors, List<String> names, String sid_702) {
 		HashMap<String, List<TreeNode>> hashMap = new HashMap<>();
 		List<TreeNode> roots = new ArrayList<>();
 		
@@ -91,15 +91,15 @@ public class TreeNodeService {
 				hashMap.put(pid, new ArrayList<TreeNode>());
 			
 			if (type.equals("26"))
-				Redirect(treeNode, unit);
+				Redirect(treeNode, unit, sid_702);
 			hashMap.get(pid).add(treeNode);
 		}
 		
 		OrderTreeNodes(hashMap, roots);
 	}
 	
-	private void Redirect(TreeNode treeNode, String fid) {
-		String s = Utility.getSQLite(null);
+	private void Redirect(TreeNode treeNode, String fid, String sid_702) {
+		String s = Utility.getSQLite(sid_702);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());

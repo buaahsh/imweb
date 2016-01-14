@@ -51,7 +51,7 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(treeNodes));
 		}
-		else if (arg.endsWith("all")) {
+		else if (arg.equals("all")) {
 			String id_702 = request.getParameter("id");
 			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
@@ -66,7 +66,7 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
 		}
-		else if (arg.endsWith("view")) {
+		else if (arg.equals("view")) {
 			String id_702 = request.getParameter("id");
 			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
@@ -95,7 +95,7 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(result));
 		}
-		else if (arg.endsWith("mm")) {
+		else if (arg.equals("mm")) {
 			String id_702 = request.getParameter("id");
 //			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
@@ -110,7 +110,7 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
 		}
-		else if (arg.endsWith("mmview")) {
+		else if (arg.equals("mmview")) {
 			String id_702 = request.getParameter("id");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");

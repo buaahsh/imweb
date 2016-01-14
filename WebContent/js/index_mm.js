@@ -38,7 +38,7 @@ $(function(){
 			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + item.id
 				+ "&user=" + user + "&pwd=" + pwd;
 			var itemStr = "<tr>" 
-				+  "<th scope='row'><a target='_blank' href=\""+ href
+				+  "<th scope='row'><a href=\""+ href
 				+"\">"+ item.name +"</a></th>"
 				+ "<td>" + item.date + "</td>"
 				+ "<td>" + item.person + "</td>"
