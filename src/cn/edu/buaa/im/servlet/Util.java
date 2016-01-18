@@ -1,5 +1,6 @@
 package cn.edu.buaa.im.servlet;
 
+import java.awt.Insets;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.edu.buaa.im.model.TreeNode;
 
 public class Util {
 	public static byte[] toByteArray(String filename) throws IOException {
@@ -100,4 +105,62 @@ public class Util {
 		}
 		return "";
 	}
+	
+	public class ExtTreeNode{
+		 public String id;
+		 public String iconCls;
+		 public String cls;
+		 public String text;
+
+		 public List<ExtTreeNode> children;
+		 public boolean leaf;
+		 public boolean singleClickExpand;
+		 
+		 public ExtTreeNode(String id, String text) {
+			this.id = id;
+			this.text = text;
+			singleClickExpand = true;
+			leaf = true;
+		 }
+		 
+		 public void Add(ExtTreeNode extTreeNoede){
+			 if (children == null)
+				 children = new ArrayList<>();
+			 children.add(extTreeNoede);
+			 leaf = false;
+		 }
+	}
+	
+	public static List<ExtTreeNode> Convert2Ext(List<TreeNode> treeNodes){
+		Util util = new Util();
+		List<ExtTreeNode> extTreeNodes = new ArrayList<>();
+		
+		for (TreeNode treeNode : treeNodes) {
+			if (treeNode.parent.equals("#")){
+				ExtTreeNode extTreeNode = util.new ExtTreeNode(treeNode.id, treeNode.text);
+				extTreeNodes.add(extTreeNode);
+			}
+			else{
+				Insert(extTreeNodes, treeNode);
+			}
+		}
+		return extTreeNodes;
+	}
+	
+	public static boolean Insert(List<ExtTreeNode> extTreeNodes, TreeNode treeNode){
+		Util util = new Util();
+		for (ExtTreeNode extTreeNoede : extTreeNodes) {
+			if (treeNode.parent.equals(extTreeNoede.id)){
+				ExtTreeNode node = util.new ExtTreeNode(treeNode.id, treeNode.text);
+				extTreeNoede.Add(node);
+				return true;
+			}
+			if (extTreeNoede.children != null)
+				if (Insert(extTreeNoede.children, treeNode)) {
+					return true;
+				}
+		}
+		return false;
+	}
+	
 }

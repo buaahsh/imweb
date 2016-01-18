@@ -20,6 +20,7 @@ import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.TreeNode.A_attr;
 import cn.edu.buaa.im.service.DataItemService;
 import cn.edu.buaa.im.service.TreeNodeService;
+import cn.edu.buaa.im.servlet.Util.ExtTreeNode;
 import cn.edu.buaa.im.wsdl.WSDLFile;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
 import sun.org.mozilla.javascript.internal.ast.NewExpression;
@@ -56,12 +57,20 @@ public class TreeNodeServlet extends BaseServlet{
 			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");
+			String ext = request.getParameter("ext");
 			
 			WSDLHttpClient client = new WSDLHttpClient();
 			
 			client.login(username, password);
 			
 			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
+			
+			if (ext != null)
+			{
+				List<TreeNode> tnodes = (List<TreeNode>) hashMap.get("TreeNode");
+				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+				hashMap.put("TreeNode", treeNodes2);
+			}
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
