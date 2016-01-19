@@ -101,6 +101,14 @@ public class TreeNodeServlet extends BaseServlet{
 			result.put("TreeNode", treeNodes);
 			result.put("DataItem", dataItems);
 			
+			String ext = request.getParameter("ext");
+			if (ext != null)
+			{
+				List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
+				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+				result.put("TreeNode", treeNodes2);
+			}
+			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(result));
 		}
@@ -115,6 +123,14 @@ public class TreeNodeServlet extends BaseServlet{
 			client.login(username, password);
 			
 			HashMap<String, Object> hashMap = client.getMMDataItems(id_702);
+			
+			String ext = request.getParameter("ext");
+			if (ext != null)
+			{
+				List<TreeNode> tnodes = (List<TreeNode>) hashMap.get("TreeNode");
+				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+				hashMap.put("TreeNode", treeNodes2);
+			}
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(hashMap));
@@ -144,6 +160,14 @@ public class TreeNodeServlet extends BaseServlet{
 			HashMap<String, Object> result = new HashMap<String, Object>();
 			result.put("TreeNode", treeNodes);
 			result.put("DataItem", dataItems);
+			
+			String ext = request.getParameter("ext");
+			if (ext != null)
+			{
+				List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
+				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+				result.put("TreeNode", treeNodes2);
+			}
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(result));

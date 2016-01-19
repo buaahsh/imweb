@@ -21,25 +21,52 @@ function initwelcome(){
 	var uid = getUrlParam('uid');
 	var sid = getUrlParam('sid');
 	
+	var vid = getUrlParam('vid');
+	vid = decodeURIComponent(vid);
+//	vid = vid.split("_")[0];
+	
+	var data;
+	
+	if (vid == null || vid == "null" || vid == -1){
+		if (sid == id){
+			$.getJSON("/imweb/TreeNode?ext=1&arg=mm&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd, function(data1){
+				data = data1;
+			});
+		}
+		else{
+			$.getJSON("/imweb/TreeNode?ext=1&arg=all&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd, function(data1){
+				data = data1;
+			});
+		}
+		
+	}
+	else{
+		vid = stringToBytes(vid);
+		if (sid == id){
+			$.getJSON("/imweb/TreeNode?ext=1&arg=mmview&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
+				data = data1;
+			});
+		}
+		else{
+			$.getJSON("/imweb/TreeNode?ext=1&arg=view&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
+				data = data1;
+			});
+		}
+	}
+	
 	var html = "";
-	$.getJSON("/imweb/TreeNode?ext=1&arg=all&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd, function(data){
-		//CreateTree(data.TreeNode);
-		
-		Docs.classData.children = data.TreeNode;
-		
-		html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" +
-				"<table cellspacing=\"0\" class=\"member-table\"><tbody>";
-		$.each(data.DataItem, function(idx, item){
-			html += ExtDataItemProc(item);
-		});
-		html += "</tbody></table></div>";
-		
-//		$("#welcome-panel").append(html);
-		
-		
-		//PlotContainer();
+	Docs.classData.children = data.TreeNode;
+	
+	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" +
+			"<table cellspacing=\"0\" class=\"member-table\"><tbody>";
+	$.each(data.DataItem, function(idx, item){
+		html += ExtDataItemProc(item);
 	});
+	html += "</tbody></table></div>";
 	
 //	//update the versions
 //	$.getJSON("/imweb/MainModel?arg=version&id=" + id 
@@ -56,37 +83,6 @@ function initwelcome(){
 //				+ "<td>" + item.abs + "</td></tr>";
 //			$("#versions").append(itemStr);
 //		});
-//		
-//		cid = stringToBytes(cid);
-//		//update the views
-//		$.getJSON("/imweb/DataPacket?arg=view&cid=" + cid + "&sid_702=" + sid, function(data){
-//			CreateView(data);
-//		});
-//	});
-
-
-//	//update the abstraction
-//	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
-//			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
-//		var html = "<tr>";
-//		$.each(data, function(idx, item){
-//			if (idx > 0 && idx % 2 == 0){
-//				html += "</tr><tr>";
-//			}
-//			html += "<th class=\"col-md-3\">"+item.name+":</th>"
-//				+ "<td class=\"col-md-3\">"+item.value+"</td>";	
-//			if (item.name=="数据包名称")
-//				$("#title_a").text(item.value);
-//		});
-//		html += "</tr>";
-//		
-//		$("#abs_table").html(html);
-//	}); 
-	
-	//update the abstraction
-//	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
-//			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
-//		CreateJsplumb(data);
 //	});
 	
 	return html;

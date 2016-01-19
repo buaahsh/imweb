@@ -1,0 +1,20 @@
+.x-form-item {
+    float:left; 
+    margin-left: 40px;
+}
+
+#api-tree{
+	top : 5px !important;
+}
+
+#doc-body{
+	top : 5px !important;
+}
+
+#header{
+	height: 0px !important;
+}
+
+#docs-data{
+	margin: 10px;
+}

@@ -1,3 +1,97 @@
+function PlotOneContainer(ContainerId, x){
+	
+	var data = GetPlotData(ContainerId, x);
+	if (data.length == 0)
+		return;
+	$('#' + ContainerId).highcharts({
+		title: {
+			text : ""
+		},
+//		chart: {
+//			type : 'scatter',
+//			zoomType : 'xy'
+//		},
+	    xAxis: {
+//	        title: {
+//	            text: 'Temperature (°C)'
+//	        },
+	    },
+	    yAxis: {
+//	        title: {
+//	            text: 'Temperature (°C)'
+//	        },
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle',
+	        borderWidth: 0
+	    },
+	    series:  data
+	});
+}
+
+function PlotContainer(){
+	$.each($(".plot_container"), function(idx, item){
+		var ContainerId = $(item)[0].id;
+		PlotOneContainer(ContainerId, 0);
+	});
+}
+
+function GetPlotData(ContainerId, xaxis){
+	var data = new Array();
+	var tokens = ContainerId.split("_")
+	var tableid = tokens[0] + "_" + tokens[1] + "_table";
+	var num = 0;
+	var x_group = new Array();
+	$.each($("#" + tableid + " tbody tr"), function(idx, item){
+		var tds = $(item).children("td");
+		num = tds.length;
+		$.each(tds, function(i, tem){
+			if ($(tem).text() != "")
+			{
+				if (i == xaxis){
+					x_group.push(parseFloat($(tem).text()));
+				}
+			}
+		});
+	});
+	
+	for (var j=0; j<num ;j++)
+	{
+		if (j==xaxis)
+			continue;
+		var subdata = new Array();
+		$.each($("#" + tableid + " tbody tr"), function(idx, item){
+			var tds = $(item).children("td");
+			num = tds.length;
+			$.each(tds, function(i, tem){
+				if ($(tem).text() != "")
+				{
+					if (i == j){
+						subdata.push([x_group[idx], parseFloat($(tem).text())]);
+					}
+				}
+			});
+		});
+		var name = "";
+		$.each($("#" + tableid + " thead th span"), function(idx, item){
+			if (idx == j)
+				name = $(item).text();
+		});
+		data.push({
+			name : name,
+			data: subdata
+		});
+	}
+	return data;
+}
+
 function ExtDataItemProc(dataItem)
 {
 	//var html = getLittletitle(dataItem.id, dataItem.title);
@@ -5,7 +99,7 @@ function ExtDataItemProc(dataItem)
 		"'>" +
 		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td><td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
 		+ dataItem.title
-		+ "</b> :";
+		+ "</b> : ";
 	switch(dataItem.type){ 
 		case "TitleDataItem":    
 			//return getTitle(dataItem.id, dataItem.title)
@@ -20,11 +114,11 @@ function ExtDataItemProc(dataItem)
 	    	//html += FileDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "TextDataItem":
-	    	html += "文本<div class=\"mdesc\">";
+//	    	html += "<div class=\"mdesc\">";
 	    	html += TextDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "FloatDataItem":
-	    	html += "浮点数<div class=\"mdesc\">";
+//	    	html += "<div class=\"mdesc\">";
 	    	html += FloatDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "RadioDataItem":
@@ -40,13 +134,14 @@ function ExtDataItemProc(dataItem)
 	    	//html += D3DataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "TableDataItem":
-	    	html += "数据表<div class=\"mdesc\">";
-	    	//html += TableDataItemProc(dataItem.id, dataItem.data);
+	    	html += "<div class=\"mdesc\">";
+	    	html += TableDataItemProc(dataItem.id, dataItem.data);
+	    	html += "</div>";
 	    	break;	
 	    default:
 	    	break;
 	}
-	html += "</div></td></tr>";
+	html += "</td></tr>";
 	return html;
 }
 
@@ -79,7 +174,9 @@ function CurveDataItemProc(id, data)
 	var thead = "<tr>";
 	$.each(data.table[0], function(idx, item){
 		thead += "<th><span>"+item
-		+"</span><label><input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
+		+"</span>" 
+		+"<label>" 
+		+"<input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
 		+"</th>";
 	});
 	thead += "</tr>";
@@ -123,24 +220,6 @@ function CurveDataItemProc(id, data)
 	return html;
 }
 
-function ImageDataItemProc(id, data)
-{
-	if (data.flag == 1){
-		var html = "<div class='imgslides'>";
-		$.each(data.urls, function(idx, item){
-			html += "<img src=\"\DataItem?arg=file&file="+item+"\">";
-		});
-	    return html;
-	}
-	else{
-		var html = "<div class='imgslides'>";
-		$.each(data.urls, function(idx, item){
-			html += "<img src=\""+item+"\">";
-		});
-	    return html;
-	}
-}
-
 function FileDataItemProc(id, data){
 	var html = "";
 	$.each(data.filePaths, function(idx, item){
@@ -153,31 +232,14 @@ function FileDataItemProc(id, data){
 function TextDataItemProc(id, data){
 	var html = "";
 	$.each(data.text, function(idx, item){
-		html += "<p>"+item+"</p>";
+		html += "<span>"+item+"</span>";
 	});
   	return html;
 }
 
 function FloatDataItemProc(id, data){
 	var html = "";
-	html = "<p class=\"float\"><span>"+data.value+"</span>"+data.unit+"</p>";
-  	return html;
-}
-
-function RadioDataItemProc(id, data){
-	var html = "";
-	$.each(data.filePaths, function(idx, item){
-		html += "<p><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span><a>"
-			+item+"</a></p>";
-	});
-  	return html;
-}
-
-function UrlDataItemProc(id, data){
-	var html = "";
-	$.each(data.links, function(idx, item){
-		html += "<p><a>"+item+"</a></p>";
-	});
+	html = "<span class=\"float\"><span>"+data.value+"</span>"+data.unit+"</span>";
   	return html;
 }
 
@@ -196,7 +258,9 @@ function TableDataItemProc(id, data){
 	var thead = "<tr>";
 	$.each(data.header, function(idx, item){
 		thead += "<th><span>"+item
-		+"</span><label><input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
+		+"</span>" 
+		+"<label style='margin-left: 10px;'>" 
+		+"<input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
 		+"</th>";
 	});
 	thead += "</tr>";
@@ -210,18 +274,18 @@ function TableDataItemProc(id, data){
 		tbody += "</tr>";
 	});
 	
-	var html = 
-		"<ul class=\"nav nav-tabs\">"
-		+"   <li class=\"active\">"
-		+"      <a href=\"#"+tableid+"\" data-toggle=\"tab\">"
-		+"         数据"
-		+"      </a>"
-		+"   </li>"
-		+"   <li><a href=\"#"+plotid+"\" data-toggle=\"tab\">曲线</a></li>"
-		+"</ul>"
-		+"<div  class=\"tab-content\">"
+	var html = ""
+//		+"<ul class=\"nav nav-tabs\">"
+//		+"   <li class=\"active\">"
+//		+"      <a href=\"#"+tableid+"\" data-toggle=\"tab\">"
+//		+"         数据"
+//		+"      </a>"
+//		+"   </li>"
+//		+"   <li><a href=\"#"+plotid+"\" data-toggle=\"tab\">曲线</a></li>"
+//		+"</ul>"
+//		+"<div  class=\"tab-content\">"
 		+"   <div class=\"tab-pane fade in active\" id=\""+tableid+"\">"
-		+"      <table class=\"table table-bordered\"> " 
+		+"      <table class=\"member-table\"> " 
 		+"          <thead>"
 		+ thead
 		+"          </thead>"
@@ -231,7 +295,7 @@ function TableDataItemProc(id, data){
 		+"        </table>"
 		+"   </div>"
 		+"   <div class=\"tab-pane fade\" id=\""+plotid+"\">"
-		+"        <div id=\""+plotid+"_container\" class='plot_container' style=\"min-width:1000px; height:400px\"></div>   "
+		+"        <div id=\""+plotid+"_container\" class='plot_container' style=\"min-width:700px;\"></div>   "
 		+"   </div>"
 		+"</div>";
 	//min-width:700px;

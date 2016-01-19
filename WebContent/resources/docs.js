@@ -255,13 +255,13 @@ MainPanel = function(){
             title: '数据展示',
             html : '<div></div>',
             iconCls:'icon-docs',
-            autoScroll: true
+            autoScroll: true,
+            items : addPanel() 
         }
     });
 };
 
 Ext.extend(MainPanel, Ext.TabPanel, {
-
     initEvents : function(){
         MainPanel.superclass.initEvents.call(this);
         this.body.on('click', this.onClick, this);
@@ -363,7 +363,7 @@ Ext.onReady(function(){
     api.on('click', function(node, e){
     	var id = node.id;
     	id = 'docs-' + id + '_target';
-    	var body = Ext.get('docs-data').body;
+    	var body = mainPanel.items.items[0].body;
     	var el = Ext.fly(id);
         if(el){
             var top = (el.getOffsetsTo(body)[1]) + body.dom.scrollTop;
@@ -376,7 +376,7 @@ Ext.onReady(function(){
 //        api.selectClass(tab.cclass); 
 //    });
 
-    addPanel(mainPanel);
+//    addPanel(mainPanel);
     
     var viewport = new Ext.Viewport({
         layout:'border',
@@ -434,29 +434,12 @@ Ext.onReady(function(){
         }
     });
 	
-   
-    
-	var combo1 = new Ext.form.ComboBox({
-	    store: [["soft","视图1"],["game","视图2"]],
-	    mode: 'loacl',
-	    valueField: 'value',
-	    typeAhead : true,  
-        triggerAction : 'all',  
-        lazyRender : true, 
-        editable : false,  
-	    displayField: 'text',
-	    renderTo : api.tbar,
-	    listeners: {
-	        select: function(combo, record, index){
-	            //alert(combo.getValue());
-	        }
-	    }
-	});
+	addView(api);
 	
-    viewport.doLayout();
+    viewport.doLayout();  
+    
+	PlotContainer();
 	
-    
-    
 	setTimeout(function(){
         Ext.get('loading').remove();
         Ext.get('loading-mask').fadeOut({remove:true});
