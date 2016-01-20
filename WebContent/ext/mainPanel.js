@@ -29,6 +29,8 @@ function addHistory()
 	var uid = getUrlParam('uid');
 	var sid = getUrlParam('sid');
 	
+	var vid = getUrlParam('vid');
+	vid = decodeURIComponent(vid);
 	
 	 var jsonstore;
 	 
@@ -42,29 +44,48 @@ function addHistory()
     //定义列
     var column = new Ext.grid.ColumnModel({
         columns: [
-             { header: '数据包版本', dataIndex: 'id', sortable: true },
+             { header: '数据包版本', dataIndex: 'id', sortable: true,
+            	 renderer: function (val, meta, record) {
+            		 var href = "/imweb/ie.html?cid=" + cid + "&id=" + id + "&version=" + val
+     				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + vid;
+            		 return "<span style='cursor:hand' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
+                 }
+             },
              { header: '完成日期	', dataIndex: 'date', sortable: true  },
              { header: '完成人', dataIndex: 'person', sortable: true },
              { header: '版本说明', dataIndex: 'abs', sortable: true }
-        ]
+        ],
+        autoHeight : true,
+        viewConfig: {
+        	  forceFit: true
+        	}
     });
     //列表
     var grid = new Ext.grid.GridPanel({
     	frame: true,
     	id : "docs-history",
     	style : "margin: 10px",
-    	height: 100,
+    	height: 300,
         title: '历史版本',
         store: jsonstore,
+        autoHeight : true,
         colModel: column
 //        viewConfig:{
 //        	autoFill: true, // 注意不要用autoFill:true,那样设置的话当GridPanel的大小变化（比如你resize了它）时不会自动调整column的宽度
 //        	 scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
 //        	  }
+//        viewConfig: {
+//      	  forceFit: true
+//      	}
     });
     
     return grid;
 }
+
+function clickHistory(obj){
+	location.href = obj;
+}
+
 function addAbs(){
 	$.ajaxSetup({
 		async : false
@@ -153,7 +174,7 @@ function addView(api){
 	    }
 	});
 	var vid = getUrlParam('vid');
-	if (vid == null)
+	if (vid == null || vid == 'null')
 		combo1.setValue('-1');
 	else
 		combo1.setValue(decodeURIComponent(vid));
