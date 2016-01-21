@@ -46,8 +46,10 @@ function addHistory()
         columns: [
              { header: '数据包版本', dataIndex: 'id', sortable: true,
             	 renderer: function (val, meta, record) {
-            		 var href = "/imweb/ie.html?cid=" + cid + "&id=" + id + "&version=" + val
-     				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + vid;
+            		 tcid = encodeURIComponent(cid);
+            		 tvid = encodeURIComponent(vid);
+            		 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + id + "&version=" + val
+     				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
             		 return "<span style='cursor:hand' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
                  }
              },
@@ -169,7 +171,8 @@ function addView(api){
 	    renderTo : api.tbar,
 	    listeners: {
 	        select: function(combo, record, index){
-	        	location.href = window.location.href.split('&vid=')[0] + "&vid=" + combo.getValue();
+	        	
+	        	location.href = window.location.href.split('&vid=')[0] + "&vid=" + encodeURIComponent(combo.getValue());
 	        }
 	    }
 	});
