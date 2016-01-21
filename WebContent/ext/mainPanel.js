@@ -51,11 +51,12 @@ function addHistory()
             		 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + id + "&version=" + val
      				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
             		 return "<span style='cursor:hand' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
-                 }
+                 },
+                 width: 120
              },
-             { header: '完成日期	', dataIndex: 'date', sortable: true  },
-             { header: '完成人', dataIndex: 'person', sortable: true },
-             { header: '版本说明', dataIndex: 'abs', sortable: true }
+             { header: '完成日期	', dataIndex: 'date', sortable: true,width: 150  },
+             { header: '完成人', dataIndex: 'person', sortable: true, width: 150 },
+             { header: '版本说明', dataIndex: 'abs', sortable: true, width: 150 }
         ],
         autoHeight : true,
         viewConfig: {
@@ -88,6 +89,7 @@ function clickHistory(obj){
 	location.href = obj;
 }
 
+//返回概要panel
 function addAbs(){
 	$.ajaxSetup({
 		async : false
@@ -114,7 +116,8 @@ function addAbs(){
 		        width: 140,
 		        maxLength: 20,
 		        name: 'username',
-		        fieldLabel: item.name
+		        fieldLabel: item.name,
+		        readOnly: true
 		    });
 			txtusername.setValue(item.value);
 			items.push(txtusername);

@@ -7,19 +7,9 @@ function PlotOneContainer(ContainerId, x){
 		title: {
 			text : ""
 		},
-//		chart: {
-//			type : 'scatter',
-//			zoomType : 'xy'
-//		},
 	    xAxis: {
-//	        title: {
-//	            text: 'Temperature (°C)'
-//	        },
 	    },
 	    yAxis: {
-//	        title: {
-//	            text: 'Temperature (°C)'
-//	        },
 	        plotLines: [{
 	            value: 0,
 	            width: 1,
@@ -95,17 +85,23 @@ function GetPlotData(ContainerId, xaxis){
 function ExtDataItemProc(dataItem)
 {
 	//var html = getLittletitle(dataItem.id, dataItem.title);
-	var html = "<tr class=\"config-row \" id= 'docs-" + dataItem.id + 
+	var html = "<tr class=\"config-row \" id= 'docs-" 
+		+ dataItem.id + 
 		"'>" +
-		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td><td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
-		+ dataItem.title
-		+ "</b> : ";
+		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>";
+		
 	switch(dataItem.type){ 
 		case "TitleDataItem":    
-			//return getTitle(dataItem.id, dataItem.title)
+			html += 
+		    	"<td class=\"sig\" style=\"font-size: 21px;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+				+ dataItem.title
+				+ "</b> : ";
     	break; 
 	    case "SubtitleDataItem":    
-	    	//return getSubtitle(dataItem.id, dataItem.title)
+	    	html += 
+		    	"<td class=\"sig\" style=\"font-size: 18px;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+				+ dataItem.title
+				+ "</b> : ";
 	    	break; 
 	    case "ImageDataItem":
 	    	//html += ImageDataItemProc(dataItem.id, dataItem.data);
@@ -114,11 +110,17 @@ function ExtDataItemProc(dataItem)
 	    	//html += FileDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "TextDataItem":
-//	    	html += "<div class=\"mdesc\">";
+	    	html += 
+	    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+			+ dataItem.title
+			+ "</b> : ";
 	    	html += TextDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "FloatDataItem":
-//	    	html += "<div class=\"mdesc\">";
+	    	html += 
+		    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+				+ dataItem.title
+				+ "</b> : ";
 	    	html += FloatDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "RadioDataItem":
@@ -134,6 +136,10 @@ function ExtDataItemProc(dataItem)
 	    	//html += D3DataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "TableDataItem":
+	    	html += 
+		    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+				+ dataItem.title
+				+ "</b> : ";
 	    	html += "<div class=\"mdesc\">";
 	    	html += TableDataItemProc(dataItem.id, dataItem.data);
 	    	html += "</div>";
