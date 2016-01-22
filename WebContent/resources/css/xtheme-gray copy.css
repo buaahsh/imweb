@@ -200,7 +200,7 @@ ul.x-tab-strip-bottom{
     border-color:#d0d0d0;
 }
 .x-form-field{
-    font:normal 12px tahoma, arial, helvetica, sans-serif;
+    font:normal 13px tahoma, arial, helvetica, sans-serif;
 }
 
 .x-form-text, textarea.x-form-field{
@@ -314,7 +314,7 @@ ul.x-tab-strip-bottom{
 }
 
 .x-btn button{
-    font:normal 11px arial,tahoma,verdana,helvetica;
+    font:normal 13px arial,tahoma,verdana,helvetica;
     color:#333;
 }
 

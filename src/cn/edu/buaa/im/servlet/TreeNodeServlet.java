@@ -114,7 +114,7 @@ public class TreeNodeServlet extends BaseServlet{
 		}
 		else if (arg.equals("mm")) {
 			String id_702 = request.getParameter("id");
-//			String v_702 = request.getParameter("version");
+			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");
 			
@@ -122,7 +122,7 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			client.login(username, password);
 			
-			HashMap<String, Object> hashMap = client.getMMDataItems(id_702);
+			HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
 			
 			String ext = request.getParameter("ext");
 			if (ext != null)
@@ -137,6 +137,7 @@ public class TreeNodeServlet extends BaseServlet{
 		}
 		else if (arg.equals("mmview")) {
 			String id_702 = request.getParameter("id");
+			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
 			String password = request.getParameter("pwd");
 			
@@ -150,7 +151,7 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			client.login(username, password);
 			
-			HashMap<String, Object> hashMap = client.getMMDataItems(id_702);
+			HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
 			
 			TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
 			treeNodes = treeNodeService.geTreeNodes();

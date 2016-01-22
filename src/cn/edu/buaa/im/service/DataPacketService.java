@@ -102,14 +102,14 @@ public class DataPacketService {
 				DataPacketAbs item = new DataPacketAbs();
 				if (attribute.getName().equals("name"))
 				{
-					item.name = "数据包名称";
+					item.name = "名称";
 					item.value = attribute.getValue();
 					dataPacket.add(item);
 					this.pedigree.self = attribute.getValue();
 				}
 				else if (attribute.getName().equals("version"))
 				{
-					item.name = "数据包版本";
+					item.name = "版本";
 					item.value = attribute.getValue();
 					dataPacket.add(item);
 				}

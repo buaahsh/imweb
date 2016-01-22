@@ -51,7 +51,7 @@
     border-right: 0 none;
 }
 .body-wrap .top-tools{
-	font-size:11px;
+	font-size:13px;
 	text-align:right;
 }
 .body-wrap table {
@@ -151,6 +151,12 @@
 	width:16px;
 	padding:0px;
     background: #f9f9f9 url(expand-bg.gif) repeat-y top right;
+    border-right:1px solid #d0d0d0;
+}
+.body-wrap .member-table td.micon-blue{
+	width:16px;
+	padding:0px;
+    background: #f9f9f9 url(expand-bg-over.gif) repeat-y top right;
     border-right:1px solid #d0d0d0;
 }
 .body-wrap .member-table td.micon a {

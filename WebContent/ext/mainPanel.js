@@ -44,13 +44,13 @@ function addHistory()
     //定义列
     var column = new Ext.grid.ColumnModel({
         columns: [
-             { header: '数据包版本', dataIndex: 'id', sortable: true,
+             { header: '版本', dataIndex: 'id', sortable: true,
             	 renderer: function (val, meta, record) {
             		 tcid = encodeURIComponent(cid);
             		 tvid = encodeURIComponent(vid);
             		 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + id + "&version=" + val
      				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
-            		 return "<span style='cursor:hand' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
+            		 return "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
                  },
                  width: 120
              },
@@ -113,7 +113,7 @@ function addAbs(){
 		$.each(data, function(idx, item){
 			var txtusername = new Ext.form.TextField({
 				cls : "abs-item", 
-		        width: 140,
+		        width: 150,
 		        maxLength: 20,
 		        name: 'username',
 		        fieldLabel: item.name,
@@ -166,12 +166,13 @@ function addView(api){
 	    store: store,
 	    mode: 'loacl',
 	    valueField: 'value',
+	    width: 210,
 	    typeAhead : true,  
         triggerAction : 'all',  
         lazyRender : true, 
         editable : false,  
 	    displayField: 'text',
-	    renderTo : api.tbar,
+//	    renderTo : api.tbar,
 	    listeners: {
 	        select: function(combo, record, index){
 	        	
@@ -184,6 +185,11 @@ function addView(api){
 		combo1.setValue('-1');
 	else
 		combo1.setValue(decodeURIComponent(vid));
+	var fourTbar = new Ext.Toolbar({
+		id:'view',
+		renderTo : api.tbar,
+		items : [combo1]
+	});
 }
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象

@@ -34,11 +34,11 @@ public class WSDLHttpClient {
 		client = new HttpClientUtils();
 	}
 	
-	public HashMap<String, Object> getMMDataItems(String nodeId){
+	public HashMap<String, Object> getMMDataItems(String nodeId, String version){
 		
 		int start = 0;
 		int limit = 25;
-		String resultString = getJsonStr(nodeId, start, limit);
+		String resultString = getJsonStr(nodeId, start, limit, Integer.valueOf(version));
 		Gson gson = new Gson();
 		List<TreeNode> treeNodes = new ArrayList<TreeNode>();
 		List<DataItem> dataItems = new ArrayList<DataItem>();
@@ -56,7 +56,7 @@ public class WSDLHttpClient {
 	private void getOneNode(List<TreeNode> treeNodes, 
 			List<DataItem> dataItems, String pid, WSDLNode wsdlnode) {
 		// 如果为数据包
-		if (wsdlnode.dataPack != null)
+		if (wsdlnode.type.equals("dataPack"))
 		{
 			HashMap<String, Object> result =  getDataItems(String.valueOf(wsdlnode.id), 
 					String.valueOf(wsdlnode.version));
@@ -155,14 +155,15 @@ public class WSDLHttpClient {
 		return null;
 	}
 	
-	private String getJsonStr(String nodeId, int start, int limit) {
-		String urlstr = String.format("%s/node/loadNodeGrid.mm",
+	private String getJsonStr(String nodeId, int start, int limit, int version) {
+		String urlstr = String.format("%s/hisNode/loadHisNodeGrid.mm",
 				baseURL);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("start", String.valueOf(start));
 		params.put("limit", String.valueOf(limit));
 		params.put("pid", String.valueOf(nodeId));
-
+		params.put("version", String.valueOf(version));
+		
 		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
 				"utf-8", false);
 		return resultString;
@@ -178,13 +179,15 @@ public class WSDLHttpClient {
 			if (n >= 100)
 				break;
 			
-			String urlstr = String.format("%s/node/loadNodeGrid.mm",
+			String urlstr = String.format("%s/hisNode/loadHisNodeGrid.mm",
 					baseURL);
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("start", String.valueOf(start));
 			params.put("limit", String.valueOf(limit));
 			params.put("pid", String.valueOf(nodeId));
+			params.put("version", String.valueOf(version));
 
+			
 			String resultString = client.getDoPostResponseDataByURL(urlstr, params,
 					"utf-8", false);
 			Gson gson = new Gson();
@@ -258,13 +261,14 @@ public class WSDLHttpClient {
 		public String text;
 		public int version;
 		public List<WSDLNode> children;
-		public WSDLDataPack dataPack;
+		public String type;
+//		public WSDLDataPack dataPack;
 	}
 	
-	public class WSDLDataPack{
-		public int id;
-		public String name;
-	}
+//	public class WSDLDataPack{
+//		public int id;
+//		public String name;
+//	}
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 //		WSDLHttpClient w = new WSDLHttpClient();

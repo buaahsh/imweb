@@ -68,23 +68,6 @@ function initwelcome(){
 	});
 	html += "</tbody></table></div>";
 	
-//	//update the versions
-//	$.getJSON("/imweb/MainModel?arg=version&id=" + id 
-//			+ "&user=" + user + "&pwd=" + pwd , function(data){
-//		$("#versions").empty();
-//		$.each(data, function(idx, item){
-//			var href = "/imweb/?cid=" + cid + "&id=" + id + "&version=" + item.id
-//				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
-//			var itemStr = "<tr>" 
-//				+  "<th scope='row'><a href=\""+ href
-//				+"\">"+ item.name +"</a></th>"
-//				+ "<td>" + item.date + "</td>"
-//				+ "<td>" + item.person + "</td>"
-//				+ "<td>" + item.abs + "</td></tr>";
-//			$("#versions").append(itemStr);
-//		});
-//	});
-	
 	return html;
 	
  }

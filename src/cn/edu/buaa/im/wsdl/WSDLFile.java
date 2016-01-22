@@ -35,6 +35,7 @@ public class WSDLFile {
 		}
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
+		Util.AddParents(treeNodes, dataItems);
 		result.put("TreeNode", treeNodes);
 		result.put("DataItem", dataItems);
 		

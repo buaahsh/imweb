@@ -48,7 +48,7 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
             	 // search
             	 [ ' ',
 				new Ext.form.TextField({
-					width: 200,
+					width: 210,
 					emptyText:'查找...',
 	                enableKeyEvents: true,
 					listeners:{

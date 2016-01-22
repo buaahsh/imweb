@@ -201,7 +201,7 @@ ul.x-tab-strip-bottom{
 .x-tab-panel-bbar .x-toolbar, .x-tab-panel-tbar .x-toolbar {
     border-color:#99bbe8;
 }.x-form-field {
-    font:normal 12px tahoma, arial, helvetica, sans-serif;
+    font:normal 13px tahoma, arial, helvetica, sans-serif;
 }
 
 .x-form-text, textarea.x-form-field {
@@ -298,11 +298,11 @@ ul.x-tab-strip-bottom{
 }
 
 .x-small-editor .x-form-field {
-    font:normal 11px arial, tahoma, helvetica, sans-serif;
+    font:normal 13px arial, tahoma, helvetica, sans-serif;
 }
 
 .ext-webkit .x-small-editor .x-form-field {
-    font:normal 11px arial, tahoma, helvetica, sans-serif;
+    font:normal 13px arial, tahoma, helvetica, sans-serif;
 }
 
 .x-form-invalid-icon {
@@ -322,7 +322,7 @@ ul.x-tab-strip-bottom{
 }
 
 .x-btn button{
-    font:normal 11px arial,tahoma,verdana,helvetica;
+    font:normal 13px arial,tahoma,verdana,helvetica;
     color:#333;
 }
 
@@ -538,11 +538,11 @@ ul.x-tab-strip-bottom{
 }
 
 .x-grid3-row td, .x-grid3-summary-row td{
-	font:normal 11px/13px arial, tahoma, helvetica, sans-serif;
+	font:normal 13px arial, tahoma, helvetica, sans-serif;
 }
 
 .x-grid3-hd-row td {
-	font:normal 11px/15px arial, tahoma, helvetica, sans-serif;
+	font:normal 13px arial, tahoma, helvetica, sans-serif;
 }
 
 
@@ -1394,7 +1394,7 @@ a.x-menu-item {
 }
 
 .x-panel-mc {
-    font: normal 11px tahoma,arial,helvetica,sans-serif;
+    font: normal 13px tahoma,arial,helvetica,sans-serif;
     background-color:#dfe8f6;
 }
 

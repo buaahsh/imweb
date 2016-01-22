@@ -86,22 +86,21 @@ function ExtDataItemProc(dataItem)
 {
 	//var html = getLittletitle(dataItem.id, dataItem.title);
 	var html = "<tr class=\"config-row \" id= 'docs-" 
-		+ dataItem.id + 
-		"'>" +
-		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>";
-		
+		+ dataItem.id + "'>"
 	switch(dataItem.type){ 
 		case "TitleDataItem":    
 			html += 
-		    	"<td class=\"sig\" style=\"font-size: 21px;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+				"<td class=\"micon-blue\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
+		    	+ "<td class=\"sig\" style=\"color:blue;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 				+ dataItem.title
-				+ "</b> : ";
+				+ " ";
     	break; 
 	    case "SubtitleDataItem":    
 	    	html += 
-		    	"<td class=\"sig\" style=\"font-size: 18px;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
-				+ dataItem.title
-				+ "</b> : ";
+	    		"<td class=\"micon-blue\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
+		    	+ "<td class=\"sig\" style=\"color:blue;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
+	    		+ getParents(dataItem.parents) + dataItem.title
+				+ " ";
 	    	break; 
 	    case "ImageDataItem":
 	    	//html += ImageDataItemProc(dataItem.id, dataItem.data);
@@ -111,16 +110,18 @@ function ExtDataItemProc(dataItem)
 	    	break;
 	    case "TextDataItem":
 	    	html += 
-	    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+	    		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"	
+	    	+"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 			+ dataItem.title
-			+ "</b> : ";
+			+ " : ";
 	    	html += TextDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "FloatDataItem":
-	    	html += 
-		    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+	    	html +=
+	    		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
+		    	+ "<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 				+ dataItem.title
-				+ "</b> : ";
+				+ " : ";
 	    	html += FloatDataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "RadioDataItem":
@@ -136,10 +137,12 @@ function ExtDataItemProc(dataItem)
 	    	//html += D3DataItemProc(dataItem.id, dataItem.data);
 	    	break;
 	    case "TableDataItem":
+	    	
 	    	html += 
-		    	"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a><b>"
+	    		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
+	    		+ "<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 				+ dataItem.title
-				+ "</b> : ";
+				+ " : ";
 	    	html += "<div class=\"mdesc\">";
 	    	html += TableDataItemProc(dataItem.id, dataItem.data);
 	    	html += "</div>";
@@ -265,7 +268,7 @@ function TableDataItemProc(id, data){
 	$.each(data.header, function(idx, item){
 		thead += "<th><span>"+item
 		+"</span>" 
-		+"<label style='margin-left: 10px;'>" 
+		+"<label style='margin-left: 5px;'>" 
 		+"<input onclick='RadioClick(this)' type=\"radio\" class='table_radio' name=\"radio_"+tableid+"\"> X轴</label>"
 		+"</th>";
 	});
@@ -273,7 +276,10 @@ function TableDataItemProc(id, data){
 	
 	var tbody = "";
 	$.each(data.body, function(idx, item){
-		tbody += "<tr>";
+		var t = "";
+		if (idx >= 10)
+			t = "style=\"display: none;\"";
+		tbody += "<tr " + t + ">";
 		$.each(item, function(i, tem){
 			tbody += "<td>"+tem+"</td>";
 		});
@@ -281,15 +287,6 @@ function TableDataItemProc(id, data){
 	});
 	
 	var html = ""
-//		+"<ul class=\"nav nav-tabs\">"
-//		+"   <li class=\"active\">"
-//		+"      <a href=\"#"+tableid+"\" data-toggle=\"tab\">"
-//		+"         数据"
-//		+"      </a>"
-//		+"   </li>"
-//		+"   <li><a href=\"#"+plotid+"\" data-toggle=\"tab\">曲线</a></li>"
-//		+"</ul>"
-//		+"<div  class=\"tab-content\">"
 		+"   <div class=\"tab-pane fade in active\" id=\""+tableid+"\">"
 		+"      <table class=\"member-table\"> " 
 		+"          <thead>"
@@ -300,10 +297,40 @@ function TableDataItemProc(id, data){
 		+"          </tbody>"
 		+"        </table>"
 		+"   </div>"
+		+"<div>"
+		+"<span class=\"x-menu-text\" style=\"cursor:pointer; float: right;\" onclick='showmore(this)' id=\""+ tableid + "_btn\">"
+		+"显示更多...</span>"
+		+"</div>"
 		+"   <div class=\"tab-pane fade\" id=\""+plotid+"\">"
 		+"        <div id=\""+plotid+"_container\" class='plot_container' style=\"min-width:700px;\"></div>   "
 		+"   </div>"
 		+"</div>";
 	//min-width:700px;
 	return html;
+}
+
+function getParents(list)
+{
+	var t = "";
+	$.each(list, function(idx, item){
+		t = item + " -> "
+	});
+	return t;
+}
+
+function showmore(obj){
+	var tableid = obj.id.split("_")[0] + "_target_table";
+	if (obj.textContent == "显示更多..."){
+		$.each($("#"+tableid + " tbody tr"), function(idx, item){
+			$(item).show();
+		});
+		obj.textContent = "收起";
+	}
+	else{
+		obj.textContent = "显示更多..."
+		$.each($("#"+tableid + " tbody tr"), function(idx, item){
+			if (idx >= 10)
+				$(item).hide();
+		});
+	}
 }

@@ -107,7 +107,7 @@ a#help-forums{
 }
 #api-tree a span {
     font-family:helvetica,arial,verdana,tahoma,sans-serif;
-    font-size:11px;
+    font-size:13px;
 }
 #api-tree .cls a:hover span {
     text-decoration:underline;

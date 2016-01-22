@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
 
 public class Util {
@@ -163,4 +164,35 @@ public class Util {
 		return false;
 	}
 	
+	public static void AddParents(List<TreeNode> nodes, List<DataItem> dataItems)
+	{
+		for (DataItem dataitem : dataItems) {
+			if (dataitem.type.equals("SubtitleDataItem") )
+			{
+				
+				List<String> parents = new ArrayList<String>();
+				getParentList(nodes, dataitem.id.split("_")[0], parents);
+				dataitem.parents = parents;
+			}
+		}
+	}
+	
+	private static void getParentList(List<TreeNode> nodes, String id, List<String> parents) {
+		for (TreeNode node : nodes) {
+			if (node.id.equals(id)){
+				String pid = node.parent;
+				for (TreeNode n : nodes) {
+					if (n.id.equals(pid))
+					{
+						parents.add(n.text);
+						if (n.parent.equals("#") == false)
+							getParentList(nodes, pid, parents);
+						break;
+					}
+					
+				}
+			}
+				
+		}
+	}
 }
