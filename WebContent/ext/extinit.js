@@ -324,10 +324,10 @@ function showmore(obj){
 		$.each($("#"+tableid + " tbody tr"), function(idx, item){
 			$(item).show();
 		});
-		obj.textContent = "收起";
+		$(obj).text("收起");
 	}
 	else{
-		obj.textContent = "显示更多..."
+		$(obj).text("显示更多...");
 		$.each($("#"+tableid + " tbody tr"), function(idx, item){
 			if (idx >= 10)
 				$(item).hide();

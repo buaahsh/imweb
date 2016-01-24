@@ -65,7 +65,7 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
 			
-			if (ext != null)
+			if (ext != null && hashMap != null)
 			{
 				List<TreeNode> tnodes = (List<TreeNode>) hashMap.get("TreeNode");
 				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
@@ -102,7 +102,7 @@ public class TreeNodeServlet extends BaseServlet{
 			result.put("DataItem", dataItems);
 			
 			String ext = request.getParameter("ext");
-			if (ext != null)
+			if (ext != null && result != null)
 			{
 				List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
 				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
@@ -125,7 +125,7 @@ public class TreeNodeServlet extends BaseServlet{
 			HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
 			
 			String ext = request.getParameter("ext");
-			if (ext != null)
+			if (ext != null && hashMap != null)
 			{
 				List<TreeNode> tnodes = (List<TreeNode>) hashMap.get("TreeNode");
 				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);

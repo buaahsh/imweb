@@ -55,8 +55,10 @@ function CreateJsplumb(data) {
 			});
 			
 			// and finally, make a couple of connections
-	        ConncetJs(data, instance);
+	        
 		});
+		
+		ConncetJs(data, instance);
 		
 		$.each($("div._jsPlumb_overlay"), function(idx, item){
 			$(item).hide();
@@ -69,21 +71,20 @@ function CreateJsplumb(data) {
 
 function AddHtml(data){
 	var t1 = "<div class=\"w\" id=\"";
-	var t2 = "\"><table class=\"table\"><thead><tr><th colspan=\"2\">" +
-			"<a href=>";
-	var t3 = "</a></th></tr></thead></table><div class=\"ep\"></div></div>";
+	var t2 = "\">";
+	var t3 = "<div class=\"ep\"></div></div>";
 	var html = "";
 	var id = 1;
 	var self = 0;
 	$.each(data.upper, function(idx, item){
-		html += t1 + "token" + id + t2 + item + t3;
+		html += t1 + "token" + id + t2 + ConvertItem2Html(item, data.self.name) + t3;
 		id += 1;
 	});
-	html += t1 + "token" + id + t2 + data.self + t3;
+	html += t1 + "token" + id + t2 + ConvertItem2Html(data.self, data.self.name) + t3;
 	self = id;
 	id += 1;
 	$.each(data.down, function(idx, item){
-		html += t1 + "token" + id + t2 + item + t3;
+		html += t1 + "token" + id + t2 + ConvertItem2Html(item, data.self.name) + t3;
 		id += 1;
 	});
 	
@@ -110,6 +111,38 @@ function AddHtml(data){
 	});
 }
 
+function ConvertItem2Html(item, oldName){
+	var cid = getUrlParam('cid');
+	cid = decodeURIComponent(cid);
+	cid = cid.split("_")[0];
+	
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
+	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
+	var vid = getUrlParam('vid');
+	vid = decodeURIComponent(vid);
+	
+	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
+	tcid = encodeURIComponent(cid);
+	 tvid = encodeURIComponent(vid);
+	 
+	 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + item.version
+	+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
+	 
+	
+	var span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
+	var html = "<table class=\"table\"><tr><th colspan=\"2\">" + span;
+	html += "</th></tr>";
+	html += "<tr><th colspan=\"2\">状态 : " + item.techStatus + "</th></tr>";
+	html += "</table>";
+	return html;
+}
+
 function ConncetJs(data, instance){
 	var id = 1;
 	var self = 0;
@@ -129,7 +162,13 @@ function ConncetJs(data, instance){
 	id += 1;
 	$.each(data.down, function(idx, item){
 		instance.connect({ source:"token" + self , target:"token" + id, 
-			connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
+			connector : "Straight", anchor:["Continuous", {faces:["right", "left"]}]});
 		id += 1;
 	});
+}
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = encodeURI(window.location.search).substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
 }

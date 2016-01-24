@@ -138,49 +138,49 @@ DocPanel = Ext.extend(Ext.Panel, {
     autoScroll:true,
     
     initComponent : function(){
-        var ps = this.cclass.split('.');
-        this.title = ps[ps.length-1];
-        Ext.apply(this,{
-            tbar: ['->',{
-                text: 'Config Options',
-                handler: this.scrollToMember.createDelegate(this, ['configs']),
-                iconCls: 'icon-config'
-            },'-',{
-                text: 'Properties',
-                handler: this.scrollToMember.createDelegate(this, ['props']),
-                iconCls: 'icon-prop'
-            }, '-',{
-                text: 'Methods',
-                handler: this.scrollToMember.createDelegate(this, ['methods']),
-                iconCls: 'icon-method'
-            }, '-',{
-                text: 'Events',
-                handler: this.scrollToMember.createDelegate(this, ['events']),
-                iconCls: 'icon-event'
-            }, '-',{
-                text: 'Direct Link',
-                handler: this.directLink,
-                scope: this,
-                iconCls: 'icon-fav'
-            }, '-',{
-                tooltip:'Hide Inherited Members',
-                iconCls: 'icon-hide-inherited',
-                enableToggle: true,
-                scope: this,
-                toggleHandler : function(b, pressed){
-                     this.body[pressed ? 'addClass' : 'removeClass']('hide-inherited');
-                }
-            }, '-', {
-                tooltip:'Expand All Members',
-                iconCls: 'icon-expand-members',
-                enableToggle: true,
-                scope: this,
-                toggleHandler : function(b, pressed){
-                    this.body[pressed ? 'addClass' : 'removeClass']('full-details');
-                }
-            }]
-        });
-        DocPanel.superclass.initComponent.call(this);
+//        var ps = this.cclass.split('.');
+//        this.title = ps[ps.length-1];
+//        Ext.apply(this,{
+//            tbar: ['->',{
+//                text: 'Config Options',
+//                handler: this.scrollToMember.createDelegate(this, ['configs']),
+//                iconCls: 'icon-config'
+//            },'-',{
+//                text: 'Properties',
+//                handler: this.scrollToMember.createDelegate(this, ['props']),
+//                iconCls: 'icon-prop'
+//            }, '-',{
+//                text: 'Methods',
+//                handler: this.scrollToMember.createDelegate(this, ['methods']),
+//                iconCls: 'icon-method'
+//            }, '-',{
+//                text: 'Events',
+//                handler: this.scrollToMember.createDelegate(this, ['events']),
+//                iconCls: 'icon-event'
+//            }, '-',{
+//                text: 'Direct Link',
+//                handler: this.directLink,
+//                scope: this,
+//                iconCls: 'icon-fav'
+//            }, '-',{
+//                tooltip:'Hide Inherited Members',
+//                iconCls: 'icon-hide-inherited',
+//                enableToggle: true,
+//                scope: this,
+//                toggleHandler : function(b, pressed){
+//                     this.body[pressed ? 'addClass' : 'removeClass']('hide-inherited');
+//                }
+//            }, '-', {
+//                tooltip:'Expand All Members',
+//                iconCls: 'icon-expand-members',
+//                enableToggle: true,
+//                scope: this,
+//                toggleHandler : function(b, pressed){
+//                    this.body[pressed ? 'addClass' : 'removeClass']('full-details');
+//                }
+//            }]
+//        });
+//        DocPanel.superclass.initComponent.call(this);
     },
 
     directLink : function(){
@@ -437,14 +437,15 @@ Ext.onReady(function(){
 	addView(api);
 	
     viewport.doLayout();  
-    
-	PlotContainer();
-	
+   
 	setTimeout(function(){
         Ext.get('loading').remove();
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 250);
 	
+	PlotContainer();
+	
+	addPuxiData();
 });
 
 

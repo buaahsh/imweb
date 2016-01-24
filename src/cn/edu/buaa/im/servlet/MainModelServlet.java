@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import cn.edu.buaa.im.model.DPVersion;
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.service.DataPacketService;
+import cn.edu.buaa.im.service.RelationService;
 import cn.edu.buaa.im.service.VersionService;
 import cn.edu.buaa.im.wsdl.WSDLClient;
 
@@ -52,11 +53,12 @@ public class MainModelServlet extends BaseServlet{
 			String user = request.getParameter("user");
 			String pwd = request.getParameter("pwd");
 			String uid = request.getParameter("uid");
+			String sid = request.getParameter("sid");
 			
-			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
-			
+//			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
+			RelationService relationService = new RelationService(user, pwd, nodeId, version, sid);
 			Gson gson = new Gson();
-			responseString(response, gson.toJson(dataPacketService.getPedigree()));
+			responseString(response, gson.toJson(relationService.pedigree));
 		}
 		else if (arg.equals("debug")){
 

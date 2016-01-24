@@ -139,6 +139,21 @@ public class WSDLHttpClient {
 		loginFlag = true;
 	}
 	
+	public String getJsonResult(String url, Map<String, String> params) {
+		String urlstr = String.format("%s/%s", 
+				baseURL, url);
+		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
+				"utf-8", false);
+		return resultString;
+	}
+	
+	public String getJsonResult(String url) {
+		String urlstr = String.format("%s/%s", 
+				baseURL, url);
+		String resultString = client.getDoGetURL(urlstr, "utf-8");
+		return resultString;
+	}
+	
 	public String download(String nodeId, String version) {
 		String urlstr = String.format("%s/file/download.mm?nodeId=%s&version=%s", 
 				baseURL, nodeId, version);
@@ -192,6 +207,8 @@ public class WSDLHttpClient {
 					"utf-8", false);
 			Gson gson = new Gson();
 			WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
+			if(wNodes == null || wNodes.results == null)
+				return null;
 			for (WSDLNode node : wNodes.results) {
 				if (node.text.equals("json.txt"))
 				{
@@ -262,13 +279,7 @@ public class WSDLHttpClient {
 		public int version;
 		public List<WSDLNode> children;
 		public String type;
-//		public WSDLDataPack dataPack;
 	}
-	
-//	public class WSDLDataPack{
-//		public int id;
-//		public String name;
-//	}
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
 //		WSDLHttpClient w = new WSDLHttpClient();

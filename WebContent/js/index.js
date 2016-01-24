@@ -73,9 +73,9 @@ $(function(){
 		$("#abs_table").html(html);
 	}); 
 	
-	//update the abstraction
+	//update the puxi
 	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid, function(data){
 		CreateJsplumb(data);
 	});
 	

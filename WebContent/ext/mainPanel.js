@@ -8,7 +8,7 @@ function addPanel(){
         autoScroll: true
 	});
 	
-	return [addAbs(), addHistory(), p2]
+	return [addAbs(), addPuxi(), addHistory(), p2]
 	//Ext.get('welcome-panel').add(p);
 }
 
@@ -191,6 +191,50 @@ function addView(api){
 		items : [combo1]
 	});
 }
+
+function addPuxi(){
+	var p2 = new Ext.Panel({
+		height: 400,
+		frame: true,
+//		class: 'demo statemachine-demo',
+		id : 'docs-puxi',
+		style : "margin: 10px",
+        title: "数据谱系",
+        html : "<div id='statemachine-demo'></div>",
+//        renderTo : Ext.get('doc-body'),
+        autoScroll: true
+	});
+	return p2;
+}
+
+function addPuxiData(){
+	$.ajaxSetup({
+		async : false
+	});
+	var cid = getUrlParam('cid');
+	cid = decodeURIComponent(cid);
+	cid = cid.split("_")[0];
+	
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
+	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
+	if (id == sid)
+		return;
+	
+	$("#statemachine-demo").attr("class", "demo statemachine-demo");
+	//update the puxi
+	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid, function(data){
+		CreateJsplumb(data);
+	});
+	
+}
+
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = encodeURI(window.location.search).substr(1).match(reg);  //匹配目标参数

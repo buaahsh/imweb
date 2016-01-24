@@ -59,6 +59,11 @@ function initwelcome(){
 	}
 	
 	var html = "";
+	if (data == null){
+		alert("没有数据");
+		return html;
+	}
+		
 	Docs.classData.children = data.TreeNode;
 	
 	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" +
