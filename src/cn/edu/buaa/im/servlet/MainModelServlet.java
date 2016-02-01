@@ -55,10 +55,18 @@ public class MainModelServlet extends BaseServlet{
 			String uid = request.getParameter("uid");
 			String sid = request.getParameter("sid");
 			
+			if (sid.equals(nodeId))
+			{
+				RelationService relationService = new RelationService(user, pwd, nodeId, version);
+				responseString(response, relationService.jsonString);
+			}
 //			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
-			RelationService relationService = new RelationService(user, pwd, nodeId, version, sid);
-			Gson gson = new Gson();
-			responseString(response, gson.toJson(relationService.pedigree));
+			else{
+				RelationService relationService = new RelationService(user, pwd, nodeId, version, sid);
+				Gson gson = new Gson();
+				responseString(response, gson.toJson(relationService.pedigree));
+			}
+			
 		}
 		else if (arg.equals("debug")){
 

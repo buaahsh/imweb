@@ -12,6 +12,14 @@ import cn.edu.buaa.im.wsdl.WSDLHttpClient;
 public class RelationService {
 
 	public Pedigree pedigree;
+	public String jsonString;
+	
+	public RelationService(String username, String password, String id, String version){
+		pedigree = new Pedigree();
+		WSDLHttpClient client = new WSDLHttpClient();
+		client.login(username, password);
+		getMMRelation(client, id, version);
+	}
 	
 	public RelationService(String username, String password, String id, String version, String mmid){
 		pedigree = new Pedigree();
@@ -44,6 +52,15 @@ public class RelationService {
 		this.pedigree.self = relationItem;
 	}
 	
+	public void getMMRelation(WSDLHttpClient client, String id, String version)
+	{
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("id", id);
+		params.put("version", version);
+		String url = "ancestry/getMainModelDPRelations.mm";
+		String json = client.getJsonResult(url, params);
+		this.jsonString = json;
+	}
 	public class Pedigree{
 		public RelationItem[] upper;
 		public RelationItem self;

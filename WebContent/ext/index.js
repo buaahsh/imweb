@@ -66,8 +66,8 @@ function initwelcome(){
 		
 	Docs.classData.children = data.TreeNode;
 	
-	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" +
-			"<table cellspacing=\"0\" class=\"member-table\"><tbody>";
+	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" 
+		+"<table id='docs-table' cellspacing=\"0\" class=\"member-table\"><tbody>";
 	$.each(data.DataItem, function(idx, item){
 		html += ExtDataItemProc(item);
 	});
@@ -76,6 +76,19 @@ function initwelcome(){
 	return html;
 	
  }
+
+function genpdf(){
+	var specialElementHandlers = {
+	        '#editor': function (element,renderer) {
+	            return true;
+	        }
+	    };
+	var doc = new jsPDF();
+    doc.fromHTML($('#docs-table').html(), 15, 15, {
+        'width': 170,'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+}
 
 function RadioClick(obj){
 	var tokens = $(obj)[0].name.split("_")

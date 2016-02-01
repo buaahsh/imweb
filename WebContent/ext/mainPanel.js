@@ -1,14 +1,13 @@
 function addPanel(){
 	var p2 = new Ext.Panel({
-//		height: 400,
 		id : 'docs-data',
         title: "数据列表",
         html : initwelcome(),
-//        renderTo : Ext.get('doc-body'),
         autoScroll: true
 	});
 	
 	return [addAbs(), addPuxi(), addHistory(), p2]
+//	return [addPuxi()]
 	//Ext.get('welcome-panel').add(p);
 }
 
@@ -223,15 +222,24 @@ function addPuxiData(){
 	var uid = getUrlParam('uid');
 	var sid = getUrlParam('sid');
 	
-	if (id == sid)
-		return;
+	
 	
 	$("#statemachine-demo").attr("class", "demo statemachine-demo");
-	//update the puxi
-	$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid, function(data){
-		CreateJsplumb(data);
-	});
+	
+	if (id == sid){
+		$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
+				+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid, function(data){
+			CreateMMJsplumb(data);
+		});
+	}
+	else{
+		//update the puxi
+		$.getJSON("/imweb/MainModel?arg=relation&id=" + id + "&version=" + version
+				+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid, function(data){
+			CreateJsplumb(data);
+		});
+	}
+	
 	
 }
 

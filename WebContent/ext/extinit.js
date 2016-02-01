@@ -320,7 +320,7 @@ function getParents(list)
 
 function showmore(obj){
 	var tableid = obj.id.split("_")[0] + "_target_table";
-	if (obj.textContent == "显示更多..."){
+	if ($(obj).text() == "显示更多..."){
 		$.each($("#"+tableid + " tbody tr"), function(idx, item){
 			$(item).show();
 		});

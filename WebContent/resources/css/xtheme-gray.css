@@ -110,7 +110,7 @@ ul.x-tab-strip-bottom{
 }
 
 .x-tab-strip span.x-tab-strip-text {
-	font:normal 11px tahoma,arial,helvetica;
+	font:normal 13px tahoma,arial,helvetica;
 	color:#416aa3;
 }
 
@@ -1352,7 +1352,7 @@ a.x-menu-item {
 .x-panel-header {
     color:#15428b;
 	font-weight:bold; 
-    font-size: 11px;
+    font-size: 13px;
     font-family: tahoma,arial,verdana,sans-serif;
     border-color:#99bbe8;
     background-image: url(../images/default/panel/white-top-bottom.gif);
@@ -1377,7 +1377,7 @@ a.x-menu-item {
 
 .x-panel-tl .x-panel-header {
     color:#15428b;
-	font:bold 11px tahoma,arial,verdana,sans-serif;
+	font:bold 13px tahoma,arial,verdana,sans-serif;
 }
 
 .x-panel-tc {
