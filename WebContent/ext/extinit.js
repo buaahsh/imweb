@@ -143,6 +143,8 @@ function ExtDataItemProc(dataItem)
 	    		+ "<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 				+ dataItem.title
 				+ " : ";
+	    	if (dataItem.remark != null && dataItem.remark != "")
+	    		html += "&nbsp&nbsp&nbsp&nbsp(备注："+ dataItem.remark +")"; 
 	    	html += "<div class=\"mdesc\">";
 	    	html += TableDataItemProc(dataItem.id, dataItem.data);
 	    	html += "</div>";

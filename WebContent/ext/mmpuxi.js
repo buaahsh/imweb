@@ -1,3 +1,8 @@
+/**
+ * 主模型的谱系图
+ * @param data
+ */
+
 function CreateMMJsplumb(data) {
 	AddMMHtml(data);
 	

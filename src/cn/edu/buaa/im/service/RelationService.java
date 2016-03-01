@@ -96,7 +96,7 @@ public class RelationService {
 		public int id;
 		public String name;
 		public String techStatus;
-		public int version;
+		public String version;
 		public String writeMajor;
 		
 		public RelationItem clone(){
@@ -141,17 +141,51 @@ public class RelationService {
 		}
 		for (RelationItem item : pedigree.upper) {
 			if (idMap.containsKey(String.valueOf(item.id)))
-				item.version = Integer.parseInt(idMap.get(String.valueOf(item.id))); 
+				item.version = idMap.get(String.valueOf(item.id)); 
 		}
 
 		//更新下游
+		//多个下游节点
 		
-		List<RelationItem> downs = new ArrayList<RelationService.RelationItem>();
+//		List<RelationItem> downs = new ArrayList<RelationService.RelationItem>();
+//		
+//		for (RelationItem item : pedigree.down) {
+//			VersionService versionService = new VersionService(username, password, String.valueOf(item.id));
+//			List<DPVersion> versions = versionService.getVersions();
+//			
+//			boolean has = false;
+//			for (DPVersion dpVersion : versions) {
+//				argsStrings = new String[]{String.valueOf(item.id), dpVersion.id};
+//				result = wsdlClient.getS("getRelation", argsStrings);
+//				String keyString = "<node id=\""+ id +"\" version=\""+ version +"\"/>";
+//				if (result.contains(keyString))
+//				{
+//					has = true;
+//					RelationItem newItem = (RelationItem) item.clone();
+//					newItem.version = dpVersion.id;
+//					downs.add(newItem);
+//				}
+//			}
+//			if (has == false){
+//				RelationItem newItem = (RelationItem) item.clone();
+//				newItem.version = "-1";
+//				downs.add(newItem);
+//			}
+//		}
+//		
+//		RelationItem[] newRelationItems = new RelationItem[downs.size()];
+//		int i = 0;
+//		for (RelationItem relationItem : downs) {
+//			newRelationItems[i] = relationItem;
+//			i += 1;
+//		}
+//		pedigree.down = newRelationItems;
+		
 		
 		for (RelationItem item : pedigree.down) {
 			VersionService versionService = new VersionService(username, password, String.valueOf(item.id));
 			List<DPVersion> versions = versionService.getVersions();
-			
+			String versionStr = "";
 			boolean has = false;
 			for (DPVersion dpVersion : versions) {
 				argsStrings = new String[]{String.valueOf(item.id), dpVersion.id};
@@ -160,24 +194,14 @@ public class RelationService {
 				if (result.contains(keyString))
 				{
 					has = true;
-					RelationItem newItem = (RelationItem) item.clone();
-					newItem.version = Integer.parseInt(dpVersion.id);
-					downs.add(newItem);
+					versionStr += dpVersion.id + ",";
 				}
 			}
 			if (has == false){
-				RelationItem newItem = (RelationItem) item.clone();
-				newItem.version = -1;
-				downs.add(newItem);
+				item.version = "-1";
 			}
+			else
+				item.version = versionStr;
 		}
-		
-		RelationItem[] newRelationItems = new RelationItem[downs.size()];
-		int i = 0;
-		for (RelationItem relationItem : downs) {
-			newRelationItems[i] = relationItem;
-			i += 1;
-		}
-		pedigree.down = newRelationItems;
 	}
 }

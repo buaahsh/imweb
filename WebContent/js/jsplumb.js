@@ -1,3 +1,8 @@
+/**
+ * 数据包的谱系图
+ * @param data
+ */
+
 function CreateJsplumb(data) {
 	AddHtml(data);
 	
@@ -130,21 +135,29 @@ function ConvertItem2Html(item, oldName){
 	
 	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
 	tcid = encodeURIComponent(cid);
-	 tvid = encodeURIComponent(vid);
+	tvid = encodeURIComponent(vid);
 	 
-	var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + item.version
-	+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
-	 
-	var span = "";
-	if (item.version == -1 ){
-		span = "<span>"+item.name+"</span>";
-		item.version = "无";
-	}
-	else
-		span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
+	var span = "<span>"+item.name+"</span>";
+	
 	var html = "<table class=\"table\"><tr><th colspan=\"2\">" + span;
 	html += "</th></tr>";
-	html += "<tr><th colspan=\"2\">版本 : " + item.version + "</th></tr>";
+	if (item.version == "-1" ){
+		html += "<tr><th colspan=\"2\">版本 : 无</th></tr>";
+	}
+	else{
+		html += "<tr><th colspan=\"2\">版本 : ";
+		$.each(item.version.split(","), function(idx, ite){
+			if (ite != ""){
+				var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + ite
+				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
+				if (idx != 0)
+					html += ", <span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+ite+"</span>";
+				else
+					html += "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+ite+"</span>";
+			}
+		});
+		html += "</th></tr>";
+	}
 	html += "</table>";
 	return html;
 }
