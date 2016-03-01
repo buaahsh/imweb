@@ -55,10 +55,15 @@ public class ViewService {
 //				}
 //			}
 			
+			
+			// 针对数据库，只显示视图，其中type=5
+			
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
 			String table = "SchemasDefinition";
 			String key = "Remark";
-			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(table, key, this.cid);
+			String sql = String.format("select * from SchemasDefinition where Remark='%s' and Type = 5;", this.cid);
+			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(sql);
+//			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(table, key, this.cid);
 			List<String> names = sqLiteCRUD.getFields(table);
 			
 			// 先找到结构化数据的sid，根据结构化数据的sid去找视图的sid

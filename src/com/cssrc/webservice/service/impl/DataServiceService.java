@@ -28,6 +28,7 @@ public class DataServiceService extends Service {
     static {
         URL url = null;
         try {
+//        	url = new URL("http://202.112.140.210/MainModel/services/IDataService?wsdl");
             url = new URL(Utility.getParameter("wsdl_url"));
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(DataServiceService.class.getName())

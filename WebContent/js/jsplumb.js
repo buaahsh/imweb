@@ -97,7 +97,7 @@ function AddHtml(data){
 		$("#token" + id).css("left", "8em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 10;
+		top += 5;
 	});
 	top = 5;
 	$("#token" + id).css("left", "28em");
@@ -107,7 +107,7 @@ function AddHtml(data){
 		$("#token" + id).css("left", "60em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 10;
+		top += 5;
 	});
 	$("#statemachine-demo th").css("font-size", 13);
 }
@@ -132,11 +132,16 @@ function ConvertItem2Html(item, oldName){
 	tcid = encodeURIComponent(cid);
 	 tvid = encodeURIComponent(vid);
 	 
-	 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + item.version
+	var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + item.version
 	+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
 	 
-	
-	var span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
+	var span = "";
+	if (item.version == -1 ){
+		span = "<span>"+item.name+"</span>";
+		item.version = "无";
+	}
+	else
+		span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
 	var html = "<table class=\"table\"><tr><th colspan=\"2\">" + span;
 	html += "</th></tr>";
 	html += "<tr><th colspan=\"2\">版本 : " + item.version + "</th></tr>";
