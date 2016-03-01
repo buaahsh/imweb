@@ -9,5 +9,6 @@ public class DataItemJson {
 	public String value;
 	public String remark;
 	public String Attachment;
+	public String remark3; //备注
     public List<DataItemJson> data;
 }

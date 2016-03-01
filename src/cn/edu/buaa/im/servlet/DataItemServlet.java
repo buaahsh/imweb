@@ -103,7 +103,7 @@ public class DataItemServlet extends BaseServlet{
 		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_2.jpg");
 		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_3.jpg");
 		di0.urls.add("/imweb/DataItem?arg=123&file=/home/hsh/data/ex_4.jpg");		
-		DataItem dataItem = new DataItem(title, id, di0);
+		DataItem dataItem = new DataItem(title, id, "", di0);
 		dataItems.add(dataItem);
 
 //		title = "dataitem8";
@@ -122,12 +122,12 @@ public class DataItemServlet extends BaseServlet{
 			BaseData baseData = null;
 			if (treeNode.parent.equals("#")){
 				baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("标题")){
 				baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("文本")){
@@ -135,7 +135,7 @@ public class DataItemServlet extends BaseServlet{
 				textDataItem.text = new ArrayList<String>();
 				textDataItem.text.add("推进剂又称推进药，有规律地燃烧释放出能量，产生气体，推送火箭和导弹的火药。");
 				textDataItem.text.add("推进剂具有下列特性：①比冲量高；②密度大；③燃烧产物的气体（或蒸气）分子量小，离解度小，无毒、无烟、无腐蚀性，不含有凝聚态物质；④火焰温度不应过高，以免烧蚀喷管；⑤应有较宽的温度适应范围；");
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", textDataItem);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("浮点数")){
@@ -143,19 +143,19 @@ public class DataItemServlet extends BaseServlet{
 				FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 				floatDataItem.unit = treeNode.unit;
 				floatDataItem.value = String.valueOf(r.nextFloat() * 100);
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", floatDataItem);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("曲线")){
 				CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
 				curveDataItem.table = getTable();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "",curveDataItem);
 				dataItems.add(dataitem);
 			}
 			else if (treeNode.type.equals("三维模型")){
 				D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
 				d3.link = "/home/hsh/data/003.wrl";
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "",  d3);
 				dataItems.add(dataitem);
 			}
 		}

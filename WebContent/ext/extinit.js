@@ -114,7 +114,7 @@ function ExtDataItemProc(dataItem)
 	    	+"<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 			+ dataItem.title
 			+ " : ";
-	    	html += TextDataItemProc(dataItem.id, dataItem.data);
+	    	html += TextDataItemProc(dataItem.id, dataItem.data, dataItem.remark);
 	    	break;
 	    case "FloatDataItem":
 	    	html +=
@@ -122,7 +122,7 @@ function ExtDataItemProc(dataItem)
 		    	+ "<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
 				+ dataItem.title
 				+ " : ";
-	    	html += FloatDataItemProc(dataItem.id, dataItem.data);
+	    	html += FloatDataItemProc(dataItem.id, dataItem.data, dataItem.remark);
 	    	break;
 	    case "RadioDataItem":
 	    	//html += RadioDataItemProc(dataItem.id, dataItem.data);
@@ -238,17 +238,24 @@ function FileDataItemProc(id, data){
   	return html;
 }
 
-function TextDataItemProc(id, data){
+function TextDataItemProc(id, data, remark){
 	var html = "";
+	var remarkHtml = "";
+	if (remark != null && remark != "")
+		remarkHtml = "&nbsp&nbsp&nbsp&nbsp(备注：" + remark +  ")";
 	$.each(data.text, function(idx, item){
 		html += "<span>"+item+"</span>";
 	});
+	html += remarkHtml;
   	return html;
 }
 
-function FloatDataItemProc(id, data){
+function FloatDataItemProc(id, data, remark){
 	var html = "";
-	html = "<span class=\"float\"><span>"+data.value+"</span>"+data.unit+"</span>";
+	var remarkHtml = "";
+	if (remark != null && remark != "")
+		remarkHtml = "&nbsp&nbsp&nbsp&nbsp(备注：" + remark +  ")";
+	html = "<span class=\"float\"><span>"+data.value+"</span>"+data.unit+"</span>" + remarkHtml;
   	return html;
 }
 

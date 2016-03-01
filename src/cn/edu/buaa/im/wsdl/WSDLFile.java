@@ -50,6 +50,7 @@ public class WSDLFile {
 		String type = String.valueOf(dataItemJson.type);
 		String icon = GetIcon(type);
 		String unit = dataItemJson.remark;
+		String remark = dataItemJson.remark3;
 		
 		TreeNode treeNode = new TreeNode(fid, pid, name, icon);
 		treeNode.type = type;
@@ -57,7 +58,7 @@ public class WSDLFile {
 		
 		treeNodes.add(treeNode);
 		
-		DataItem dataItem = Convert2DataItem(treeNode, dataItemJson.value);
+		DataItem dataItem = Convert2DataItem(treeNode, dataItemJson.value, remark);
 		
 		dataItems.add(dataItem);
 		
@@ -75,33 +76,33 @@ public class WSDLFile {
 		return "file";
 	}
 	
-	public DataItem Convert2DataItem(TreeNode treeNode, String value) {
+	public DataItem Convert2DataItem(TreeNode treeNode, String value, String remark) {
 		DataItem dataitem = null;
 		BaseData baseData = null;
 		if (treeNode.parent.equals("#")){	
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, baseData);
 		}
 		else if (treeNode.type.equals("4")){ //分类
 			baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, baseData);
 		}
 		else if (treeNode.type.equals("8")){ //浮点数
 			FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 			floatDataItem.unit = treeNode.unit;
 			floatDataItem.value = value;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, floatDataItem);
 		}
 		else if (treeNode.type.equals("19")){ //文本 
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		else if (treeNode.type.equals("19")){
 			CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
 			curveDataItem.table = null;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, curveDataItem);
 		}
 		else if (treeNode.type.equals("20")){ // figure
 		}
@@ -112,27 +113,27 @@ public class WSDLFile {
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		// TODO : 曲线簇模型
 		else if (treeNode.type.equals("23")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		else if (treeNode.type.equals("24")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		// TODO : 实例链接
 		else if (treeNode.type.equals("25")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		else if (treeNode.type.equals("10")){ //二维表
 			TableDataItem tableItem = BaseData.getInstanceBaseData().new TableDataItem();
@@ -140,13 +141,13 @@ public class WSDLFile {
 			tableItem.value = value;
 			if (value == null || value.isEmpty())
 				tableItem.value = treeNode.unit;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, tableItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, tableItem);
 		}
 		else{
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, textDataItem);
 		}
 		return dataitem;
 	}

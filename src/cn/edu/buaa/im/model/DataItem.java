@@ -9,11 +9,15 @@ public class DataItem {
 	public BaseData data;
 	public List<String> parents;
 	
-	public DataItem(String title, String id, BaseData baseData){
+	public String remark; // 备注
+	
+	public DataItem(String title, String id, String remark, BaseData baseData){
 		this.title = title;
 		this.id = id.replace("#", "");
 		this.data = baseData;
 		this.type = baseData.getClass().getSimpleName();
+		
+		this.remark = remark;
 	}
 }
 

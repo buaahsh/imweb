@@ -83,7 +83,7 @@ public class WSDLHttpClient {
 			DataItem dataitem = null;
 			BaseData baseData = null;
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 			
 			treeNodes.add(treeNode);
 			dataItems.add(dataitem);
@@ -100,7 +100,7 @@ public class WSDLHttpClient {
 				dataitem = null;
 				baseData = null;
 				baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 				
 				treeNodes.add(treeNode);
 				dataItems.add(dataitem);
@@ -257,13 +257,13 @@ public class WSDLHttpClient {
 				BaseData baseData = null;
 				if (treeNode.parent.equals("#")){	
 					baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 					dataItems.add(dataitem);
 					continue;
 				}
 				else if (treeNode.type.equals("16")){
 					baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
-					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", baseData);
 					dataItems.add(dataitem);
 					continue;
 				}

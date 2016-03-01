@@ -98,28 +98,28 @@ public class DataItemService {
 		BaseData baseData = null;
 		if (treeNode.parent.equals("#")){	
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", baseData);
 		}
 		else if (treeNode.type.equals("16")){
 			baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, baseData);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", baseData);
 		}
 		else if (treeNode.type.equals("17")){
 			FloatDataItem floatDataItem =  BaseData.getInstanceBaseData().new FloatDataItem();
 			floatDataItem.unit = treeNode.unit;
 			floatDataItem.value = value;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, floatDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", floatDataItem);
 		}
 		else if (treeNode.type.equals("18")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		else if (treeNode.type.equals("19")){
 			CurveDataItem curveDataItem =  BaseData.getInstanceBaseData().new CurveDataItem();
 			curveDataItem.table = null;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, curveDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", curveDataItem);
 		}
 		else if (treeNode.type.equals("20")){ // figure
 			ImageDataItem imageDataItem = BaseData.getInstanceBaseData().new ImageDataItem();
@@ -131,46 +131,46 @@ public class DataItemService {
 					urls.add(getAbsPath(string));
 			}
 			imageDataItem.urls = urls;
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, imageDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", imageDataItem);
 		}
 		else if (treeNode.type.equals("21")){ //model
 			D3DataItem d3 =  BaseData.getInstanceBaseData().new D3DataItem();
 			String[] strings = value.split(";");
 			d3.link = getAbsPath(strings[0]);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, d3);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", d3);
 		}
 		// TODO : 浮点数选项
 		else if (treeNode.type.equals("22")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		// TODO : 曲线簇模型
 		else if (treeNode.type.equals("23")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		else if (treeNode.type.equals("24")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		// TODO : 实例链接
 		else if (treeNode.type.equals("25")){
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		else{
 			TextDataItem textDataItem = BaseData.getInstanceBaseData().new TextDataItem();
 			textDataItem.text = new ArrayList<String>();
 			textDataItem.text.add(value);
-			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, textDataItem);
+			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href,  "", textDataItem);
 		}
 		return dataitem;
 	}
