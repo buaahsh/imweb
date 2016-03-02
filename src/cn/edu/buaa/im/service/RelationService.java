@@ -29,11 +29,13 @@ public class RelationService {
 	 * @param id
 	 * @param version
 	 */
-	public RelationService(String username, String password, String id, String version){
+	public RelationService(String username, String userid, String password, String id, String version){
 		pedigree = new Pedigree();
 		WSDLHttpClient client = new WSDLHttpClient();
 		client.login(username, password);
 		getMMRelation(client, id, version);
+		
+		RefineMMRelation(username, userid, password, id, version, id);
 	}
 	
 	/**
@@ -44,7 +46,7 @@ public class RelationService {
 	 * @param version
 	 * @param mmid
 	 */
-	public RelationService(String username, String password, String id, String version, String mmid){
+	public RelationService(String username, String userid, String password, String id, String version, String mmid){
 		pedigree = new Pedigree();
 		WSDLHttpClient client = new WSDLHttpClient();
 		
@@ -52,7 +54,7 @@ public class RelationService {
 		
 		init(client, id, version, mmid);
 		
-		RefineRelation(username, password, id, version);
+		RefineRelation(username, userid, password, id, version, mmid);
 	}
 	
 	private void init(WSDLHttpClient client, String id, String version, String mmid) {
@@ -99,6 +101,8 @@ public class RelationService {
 		public String version;
 		public String writeMajor;
 		
+		public String path;
+		
 		public RelationItem clone(){
 			RelationItem relationItem = new RelationItem();
 			relationItem.id = this.id;
@@ -111,12 +115,26 @@ public class RelationService {
 		}
 	}
 	
+	public class MMRelation{
+		public int id;
+		public int srcId;
+		public int srcVersion;
+		public int destId;
+		public int destVersion;
+		public boolean isNewest;
+	}
+	
+	public class MMResponse{
+		public RelationItem[] dataPacks;
+		public MMRelation[] relations;
+	}
+	
 	/**
 	 * refine 上下游，找到真正属于该节点的上下游
 	 * @param id
 	 * @param version
 	 */
-	private void RefineRelation(String username, String password, String id, String version){
+	private void RefineRelation(String username, String userid, String password, String id, String version, String mmid){
 		//更新上游
 		WSDLClient wsdlClient = new WSDLClient();
 		String[] argsStrings = new String[]{id, version};
@@ -203,5 +221,34 @@ public class RelationService {
 			else
 				item.version = versionStr;
 		}
+		
+		HashMap<String, String> reHashMap = wsdlClient.getFilePaths(userid, password, mmid, version, null);
+		
+		for (RelationItem item : pedigree.upper) {
+			if (reHashMap.containsKey(String.valueOf(item.id)))
+				item.path = reHashMap.get(String.valueOf(item.id));
+		}
+		for (RelationItem item : pedigree.down) {
+			if (reHashMap.containsKey(String.valueOf(item.id)))
+				item.path = reHashMap.get(String.valueOf(item.id));
+		}
+	}
+
+	/**
+	 * 上下游，找到真正属于该节点的上下游
+	 */
+	private void RefineMMRelation(String username, String userid, String password, String id, String version, String mmid){
+		Gson gson = new Gson();
+		MMResponse mmResponse = gson.fromJson(this.jsonString, MMResponse.class);
+		
+		WSDLClient wsdlClient = new WSDLClient();
+		HashMap<String, String> reHashMap = wsdlClient.getFilePaths(userid, password, mmid, version, null);
+		
+		for (RelationItem item : mmResponse.dataPacks) {
+			if (reHashMap.containsKey(String.valueOf(item.id)))
+				item.path = reHashMap.get(String.valueOf(item.id));
+		}
+		
+		this.jsonString = gson.toJson(mmResponse);
 	}
 }

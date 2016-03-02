@@ -118,6 +118,15 @@ function addAbs(){
 		        fieldLabel: item.name,
 		        readOnly: true
 		    });
+			if (item.name == "技术状态"){
+				if (item.value == "3")
+					item.value = "已完成";
+				if (item.value == "2")
+					item.value = "待完成";
+				if (item.value == "1")
+					item.value = "等待中";
+			}
+				
 			txtusername.setValue(item.value);
 			items.push(txtusername);
 //			if (item.name=="数据包名称")
@@ -187,7 +196,19 @@ function addView(api){
 	var fourTbar = new Ext.Toolbar({
 		id:'view',
 		renderTo : api.tbar,
-		items : [combo1]
+		items : [combo1,"", "",
+		         {
+            iconCls: 'icon-expand-all',
+			tooltip: 'Expand All',
+            handler: function(){ api.root.expand(true); },
+            scope: this
+        }, '-', {
+            iconCls: 'icon-collapse-all',
+            tooltip: 'Collapse All',
+            handler: function(){ api.root.collapse(true); },
+            scope: this
+        }
+		         ]
 	});
 }
 

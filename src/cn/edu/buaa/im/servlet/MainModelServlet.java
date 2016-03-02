@@ -57,12 +57,12 @@ public class MainModelServlet extends BaseServlet{
 			
 			if (sid.equals(nodeId))
 			{
-				RelationService relationService = new RelationService(user, pwd, nodeId, version);
+				RelationService relationService = new RelationService(user, uid, pwd, nodeId, version);
 				responseString(response, relationService.jsonString);
 			}
 //			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
 			else{
-				RelationService relationService = new RelationService(user, pwd, nodeId, version, sid);
+				RelationService relationService = new RelationService(user, uid, pwd, nodeId, version, sid);
 				Gson gson = new Gson();
 				responseString(response, gson.toJson(relationService.pedigree));
 			}

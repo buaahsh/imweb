@@ -181,6 +181,19 @@ public class WSDLHttpClient {
 		
 		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
 				"utf-8", false);
+		Gson gson = new Gson();
+		WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
+		// 首先下载history，如果没有查找最新
+		
+		if(wNodes == null)
+			return null;
+		
+		if (wNodes.totalProperty == 0){
+			urlstr = String.format("%s/node/loadNodeGrid.mm",
+				baseURL);
+			resultString = client.getDoPostResponseDataByURL(urlstr, params,
+				"utf-8", false);
+		}
 		return resultString;
 	}
 	

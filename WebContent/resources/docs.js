@@ -46,9 +46,14 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
         Ext.apply(this, {
             tbar:
             	 // search
-            	 [ ' ',
+            	 [  {
+			            iconCls: 'icon-fav',
+						 tooltip: '后退',
+			            handler: function(){ window.history.back();  },
+			            scope: this
+			        },  ' ', ' ' ,' ',
 				new Ext.form.TextField({
-					width: 210,
+					width: 240,
 					emptyText:'查找...',
 	                enableKeyEvents: true,
 					listeners:{
@@ -65,18 +70,9 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
 	                    },
 	                    scope: this
 					}
-				}), ' ', ' ',
-				{
-	                iconCls: 'icon-expand-all',
-					tooltip: 'Expand All',
-	                handler: function(){ this.root.expand(true); },
-	                scope: this
-	            }, '-', {
-	                iconCls: 'icon-collapse-all',
-	                tooltip: 'Collapse All',
-	                handler: function(){ this.root.collapse(true); },
-	                scope: this
-	            }]
+				}), ' ', ' '
+				 
+				]
         })
         
         ApiPanel.superclass.initComponent.call(this);

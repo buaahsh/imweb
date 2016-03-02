@@ -133,9 +133,10 @@ function ConvertItem2Html(item, oldName){
 	var vid = getUrlParam('vid');
 	vid = decodeURIComponent(vid);
 	
-	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
-	tcid = encodeURIComponent(cid);
-	tvid = encodeURIComponent(vid);
+//	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
+	tcid = encodeURIComponent(item.path);
+	tvid = "";
+//	tvid = encodeURIComponent(vid);
 	 
 	var span = "<span>"+item.name+"</span>";
 	
@@ -149,7 +150,7 @@ function ConvertItem2Html(item, oldName){
 		$.each(item.version.split(","), function(idx, ite){
 			if (ite != ""){
 				var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + ite
-				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
+				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
 				if (idx != 0)
 					html += ", <span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+ite+"</span>";
 				else

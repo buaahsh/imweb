@@ -121,12 +121,13 @@ function ConvertItem2MMHtml(item, oldName){
 	var vid = getUrlParam('vid');
 	vid = decodeURIComponent(vid);
 	
-	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
-	tcid = encodeURIComponent(cid);
-	 tvid = encodeURIComponent(vid);
+//	cid = cid.replace("/" + oldName + "/", "/" + item.name + "/");
+	tcid = encodeURIComponent(item.path);
+	tvid = "";
+//	 tvid = encodeURIComponent(vid);
 	 
 	 var href = "/imweb/ie.html?cid=" + tcid + "&id=" + item.id + "&version=" + item.version
-	+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
+	+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
 	 
 	
 	var span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
