@@ -439,7 +439,7 @@ Ext.onReady(function(){
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 250);
 	
-	PlotContainer();
+	//PlotContainer();
 	
 	addPuxiData();
 });

@@ -23,7 +23,7 @@ $("#select_view").change(function(){
 				
 				ImageSilde();
 				
-				PlotContainer();
+				//PlotContainer();
 			});
 		}
 		else{
@@ -37,7 +37,7 @@ $("#select_view").change(function(){
 				
 				ImageSilde();
 				
-				PlotContainer();
+				//PlotContainer();
 			});
 		}
 		
@@ -55,7 +55,7 @@ $("#select_view").change(function(){
 				
 				ImageSilde();
 				
-				PlotContainer();
+				//PlotContainer();
 			});
 		}
 		else{
@@ -69,7 +69,7 @@ $("#select_view").change(function(){
 			
 			ImageSilde();
 			
-			PlotContainer();
+			//PlotContainer();
 		});
 		}
 	}

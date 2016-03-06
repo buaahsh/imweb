@@ -101,6 +101,8 @@ public class RelationService {
 		public String version;
 		public String writeMajor;
 		
+		public String updateUser;
+		public String updateDate;
 		public String path;
 		
 		public RelationItem clone(){

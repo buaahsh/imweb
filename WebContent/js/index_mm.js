@@ -27,7 +27,7 @@ $(function(){
 		
 		ImageSilde();
 		
-		PlotContainer();
+		//PlotContainer();
 	});
 	
 	//update the versions
