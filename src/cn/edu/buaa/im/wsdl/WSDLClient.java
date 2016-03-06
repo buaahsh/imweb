@@ -75,9 +75,9 @@ public class WSDLClient {
 					id = attribute.getValue();
 			}
 			if(isDP)
-				reHashMap.put(id, nowPath + "/" + name);
+				reHashMap.put(id, nowPath + name + "/结构化数据");
 			else{
-				BuildHashMap(element, reHashMap, nowPath + "/" + name);
+				BuildHashMap(element, reHashMap, nowPath + name + "/");
 			}
 		}
 	}

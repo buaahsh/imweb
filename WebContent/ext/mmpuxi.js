@@ -97,6 +97,12 @@ function AddMMHtml(data){
 	$.each(dps, function(idx, item){
 		$("#token" + item.id).css("left", left + "em");
 		$("#token" + item.id).css("top",  top + "em");
+		if (item.techStatus == "已完成")
+			$("#token" + item.id).css("background-color",  "#98FB98");
+		if (item.techStatus == "待完成")
+			$("#token" + item.id).css("background-color",  "#FFE4A0");
+		if (item.techStatus == "等待中")
+			$("#token" + item.id).css("background-color",  "#EFEFEF");
 		top += 10;
 		left += 12;
 	});
