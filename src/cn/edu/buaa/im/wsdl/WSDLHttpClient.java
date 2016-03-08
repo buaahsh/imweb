@@ -268,7 +268,7 @@ public class WSDLHttpClient {
 				
 				DataItem dataitem = null;
 				BaseData baseData = null;
-				if (treeNode.parent.equals("#")){	
+				if (treeNode.parent.equals("#") && treeNode.type.equals("16")){	
 					baseData = BaseData.getInstanceBaseData().new TitleDataItem();
 					dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
 					dataItems.add(dataitem);

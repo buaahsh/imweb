@@ -140,7 +140,7 @@ function ConvertItem2Html(item, oldName){
 	 
 	var span = "<span>"+item.name+"</span>";
 	
-	var html = "<table class=\"table\"><tr><th colspan=\"2\">" + span;
+	var html = "<table class=\"table\"><tr><th colspan=\"2\" style=\"font-weight: bold;\">" + span;
 	html += "</th></tr>";
 	if (item.version == "-1" ){
 		html += "<tr><th colspan=\"2\">版本 : 无</th></tr>";

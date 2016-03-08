@@ -103,8 +103,8 @@ function AddMMHtml(data){
 			$("#token" + item.id).css("background-color",  "#FFE4A0");
 		if (item.techStatus == "等待中")
 			$("#token" + item.id).css("background-color",  "#EFEFEF");
-		top += 10;
-		left += 14;
+		top += 10.5;
+		left += 17.5;
 	});
 	$("#statemachine-demo").css("height", 110 * dps.length);
 	$("#statemachine-demo").parent().css("height", 110 * dps.length + 35);
@@ -139,10 +139,10 @@ function ConvertItem2MMHtml(item, oldName){
 	var span = "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+item.name+"</span>";
 	var html = "<table class=\"table\"><tr><th colspan=\"2\" style=\"font-size: 14px;font-weight: bold;\">" + span;
 	html += "</th></tr>";
-	html += "<tr><th colspan=\"4\">" + item.updateUser + "</th></tr>";
-	html += "<tr><th colspan=\"4\">" + item.updateDate + "</th></tr>";
-	html += "<tr><th colspan=\"2\">版本 : " + item.version + "</th></tr>";
-	html += "<tr><th colspan=\"2\">状态 : " + item.techStatus + "</th></tr>";
+	html += "<tr><th style=\"font-size: 13px;color: #424242;\" colspan=\"2\">完成人: " + item.updateUser + "</th></tr>";
+	html += "<tr><th style=\"font-size: 13px;color: #424242;\" colspan=\"2\">版本 : " + item.version + "</th></tr>";
+	html += "<tr><th style=\"font-size: 13px;color: #424242;\" colspan=\"2\">时间: " + item.updateDate + "</th></tr>";
+	html += "<tr><th style=\"font-size: 13px;color: #424242;\" colspan=\"2\">状态 : " + item.techStatus + "</th></tr>";
 	
 	html += "</table>";
 	return html;
