@@ -88,22 +88,22 @@ public class WSDLHttpClient {
 			treeNodes.add(treeNode);
 			dataItems.add(dataitem);
 			for (WSDLNode node : wsdlnode.children) {
-				name = node.text;
-				fid = "fid" + String.valueOf(node.id);
-				type = "";
-				icon = "folder";
-				unit = "";
-				
-				treeNode = new TreeNode(fid, "fid" + String.valueOf(wsdlnode.id), name, icon);
-				treeNode.type = type;
-				treeNode.unit = unit;
-				dataitem = null;
-				baseData = null;
-				baseData = BaseData.getInstanceBaseData().new TitleDataItem();
-				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
-				
-				treeNodes.add(treeNode);
-				dataItems.add(dataitem);
+//				name = node.text;
+//				fid = "fid" + String.valueOf(node.id);
+//				type = "";
+//				icon = "folder";
+//				unit = "";
+//				
+//				treeNode = new TreeNode(fid, "fid" + String.valueOf(wsdlnode.id), name, icon);
+//				treeNode.type = type;
+//				treeNode.unit = unit;
+//				dataitem = null;
+//				baseData = null;
+//				baseData = BaseData.getInstanceBaseData().new TitleDataItem();
+//				dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, "", baseData);
+//				
+//				treeNodes.add(treeNode);
+//				dataItems.add(dataitem);
 				
 				getOneNode(treeNodes, dataItems, fid, node);
 			}

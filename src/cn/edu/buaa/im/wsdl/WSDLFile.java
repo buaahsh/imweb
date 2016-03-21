@@ -79,11 +79,12 @@ public class WSDLFile {
 	public DataItem Convert2DataItem(TreeNode treeNode, String value, String remark) {
 		DataItem dataitem = null;
 		BaseData baseData = null;
-		if (treeNode.parent.equals("#")){	
+		//if (treeNode.parent.equals("#") && treeNode.type.equals("4")){
+		if (treeNode.parent.equals("#")){
 			baseData = BaseData.getInstanceBaseData().new TitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, baseData);
 		}
-		else if (treeNode.type.equals("4")){ //分类
+		if (treeNode.type.equals("4")){ //分类
 			baseData = BaseData.getInstanceBaseData().new SubtitleDataItem();
 			dataitem = new DataItem(treeNode.text, treeNode.a_attr.href, remark, baseData);
 		}
