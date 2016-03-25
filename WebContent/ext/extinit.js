@@ -95,7 +95,9 @@ function ExtDataItemProc(dataItem)
 				+ dataItem.title
 				+ " ";
     	break; 
-	    case "SubtitleDataItem":    
+	    case "SubtitleDataItem":
+	    	if (dataItem.parents == null)
+	    		dataItem.parents = []
 	    	html += 
 	    		"<td class=\"micon-blue\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
 		    	+ "<td class=\"sig\" style=\"color:blue;\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
