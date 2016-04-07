@@ -17,7 +17,6 @@ import cn.edu.buaa.im.service.Utility;;
  * 
  */
 @WebServiceClient(name = "DataServiceService", 
-//                  wsdlLocation = "http://202.112.140.210/MainModel/services/IDataService?wsdl",
                   targetNamespace = "http://impl.service.webservice.cssrc.com/") 
 public class DataServiceService extends Service {
 
