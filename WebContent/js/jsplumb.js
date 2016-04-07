@@ -102,7 +102,7 @@ function AddHtml(data){
 		$("#token" + id).css("left", "8em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 5;
+		top += 8;
 	});
 	top = 5;
 	$("#token" + id).css("left", "28em");
@@ -112,7 +112,7 @@ function AddHtml(data){
 		$("#token" + id).css("left", "60em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 5;
+		top += 8;
 	});
 	$("#statemachine-demo th").css("font-size", 13);
 }
@@ -142,6 +142,9 @@ function ConvertItem2Html(item, oldName){
 	
 	var html = "<table class=\"table\"><tr><th colspan=\"2\" style=\"font-weight: bold;\">" + span;
 	html += "</th></tr>";
+	
+	html += "<tr><th colspan=\"2\">完成人: " + item.updateUser + "</th></tr>";
+	
 	if (item.version == "-1" ){
 		html += "<tr><th colspan=\"2\">版本 : 无</th></tr>";
 	}
@@ -159,6 +162,9 @@ function ConvertItem2Html(item, oldName){
 		});
 		html += "</th></tr>";
 	}
+	
+	html += "<tr><th colspan=\"2\">时间: " + item.updateDate + "</th></tr>";
+
 	html += "</table>";
 	return html;
 }
