@@ -348,6 +348,9 @@ Ext.extend(MainPanel, Ext.TabPanel, {
 	}
 });
 
+function hideHightlight(id){
+	$('#' + id).css('background-color', '');
+}
 
 Ext.onReady(function(){
 
@@ -365,6 +368,9 @@ Ext.onReady(function(){
             var top = (el.getOffsetsTo(body)[1]) + body.dom.scrollTop;
             //body.scrollTo('top', top-25, {duration:0.1, callback: this.hlMember.createDelegate(this, [member])});
             body.scrollTo('top', top-25, {duration:0.1});
+            $("#" + id).css("background-color", "rgb(255, 255, 100)");
+            setTimeout(function() {return hideHightlight(id)}, 1500);
+            
         }
     });
 
