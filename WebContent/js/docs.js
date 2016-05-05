@@ -6,6 +6,20 @@ function PlotOneContainer(ContainerId, x){
 //			type : 'scatter',
 //			zoomType : 'xy'
 //		},
+		exporting:{
+			chartOptions:{
+				plotOptions:{
+					series:{
+						dataLabels:{
+							enabled: false
+						}
+					}
+				}
+			},
+			scale: 3,
+			fallbackToExportServer: false
+				
+		},
 	    xAxis: {
 //	        title: {
 //	            text: 'Temperature (°C)'
