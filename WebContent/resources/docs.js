@@ -248,7 +248,7 @@ MainPanel = function(){
 
         items: {
             id:'welcome-panel',
-            title: '数据展示',
+            title: getTitle(),
             html : '<div></div>',
             iconCls:'icon-docs',
             autoScroll: true,

@@ -99,17 +99,17 @@ function AddHtml(data){
 	id = 1;
 	var top = 5;
 	$.each(data.upper, function(idx, item){
-		$("#token" + id).css("left", "8em");
+		$("#token" + id).css("left", "4em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
 		top += 8;
 	});
 	top = 5;
-	$("#token" + id).css("left", "28em");
+	$("#token" + id).css("left", "32em");
 	$("#token" + id).css("top",  top + "em");
 	id += 1;
 	$.each(data.down, function(idx, item){
-		$("#token" + id).css("left", "60em");
+		$("#token" + id).css("left", "64em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
 		top += 8;

@@ -129,8 +129,9 @@ function addAbs(){
 				
 			txtusername.setValue(item.value);
 			items.push(txtusername);
-//			if (item.name=="数据包名称")
-//				$("#title_a").text(item.value);
+			
+			if (item.name=="名称")
+				$("#doc-body span.icon-docs").text(item.value);
 		});		
 	}); 
 
@@ -260,8 +261,36 @@ function addPuxiData(){
 			CreateJsplumb(data);
 		});
 	}
+}
+
+function getTitle(){
+	$.ajaxSetup({
+		async : false
+	});
+	var cid = getUrlParam('cid');
+	cid = decodeURIComponent(cid);
+	cid = cid.split("_")[0];
 	
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
 	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
+	var items = new Array();
+	//update the abstraction
+	var value = "数据展示";
+		
+	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
+		$.each(data, function(idx, item){
+			if (item.name=="名称")
+				value = item.value;
+		});		
+	});
+	return value;
 }
 
 function getUrlParam(name) {

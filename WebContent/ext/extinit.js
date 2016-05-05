@@ -4,6 +4,25 @@ function PlotOneContainer(ContainerId, x){
 	if (data.length == 0)
 		return;
 	$('#' + ContainerId).highcharts({
+		exporting:{
+//			buttons:{
+//				contextButton:{
+//					menuItems:[]
+//				}
+//			},
+			chartOptions:{
+				plotOptions:{
+					series:{
+						dataLabels:{
+							enabled: false
+						}
+					}
+				}
+			},
+			scale: 3,
+			fallbackToExportServer: false
+				
+		},
 		title: {
 			text : ""
 		},
@@ -76,7 +95,8 @@ function GetPlotData(ContainerId, xaxis){
 		});
 		data.push({
 			name : name,
-			data: subdata
+			data: subdata,
+			visible: false
 		});
 	}
 	return data;
