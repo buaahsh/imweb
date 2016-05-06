@@ -5,11 +5,29 @@ function PlotOneContainer(ContainerId, x){
 		return;
 	$('#' + ContainerId).highcharts({
 		exporting:{
-//			buttons:{
-//				contextButton:{
-//					menuItems:[]
-//				}
-//			},
+			buttons:{
+				contextButton:{
+					menuItems:[{
+						text: '全选',
+						onclick: function(){
+							for(i = 0; i < this.series.length; i ++){
+								this.series[i].setVisible(true);
+							}
+						}
+					},
+					{
+						text: '全部取消',
+						onclick: function(){
+							for(i = 0; i < this.series.length; i ++){
+								this.series[i].setVisible(false);
+							}
+						}
+					},{
+						separator: true
+					}]
+					.concat(Highcharts.getOptions().exporting.buttons.contextButton.menuItems)
+				}
+			},
 			chartOptions:{
 				plotOptions:{
 					series:{
