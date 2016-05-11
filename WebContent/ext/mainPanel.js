@@ -55,7 +55,7 @@ function addHistory()
              },
              { header: '完成日期	', dataIndex: 'date', sortable: true,width: 150  },
              { header: '完成人', dataIndex: 'person', sortable: true, width: 150 },
-             { header: '版本说明', dataIndex: 'abs', sortable: true, width: 150 }
+             { header: '版本说明', dataIndex: 'abs', sortable: true, width: 300 }
         ],
         autoHeight : true,
         viewConfig: {
