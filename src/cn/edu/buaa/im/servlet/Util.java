@@ -1,18 +1,20 @@
 package cn.edu.buaa.im.servlet;
 
-import java.awt.Insets;
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+
+import cn.edu.buaa.im.model.BaseData.FloatDataItem;
+import cn.edu.buaa.im.model.BaseData.TableDataItem;
+import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
 
@@ -105,6 +107,54 @@ public class Util {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	public static byte[] dataItems2byte(List<DataItem> dataItems){
+		StringBuffer sb = new StringBuffer();
+		Gson gson = new Gson();
+		try {
+			for (DataItem dataItem : dataItems) {
+				sb.append(dataItem.title + "\r\n");
+				if (dataItem.data.toString().contains("TableDataItem"))
+				{
+					TableDataItem tableDataItem = (TableDataItem) dataItem.data;
+					TableJson tableJson = gson.fromJson(tableDataItem.value, TableJson.class);
+					sb.append(join(tableJson.header) + "\r\n");
+					for(List<String> strings : tableJson.body){
+						sb.append(join(strings) + "\r\n");
+					}
+				}
+				else if (dataItem.data.toString().contains("TextDataItem"))
+				{
+					TextDataItem textDataItem = (TextDataItem) dataItem.data;
+					for(String s: textDataItem.text)
+						sb.append(s + "\r\n");
+				}
+				else if (dataItem.data.toString().contains("FloatDataItem"))
+				{
+					FloatDataItem floatDataItem = (FloatDataItem) dataItem.data;
+					sb.append(floatDataItem.value + "\t" + floatDataItem.unit + "\r\n");
+				}
+			}
+			byte[] midbytes=sb.toString().getBytes("UTF8");
+			return midbytes;
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static String join(List<String> strings) {
+		StringBuffer sb = new StringBuffer();
+		for (String string : strings) {
+			sb.append(string + "\t");
+		}
+		return sb.toString();
+	}
+	
+	public class TableJson{
+		public List<List<String>> body;
+		public List<String> header; 
 	}
 	
 	public class ExtTreeNode{

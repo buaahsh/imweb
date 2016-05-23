@@ -51,9 +51,15 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
 						 tooltip: '后退',
 			            handler: function(){ window.history.back();  },
 			            scope: this
-			        },  ' ', ' ' ,' ',
+			        }, 
+			        {
+			            iconCls: 'icon-config',
+						 tooltip: '导出',
+			            handler: function(){ outputTxt();  },
+			            scope: this
+			        }, ' ' ,' ',
 				new Ext.form.TextField({
-					width: 240,
+					width: 220,
 					emptyText:'查找...',
 	                enableKeyEvents: true,
 					listeners:{

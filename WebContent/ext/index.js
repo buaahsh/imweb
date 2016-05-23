@@ -77,17 +77,49 @@ function initwelcome(){
 	
  }
 
-function genpdf(){
-	var specialElementHandlers = {
-	        '#editor': function (element,renderer) {
-	            return true;
-	        }
-	    };
-	var doc = new jsPDF();
-    doc.fromHTML($('#docs-table').html(), 15, 15, {
-        'width': 170,'elementHandlers': specialElementHandlers
-    });
-    doc.save('sample-file.pdf');
+function outputTxt(){
+	$.ajaxSetup({
+		async : false
+	});
+	var cid = getUrlParam('cid');
+	cid = decodeURIComponent(cid);
+	cid = cid.split("_")[0];
+	
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
+	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
+	var vid = getUrlParam('vid');
+	vid = decodeURIComponent(vid);
+	
+	var data;
+	
+	if (vid == null || vid == "null" || vid == -1){
+		if (sid == id){
+			window.open("/imweb/TreeNode?ext=1&arg=mm&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&file=1");
+		}
+		else{
+			window.open("/imweb/TreeNode?ext=1&arg=all&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&file=1");
+		}
+		
+	}
+	else{
+		vid = stringToBytes(vid);
+		if (sid == id){
+			window.open("/imweb/TreeNode?ext=1&arg=mmview&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid + "&file=1");
+		}
+		else{
+			window.open("/imweb/TreeNode?ext=1&arg=view&id=" + id + "&version=" + version
+					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid + "&file=1");
+		}
+	}
 }
 
 function RadioClick(obj){

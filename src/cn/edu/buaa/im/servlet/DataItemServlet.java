@@ -18,11 +18,9 @@ import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.service.DataItemService;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.D3DataItem;
-import cn.edu.buaa.im.model.BaseData.FileDataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
 import cn.edu.buaa.im.model.BaseData.ImageDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
-import cn.edu.buaa.im.model.BaseData.UrlDataItem;
 
 public class DataItemServlet extends BaseServlet{
 	/**

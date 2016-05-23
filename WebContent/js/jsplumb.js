@@ -1,4 +1,5 @@
 /**
+ * hsh
  * 数据包的谱系图
  * @param data
  */
@@ -104,9 +105,13 @@ function AddHtml(data){
 		id += 1;
 		top += 8;
 	});
+	
+	//画自己
 	top = 5;
 	$("#token" + id).css("left", "32em");
 	$("#token" + id).css("top",  top + "em");
+	$("#token" + id).css("background-color",  "#E4E1F7");
+	
 	id += 1;
 	$.each(data.down, function(idx, item){
 		$("#token" + id).css("left", "64em");

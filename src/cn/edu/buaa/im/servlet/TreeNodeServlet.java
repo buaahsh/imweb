@@ -2,7 +2,6 @@ package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,19 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import javax.servlet.ServletException;
-
 import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.DataItem;
-import cn.edu.buaa.im.model.DataItemJson;
 import cn.edu.buaa.im.model.TreeNode;
-import cn.edu.buaa.im.model.TreeNode.A_attr;
-import cn.edu.buaa.im.service.DataItemService;
 import cn.edu.buaa.im.service.TreeNodeService;
 import cn.edu.buaa.im.servlet.Util.ExtTreeNode;
-import cn.edu.buaa.im.wsdl.WSDLFile;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
-import sun.org.mozilla.javascript.internal.ast.NewExpression;
 
 public class TreeNodeServlet extends BaseServlet{
 
@@ -35,6 +27,7 @@ public class TreeNodeServlet extends BaseServlet{
 	/**
 	 * 得到左边的treenode
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws  IOException {
 		List<TreeNode> treeNodes;
@@ -64,6 +57,10 @@ public class TreeNodeServlet extends BaseServlet{
 			client.login(username, password);
 			
 			HashMap<String, Object> hashMap = client.getDataItems(id_702, v_702);
+			
+			//加上获取文件
+			if (returnFile(request, response, (List<DataItem>) hashMap.get("DataItem")))
+				return;
 			
 			if (ext != null && hashMap != null)
 			{
@@ -101,6 +98,10 @@ public class TreeNodeServlet extends BaseServlet{
 			result.put("TreeNode", treeNodes);
 			result.put("DataItem", dataItems);
 			
+			//加上获取文件
+			if (returnFile(request, response, dataItems))
+				return;
+			
 			String ext = request.getParameter("ext");
 			if (ext != null && result != null)
 			{
@@ -123,6 +124,10 @@ public class TreeNodeServlet extends BaseServlet{
 			client.login(username, password);
 			
 			HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
+			
+			//加上获取文件
+			if (returnFile(request, response, (List<DataItem>) hashMap.get("DataItem")))
+				return;
 			
 			String ext = request.getParameter("ext");
 			if (ext != null && hashMap != null)
@@ -162,6 +167,10 @@ public class TreeNodeServlet extends BaseServlet{
 			result.put("TreeNode", treeNodes);
 			result.put("DataItem", dataItems);
 			
+			//加上获取文件
+			if (returnFile(request, response, dataItems))
+				return;
+			
 			String ext = request.getParameter("ext");
 			if (ext != null)
 			{
@@ -173,5 +182,34 @@ public class TreeNodeServlet extends BaseServlet{
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(result));
 		}
+	}
+	
+	private boolean returnFile(HttpServletRequest request,
+			HttpServletResponse response, List<DataItem> dataItems) {
+		String fileName = "Data.txt";
+		String isFile = request.getParameter("file");
+		
+		if (isFile == null)
+			return false;
+
+		response.reset();
+		// 设置response的Header
+		response.setContentType("application/x-cortona");
+
+		byte[] result;
+		try {
+			result = Util.dataItems2byte(dataItems);
+			response.addHeader("Content-Disposition", "attachment;filename="
+					+ fileName);
+			response.addHeader("Content-Length", "" + result.length);
+			OutputStream outputStream = null;
+			outputStream = response.getOutputStream();
+			outputStream.write(result, 0, result.length);
+			outputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 }
