@@ -1,3 +1,8 @@
+/*
+	画图，以及所有数据项的展示
+	@author: Shaohan
+*/
+
 function PlotOneContainer(ContainerId, x){
 	
 	var data = GetPlotData(ContainerId, x);
@@ -181,6 +186,8 @@ function ExtDataItemProc(dataItem)
 	    	html += 
 	    		"<td class=\"micon\"><a href=\"#expand\" class=\"exi\">&nbsp;</a></td>"
 	    		+ "<td class=\"sig\"><a id=\"Ext.grid.GridPanel-columnLines\"></a>"
+	    		+ "<span style=\"color: blue; cursor:pointer;\" onclick='PlotAgain(\""+dataItem.id+"\")'>添加图表</span>" 
+	    		+ "&nbsp&nbsp&nbsp&nbsp"
 				+ dataItem.title
 				+ " : ";
 	    	if (dataItem.remark != null && dataItem.remark != "")
@@ -382,4 +389,80 @@ function showmore(obj){
 				$(item).hide();
 		});
 	}
+}
+
+/**
+ * 点击之后再画一个新图
+ */
+
+var plotid = 0;
+
+function PlotAgain(id){
+	id = id.split("_")[0]
+	var ContainerId = id + "_target_plot_container";
+	var x = GetXAxis(ContainerId);
+	var data = GetPlotData(ContainerId, x);
+	if (data.length == 0)
+		return;
+	var newid = ContainerId + plotid ;
+	$("#" + id + "_target_plot").append("<div class=\"tab-pane fade\" id=\""+ newid +"\"></div>");
+	plotid += 1;
+	$('#' + newid).highcharts({
+		exporting:{
+			buttons:{
+				contextButton:{
+					menuItems:[{
+						text: '全选',
+						onclick: function(){
+							for(i = 0; i < this.series.length; i ++){
+								this.series[i].setVisible(true);
+							}
+						}
+					},
+					{
+						text: '全部取消',
+						onclick: function(){
+							for(i = 0; i < this.series.length; i ++){
+								this.series[i].setVisible(false);
+							}
+						}
+					},{
+						separator: true
+					}]
+					.concat(Highcharts.getOptions().exporting.buttons.contextButton.menuItems)
+				}
+			},
+			chartOptions:{
+				plotOptions:{
+					series:{
+						dataLabels:{
+							enabled: false
+						}
+					}
+				}
+			},
+			scale: 3,
+			fallbackToExportServer: false
+				
+		},
+		title: {
+			text : ""
+		},
+	    xAxis: {
+	    },
+	    yAxis: {
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle',
+	        borderWidth: 0
+	    },
+	    series:  data
+	});
 }

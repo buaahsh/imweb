@@ -1,9 +1,7 @@
 package cn.edu.buaa.im.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +11,6 @@ import org.dom4j.Element;
 import com.google.gson.Gson;
 
 import cn.edu.buaa.im.model.DPVersion;
-import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.wsdl.WSDLClient;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
 

@@ -124,7 +124,10 @@ function outputTxt(){
 
 function RadioClick(obj){
 	var tokens = $(obj)[0].name.split("_")
+	$("#" +  tokens[1] + "_" + tokens[2] + "_plot").empty();
+	
 	var ContainerId = tokens[1] + "_" + tokens[2] + "_plot_container";
+	$("#" +  tokens[1] + "_" + tokens[2] + "_plot").append("<div class=\"tab-pane fade\" id=\""+ ContainerId +"\"></div>");;
 	var x = GetXAxis(ContainerId);
 	PlotOneContainer(ContainerId, x);
 }
