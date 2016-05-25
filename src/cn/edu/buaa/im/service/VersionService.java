@@ -13,6 +13,8 @@ import org.dom4j.io.SAXReader;
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.DPVersion;
+import cn.edu.buaa.im.service.RelationService.MMResponse;
+import cn.edu.buaa.im.service.RelationService.RelationItem;
 import cn.edu.buaa.im.wsdl.WSDLClient;
 
 public class VersionService {
@@ -107,5 +109,22 @@ public class VersionService {
 				return i;
 		}
 		return -1;
+	}
+	
+	public static void updateBigVersion(List<DPVersion> versions, String user, String uid, String pwd, String nodeId) {
+		for (DPVersion dpVersion : versions) {
+			String version = dpVersion.id;
+			RelationService relationService = new RelationService(user, uid, pwd, nodeId, version);
+			if (checkBigVersion(relationService.mmResponse))
+				dpVersion.bigversion = 1;
+		}
+	}
+	
+	private static boolean checkBigVersion(MMResponse mResponse) {
+		for (RelationItem relaItem : mResponse.dataPacks) {
+			if (relaItem.techStatus.equals("已完成") == false)
+				return false;
+		}
+		return true;
 	}
 }

@@ -18,6 +18,7 @@ public class RelationService {
 
 	public Pedigree pedigree;
 	public String jsonString;
+	public MMResponse mmResponse;
 	
 	/**
 	 * 构建主模型的上下游关系
@@ -139,11 +140,14 @@ public class RelationService {
 		String[] argsStrings = new String[]{id, version};
 		String result = wsdlClient.getS("getRelation", argsStrings);
 		Element root = Utility.getElementFromXml(result);
+		@SuppressWarnings("unchecked")
 		List<Element> elements = root.elements("upper");
 		HashMap<String, String> idMap = new HashMap<String, String>();
 		for (Element element : elements) {	
+			@SuppressWarnings("unchecked")
 			List<Element> subelements = element.elements("node");
 			for (Element subelement : subelements) {	
+				@SuppressWarnings("unchecked")
 				List<Attribute> list = subelement.attributes();
 				String tid = "";
 				String tversion = "";
@@ -247,6 +251,8 @@ public class RelationService {
 			if (reHashMap.containsKey(String.valueOf(item.id)))
 				item.path = reHashMap.get(String.valueOf(item.id));
 		}
+		
+		this.mmResponse = mmResponse;
 		
 		this.jsonString = gson.toJson(mmResponse);
 	}

@@ -448,12 +448,14 @@ Ext.onReady(function(){
    
 	setTimeout(function(){
         Ext.get('loading').remove();
+        addBigVersion();
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 250);
 	
 	//PlotContainer();
 	
 	addPuxiData();
+	
 });
 
 

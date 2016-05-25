@@ -6,6 +6,7 @@ public class DPVersion {
 	public String person;
 	public String abs;
 	public String id;
+	public int bigversion = 0;
 	
 	public String getId() {
 		return id;

@@ -11,7 +11,6 @@ import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.service.DataPacketService;
 import cn.edu.buaa.im.service.RelationService;
 import cn.edu.buaa.im.service.VersionService;
-import cn.edu.buaa.im.wsdl.WSDLClient;
 
 import com.google.gson.Gson;
 
@@ -45,6 +44,14 @@ public class MainModelServlet extends BaseServlet{
 			String pwd = request.getParameter("pwd");
 			VersionService version = new VersionService(user, pwd, nodeId);
 			List<DPVersion> versions = version.getVersions();
+			
+			String uid = request.getParameter("uid");
+			String sid = request.getParameter("sid");
+			//如果uid不为空，表示为主模型的版本，需要考虑大版本的问题
+			if (uid != null && sid != null && sid.equals(nodeId)){
+				VersionService.updateBigVersion(versions, user, uid, pwd, nodeId);
+			}
+			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(versions));
 		}else if (arg.equals("relation")){
@@ -60,7 +67,6 @@ public class MainModelServlet extends BaseServlet{
 				RelationService relationService = new RelationService(user, uid, pwd, nodeId, version);
 				responseString(response, relationService.jsonString);
 			}
-//			DataPacketService dataPacketService = new DataPacketService(nodeId, version, user, pwd, uid);
 			else{
 				RelationService relationService = new RelationService(user, uid, pwd, nodeId, version, sid);
 				Gson gson = new Gson();

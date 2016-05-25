@@ -1,3 +1,8 @@
+/*
+	构造右边4个模型，包括：概要、谱系、历史版本和数据内容
+	@author: Shaohan
+*/
+
 function addPanel(){
 	var p2 = new Ext.Panel({
 		id : 'docs-data',
@@ -31,17 +36,18 @@ function addHistory()
 	var vid = getUrlParam('vid');
 	vid = decodeURIComponent(vid);
 	
-	 var jsonstore;
+	var jsonstore;
 	 
 	$.getJSON("/imweb/MainModel?arg=version&id=" + id 
-			+ "&user=" + user + "&pwd=" + pwd , function(data){
+			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid , function(data){
 		jsonstore = new Ext.data.JsonStore({
 	        data: data,
-	        fields: ['id', 'date', 'person', 'abs']
+	        fields: ['id', 'date', 'person', 'abs', 'bigversion'],
 	    });
 	});
     //定义列
     var column = new Ext.grid.ColumnModel({
+    	id : "versionCol",
         columns: [
              { header: '版本', dataIndex: 'id', sortable: true,
             	 renderer: function (val, meta, record) {
@@ -55,7 +61,8 @@ function addHistory()
              },
              { header: '完成日期	', dataIndex: 'date', sortable: true,width: 150  },
              { header: '完成人', dataIndex: 'person', sortable: true, width: 150 },
-             { header: '版本说明', dataIndex: 'abs', sortable: true, width: 300 }
+             { header: '版本说明', dataIndex: 'abs', sortable: true, width: 300 },
+             { header: '大版本', hidden: true , dataIndex: 'bigversion'}
         ],
         autoHeight : true,
         viewConfig: {
@@ -328,4 +335,31 @@ function stringToBytes ( str ) {
 	     hex_str+=hex_one
 	}
  return hex_str;
+}
+
+function addBigVersion()
+{
+	$("#docs-history").append("<span style=\"color: blue; cursor:pointer;\" id='moreversion' onclick='showMoreVersion()'>显示所有版本</span>");
+	$.each($("#docs-history div.x-grid3-body div.x-grid3-row"), function(idx, item){
+		if ($(item).find("td.x-grid3-cell-last").text() == "0")
+			$(item).hide();
+	});
+}
+
+function showMoreVersion()
+{
+	obj = "#moreversion";
+	if ($(obj).text() == "显示所有版本"){
+		$.each($("#docs-history div.x-grid3-body div.x-grid3-row"), function(idx, item){
+			$(item).show();
+		});
+		$(obj).text("显示大版本");
+	}
+	else{
+		$(obj).text("显示所有版本");
+		$.each($("#docs-history div.x-grid3-body div.x-grid3-row"), function(idx, item){
+			if ($(item).find("td.x-grid3-cell-last").text() == "0")
+				$(item).hide();
+		});
+	}
 }
