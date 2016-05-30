@@ -339,6 +339,12 @@ function stringToBytes ( str ) {
 
 function addBigVersion()
 {
+	var id = getUrlParam('id');
+	var sid = getUrlParam('sid');
+	
+	if (sid != id)
+		return;
+	
 	$("#docs-history").append("<span style=\"color: blue; cursor:pointer;\" id='moreversion' onclick='showMoreVersion()'>显示所有版本</span>");
 	$.each($("#docs-history div.x-grid3-body div.x-grid3-row"), function(idx, item){
 		if ($(item).find("td.x-grid3-cell-last").text() == "0")

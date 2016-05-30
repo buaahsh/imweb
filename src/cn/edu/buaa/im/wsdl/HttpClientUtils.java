@@ -282,10 +282,8 @@ public class HttpClientUtils extends HttpClient {
 		return response.toString();
 	}
 
-	public String postFile(String url, String filePath, String email_user,
-			String email_password, String email_server, String email_port) {
+	public String postFile(String url, String filePath) {
 		try {
-
 			PostMethod postMethod = new PostMethod(url);
 
 			postMethod.setRequestHeader("Cookie", Convert2Str(this.getState()
@@ -293,10 +291,7 @@ public class HttpClientUtils extends HttpClient {
 
 			File file = new File(filePath);
 			FilePart fp = new FilePart("eml1", file);
-			Part[] parts = { fp, new StringPart("email_user", email_server),
-					new StringPart("email_password", email_password),
-					new StringPart("email_server", email_server),
-					new StringPart("email_port", email_port), };
+			Part[] parts = { fp };
 
 			// 对于MIME类型的请求，httpclient建议全用MulitPartRequestEntity进行包装
 			MultipartRequestEntity mre = new MultipartRequestEntity(parts,
@@ -305,7 +300,7 @@ public class HttpClientUtils extends HttpClient {
 			postMethod.setRequestEntity(mre);
 
 			this.executeMethod(postMethod);
-
+			
 			//int statusCode = postMethod.getStatusCode();
 
 			StringBuffer response = new StringBuffer();
@@ -324,7 +319,6 @@ public class HttpClientUtils extends HttpClient {
 			e.printStackTrace();
 		} finally {
 			try {
-				// httpclient.getConnectionManager().shutdown();
 			} catch (Exception ignore) {
 
 			}
@@ -449,5 +443,14 @@ public class HttpClientUtils extends HttpClient {
 		for (Header header : temp) {
 			System.err.println(header.getName() + "   " + header.getValue());
 		}
+	}
+	
+	public static void main(String[] args) {
+		String url = "http://202.112.140.210/MainModel/genericFile/uploadFile.mm?nodeId=2382&type=usertem&userId=285";
+		String fileName = "C:\\Users\\Shaohan\\Desktop\\user.usertem";
+		HttpClientUtils httpClientUtils = new HttpClientUtils();
+		httpClientUtils.postFile(url, fileName);
+		url = "http://202.112.140.210/MainModel/genericFile/downloadFile.mm?nodeId=2382&type=usertem&userId=285";
+		System.out.println(httpClientUtils.getDoGetURL(url, "utf8"));
 	}
 }

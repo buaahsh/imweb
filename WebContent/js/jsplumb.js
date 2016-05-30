@@ -110,7 +110,7 @@ function AddHtml(data){
 	top = 5;
 	$("#token" + id).css("left", "32em");
 	$("#token" + id).css("top",  top + "em");
-	$("#token" + id).css("background-color",  "#E4E1F7");
+	$("#token" + id).css("background-color",  "#b5d1f3");
 	
 	id += 1;
 	$.each(data.down, function(idx, item){
