@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
+import cn.edu.buaa.im.model.ViewItem;
 
 public class ViewService {
 	public String cid;
@@ -90,10 +91,5 @@ public class ViewService {
 				return i;
 		}
 		return -1;
-	}
-	
-	public class ViewItem{
-		public String sid;
-		public String name;
 	}
 }

@@ -55,7 +55,6 @@ public class DataPacketServlet extends BaseServlet{
 			responseString(response, gson.toJson(caseService));
 		}
 		else if (arg.equals("view")){
-			// TODO: 需要下载db文件
 			String sid_702 = request.getParameter("sid_702");
 			String cid = request.getParameter("cid");
 			cid = Util.byte2str(cid);

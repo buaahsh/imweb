@@ -260,6 +260,12 @@ public class WSDLHttpClient {
 				String.valueOf(tempversion)};
 	}
 	
+	/**
+	 * 根据新的treenode，和 oldDataItems 把新的DataItems提取
+	 * @param treeNodes
+	 * @param oldDataItems
+	 * @return
+	 */
 	public List<DataItem> buildDataItems(List<TreeNode> treeNodes, List<DataItem> oldDataItems) {
 		List<DataItem> dataItems = new ArrayList<>();
 		try {

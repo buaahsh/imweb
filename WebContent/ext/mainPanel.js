@@ -79,13 +79,6 @@ function addHistory()
         store: jsonstore,
         autoHeight : true,
         colModel: column
-//        viewConfig:{
-//        	autoFill: true, // 注意不要用autoFill:true,那样设置的话当GridPanel的大小变化（比如你resize了它）时不会自动调整column的宽度
-//        	 scrollOffset: 0 //不加这个的话，会在grid的最右边有个空白，留作滚动条的位置
-//        	  }
-//        viewConfig: {
-//      	  forceFit: true
-//      	}
     });
     
     return grid;

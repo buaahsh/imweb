@@ -48,7 +48,7 @@
     <url-pattern>/TreeNode</url-pattern>
   </servlet-mapping>
   
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>MainModel</display-name>
     <servlet-name>MainModel</servlet-name>
@@ -57,6 +57,17 @@
   <servlet-mapping>
     <servlet-name>MainModel</servlet-name>
     <url-pattern>/MainModel</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>DataExtract</display-name>
+    <servlet-name>DataExtract</servlet-name>
+    <servlet-class>cn.edu.buaa.im.servlet.DataExtractServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DataExtract</servlet-name>
+    <url-pattern>/DataExtract</url-pattern>
   </servlet-mapping>
   
 </web-app>

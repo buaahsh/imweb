@@ -8,7 +8,6 @@ import java.util.Vector;
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.TreeNode;
-import cn.edu.buaa.im.model.TreeNode.A_attr;
 
 /**
  * 通过一个sid，从数据库FieldsDefinition中找到相关的Fields，构建出整个树
@@ -33,7 +32,6 @@ public class TreeNodeService {
 	}
 	
 	private void init(String sid_702) {
-		// TODO: 下载db
 		String s = Utility.getSQLite(sid_702);
 		SQLiteConn sqLiteConn = new SQLiteConn(s);
 		try {
