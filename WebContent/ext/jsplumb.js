@@ -244,12 +244,18 @@ function addDataExtract(data_e){
 	
 	cidsb = stringToBytes(cid);
 	
+	// raw_cid 是当前浏览的cid
+	var raw_cid = getUrlParam('cid');
+	raw_cid = decodeURIComponent(raw_cid);
+	raw_cid = raw_cid.split("_")[0];
+	raw_cid = stringToBytes(raw_cid);
+	
 	var html = "";
 //	//update the views
-	$.getJSON("/imweb/DataExtract?arg=view&cid=" + cidsb + "&sid_702=" + sid, function(data){
+	$.getJSON("/imweb/DataExtract?arg=view&cid=" + raw_cid + "&sid_702=" + sid, function(data){
 		$.each(data, function(idx, item){
-			var href = "/imweb/ie.html?cid=" + cid + "&id=" + sid + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + item.sid;
+			var href = "/imweb/ie.html?cid=" + cid + "&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + item.sid + "&dataext=1";
 			html += "<p>" 
 					+ "<a target=\"_blank\" href='"+href+"'>" + item.name + "</a>"
 					+ "</p>";

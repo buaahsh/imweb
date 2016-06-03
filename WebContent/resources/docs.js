@@ -398,6 +398,18 @@ Ext.onReady(function(){
             margins: '0 0 5 0'
         }, api, mainPanel ]
     });
+    
+ // 如果是数据提取的模板，只显示左边的树和右边的数据项
+    var dataext = getUrlParam('dataext');
+	if (dataext == 1){
+		addView(api);
+		setTimeout(function(){
+	        Ext.get('loading').remove();
+	        addBigVersion();
+	        Ext.get('loading-mask').fadeOut({remove:true});
+	    }, 250);
+		return;
+	}
 
 	var oneTbar = new Ext.Toolbar({
 		id:'abs',

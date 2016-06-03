@@ -4,14 +4,19 @@
 */
 
 function addPanel(){
-	var p2 = new Ext.Panel({
+	var dataItems = new Ext.Panel({
 		id : 'docs-data',
         title: "数据列表",
         html : initwelcome(),
         autoScroll: true
 	});
 	
-	return [addAbs(), addPuxi(), addHistory(), p2]
+	var dataext = getUrlParam('dataext');
+	if (dataext == 1)
+		return [dataItems];
+	
+	return [addAbs(), addPuxi(), addHistory(), dataItems];
+	
 //	return [addPuxi()]
 	//Ext.get('welcome-panel').add(p);
 }
