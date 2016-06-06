@@ -2,6 +2,7 @@ package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
+import cn.edu.buaa.im.service.DataExtractService;
 import cn.edu.buaa.im.service.TreeNodeService;
 import cn.edu.buaa.im.servlet.Util.ExtTreeNode;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
@@ -73,6 +75,8 @@ public class TreeNodeServlet extends BaseServlet{
 			responseString(response, gson.toJson(hashMap));
 		}
 		else if (arg.equals("view")) {
+			String cid = request.getParameter("cid");
+			String dataext = request.getParameter("dataext");
 			String id_702 = request.getParameter("id");
 			String v_702 = request.getParameter("version");
 			String username = request.getParameter("user");
@@ -82,6 +86,7 @@ public class TreeNodeServlet extends BaseServlet{
 			String sid_702 = request.getParameter("sid_702");
 			
 			sid = Util.byte2str(sid);
+			cid = Util.byte2str(cid);
 			
 			WSDLHttpClient client = new WSDLHttpClient();
 			
@@ -91,7 +96,10 @@ public class TreeNodeServlet extends BaseServlet{
 			
 			TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
 			treeNodes = treeNodeService.geTreeNodes();
-
+			
+			if (dataext != null && dataext.equals("1"))
+				treeNodes = DataExtractService.filterTreeNodes(cid, treeNodes);
+			
 			List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));
 			
 			HashMap<String, Object> result = new HashMap<String, Object>();

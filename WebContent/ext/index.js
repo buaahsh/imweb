@@ -44,14 +44,16 @@ function initwelcome(){
 	}
 	else{
 		vid = stringToBytes(vid);
+		cid = stringToBytes(cid);
+		var dataext = getUrlParam('dataext');
 		if (sid == id){
-			$.getJSON("/imweb/TreeNode?ext=1&arg=mmview&id=" + id + "&version=" + version
+			$.getJSON("/imweb/TreeNode?ext=1&arg=mmview&id=" + id + "&version=" + version 
 					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
 				data = data1;
 			});
 		}
 		else{
-			$.getJSON("/imweb/TreeNode?ext=1&arg=view&id=" + id + "&version=" + version
+			$.getJSON("/imweb/TreeNode?ext=1&arg=view&id=" + id + "&version=" + version + "&cid=" + cid + "&dataext=" + dataext
 					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
 				data = data1;
 			});

@@ -1,11 +1,15 @@
 package cn.edu.buaa.im.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.ListModel;
+
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
+import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.ViewItem;
 
 /**
@@ -62,5 +66,27 @@ public class DataExtractService {
 				return i;
 		}
 		return -1;
+	}
+	
+	public static List<TreeNode> filterTreeNodes(String cid, List<TreeNode> treeNodes){
+		String[] tokens = cid.split("/");
+		cid = tokens[0] + "_" + tokens[tokens.length - 2] + "_" + tokens[tokens.length - 1];
+		
+		HashSet<String> ids = new HashSet<String>();
+		
+		List<TreeNode> newTreeNodes = new ArrayList<TreeNode>();
+		
+		for (TreeNode treeNode : treeNodes) {
+			if (treeNode.text.equals(cid)){
+				newTreeNodes.add(treeNode);
+				ids.add(treeNode.id);
+			}
+			else if (ids.contains(treeNode.parent)) {
+				newTreeNodes.add(treeNode);
+				ids.add(treeNode.id);
+			}
+				
+		}
+		return newTreeNodes;
 	}
 }
