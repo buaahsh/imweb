@@ -91,7 +91,7 @@ function AddHtml(data){
 	self = id;
 	id += 1;
 	$.each(data.down, function(idx, item){
-		html += t1 + "token" + id + t2 + ConvertItem2Html(item, data.self.name, 0) + t3;
+		html += t1 + "token" + id + t2 + ConvertItem2Html(item, data.self.name, 2) + t3;
 		id += 1;
 	});
 	
@@ -99,16 +99,16 @@ function AddHtml(data){
 	
 	// css
 	id = 1;
-	var top = 5;
+	var top = 3;
 	$.each(data.upper, function(idx, item){
 		$("#token" + id).css("left", "4em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 8;
+		top += 10;
 	});
 	
 	//画自己
-	top = 5;
+	top = 3;
 	$("#token" + id).css("left", "32em");
 	$("#token" + id).css("top",  top + "em");
 	$("#token" + id).css("background-color",  "#b5d1f3");
@@ -118,7 +118,7 @@ function AddHtml(data){
 		$("#token" + id).css("left", "64em");
 		$("#token" + id).css("top",  top + "em");
 		id += 1;
-		top += 8;
+		top += 10;
 	});
 	$("#statemachine-demo th").css("font-size", 13);
 }
@@ -178,7 +178,16 @@ function ConvertItem2Html(item, oldName, dataext){
 				if (ite != ""){
 					var data_e = tcid + "_" + item.id + "_" + ite;
 //					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
-					dataext_html = "<span style='cursor:hand; color:blue;' onclick='addDataExtract(\""+data_e+"\")'>数据提取模板</span>"; 
+					dataext_html = "<span style='float: right;cursor:hand; color:blue;' onclick='addDataExtract(\""+data_e+"\")'>浏览数据</span>"; 
+				}
+			});
+		}
+		if (dataext == 2){
+			$.each(item.version.split(","), function(idx, ite){
+				if (ite != ""){
+					var data_e = tcid + "_" + item.id + "_" + ite;
+//					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
+					dataext_html = "<span style='cursor:hand; color:blue;' onclick='addDownDataExtract(\""+data_e+"\")'>浏览数据</span>"; 
 				}
 			});
 		}
@@ -190,12 +199,14 @@ function ConvertItem2Html(item, oldName, dataext){
 	if (dataext == 1){
 		html += "<tr><th colspan=\"2\">" + dataext_html + "</th></tr>";
 	}
+	if (dataext == 2){
+		html += "<tr><th colspan=\"2\">" + dataext_html + "</th></tr>";
+	}
 	
 	html += "</table>";
 	
 	return html;
 }
-
 
 function ConncetJs(data, instance){
 	var id = 1;
@@ -207,7 +218,6 @@ function ConncetJs(data, instance){
 	
 	// css
 	id = 1;
-	var top = 5;
 	$.each(data.upper, function(idx, item){
 		instance.connect({ source:"token" + id, target:"token" + self , 
 			connector : "Straight", anchor:["Continuous", {faces:["left", "right"]}]});
@@ -228,6 +238,10 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]); return null; //返回参数值
 }
 
+/**
+ * 针对上游的数据提取模板的浏览
+ * @param data_e
+ */
 function addDataExtract(data_e){
 	var tokens = data_e.split("_");
 	var cid = tokens[0];
@@ -261,11 +275,59 @@ function addDataExtract(data_e){
 					+ "</p>";
 		});
 		Ext.MessageBox.show({
-            title: '数据提取模板',
+            title: '数据列表',
             msg: html,
             width: 200 ,
             buttons: Ext.MessageBox.OK
         });                
 	});
+}
+
+/**
+ * 针对下游的数据提取模板的浏览
+ * @param data_e
+ */
+function addDownDataExtract(data_e){
+	var tokens = data_e.split("_");
+	var cid = tokens[0];
+	cid = decodeURIComponent(cid);
+//	cid = cid.split("_")[0];
 	
+//	var id = tokens[1];
+//	var version = tokens[2];
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
+	
+	var uid = getUrlParam('uid');
+	var sid = getUrlParam('sid');
+	
+	cidsb = stringToBytes(cid);
+	
+	
+	var version = getUrlParam('version');
+	var id = getUrlParam('id');
+	
+	// raw_cid 是当前浏览的cid
+	var raw_cid = getUrlParam('cid');
+	raw_cid = decodeURIComponent(raw_cid);
+	raw_cid = raw_cid.split("_")[0];
+//	raw_cid = stringToBytes(raw_cid);
+	
+	var html = "";
+//	//update the views
+	$.getJSON("/imweb/DataExtract?arg=view&cid=" + cidsb + "&sid_702=" + sid, function(data){
+		$.each(data, function(idx, item){
+			var href = "/imweb/ie.html?cid=" + raw_cid + "&id=" + id + "&version=" + version
+			+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + item.sid + "&dataext=1";
+			html += "<p>" 
+					+ "<a target=\"_blank\" href='"+href+"'>" + item.name + "</a>"
+					+ "</p>";
+		});
+		Ext.MessageBox.show({
+            title: '数据列表',
+            msg: html,
+            width: 200 ,
+            buttons: Ext.MessageBox.OK
+        });                
+	});
 }
