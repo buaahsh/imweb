@@ -114,9 +114,20 @@ public class VersionService {
 	public static void updateBigVersion(List<DPVersion> versions, String user, String uid, String pwd, String nodeId) {
 		for (DPVersion dpVersion : versions) {
 			String version = dpVersion.id;
-			RelationService relationService = new RelationService(user, uid, pwd, nodeId, version);
-			if (checkBigVersion(relationService.mmResponse))
+			
+			WSDLClient w = new WSDLClient();
+			
+			String method = "getNodeDetail";
+			String[] arg = new String[]{uid, pwd, nodeId, version};
+			String xml = w.getS(method, arg);
+			
+			if (xml.contains("allDpNewest=\"1\""))
 				dpVersion.bigversion = 1;
+				
+//			String version = dpVersion.id;
+//			RelationService relationService = new RelationService(user, uid, pwd, nodeId, version);
+//			if (checkBigVersion(relationService.mmResponse))
+//				dpVersion.bigversion = 1;
 		}
 	}
 	

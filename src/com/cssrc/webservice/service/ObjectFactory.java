@@ -36,12 +36,12 @@ public class ObjectFactory {
     private final static QName _GetNodeHistoryResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "getNodeHistoryResponse");
     private final static QName _GetSonnodes_QNAME = new QName("http://service.webservice.cssrc.com/", "getSonnodes");
     private final static QName _GetSonnodesResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "getSonnodesResponse");
-    private final static QName _GetUserMessage_QNAME = new QName("http://service.webservice.cssrc.com/", "getUserMessage");
-    private final static QName _GetUserMessageResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "getUserMessageResponse");
+//    private final static QName _GetUserMessage_QNAME = new QName("http://service.webservice.cssrc.com/", "getUserMessage");
+//    private final static QName _GetUserMessageResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "getUserMessageResponse");
     private final static QName _ImportMainModel_QNAME = new QName("http://service.webservice.cssrc.com/", "importMainModel");
     private final static QName _ImportMainModelResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "importMainModelResponse");
-    private final static QName _SubmitDataPack_QNAME = new QName("http://service.webservice.cssrc.com/", "submitDataPack");
-    private final static QName _SubmitDataPackResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "submitDataPackResponse");
+//    private final static QName _SubmitDataPack_QNAME = new QName("http://service.webservice.cssrc.com/", "submitDataPack");
+//    private final static QName _SubmitDataPackResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "submitDataPackResponse");
     private final static QName _ValidateUser_QNAME = new QName("http://service.webservice.cssrc.com/", "validateUser");
     private final static QName _ValidateUserResponse_QNAME = new QName("http://service.webservice.cssrc.com/", "validateUserResponse");
     private final static QName _Exception_QNAME = new QName("http://service.webservice.cssrc.com/", "Exception");
@@ -185,9 +185,9 @@ public class ObjectFactory {
      * Create an instance of {@link SubmitDataPack }
      * 
      */
-    public SubmitDataPack createSubmitDataPack() {
-        return new SubmitDataPack();
-    }
+//    public SubmitDataPack createSubmitDataPack() {
+//        return new SubmitDataPack();
+//    }
 
     /**
      * Create an instance of {@link SubmitDataPackResponse }
@@ -333,19 +333,19 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link GetUserMessage }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "getUserMessage")
-    public JAXBElement<GetUserMessage> createGetUserMessage(GetUserMessage value) {
-        return new JAXBElement<GetUserMessage>(_GetUserMessage_QNAME, GetUserMessage.class, null, value);
-    }
+//    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "getUserMessage")
+//    public JAXBElement<GetUserMessage> createGetUserMessage(GetUserMessage value) {
+//        return new JAXBElement<GetUserMessage>(_GetUserMessage_QNAME, GetUserMessage.class, null, value);
+//    }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetUserMessageResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "getUserMessageResponse")
-    public JAXBElement<GetUserMessageResponse> createGetUserMessageResponse(GetUserMessageResponse value) {
-        return new JAXBElement<GetUserMessageResponse>(_GetUserMessageResponse_QNAME, GetUserMessageResponse.class, null, value);
-    }
+//    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "getUserMessageResponse")
+//    public JAXBElement<GetUserMessageResponse> createGetUserMessageResponse(GetUserMessageResponse value) {
+//        return new JAXBElement<GetUserMessageResponse>(_GetUserMessageResponse_QNAME, GetUserMessageResponse.class, null, value);
+//    }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ImportMainModel }{@code >}}
@@ -369,19 +369,19 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link SubmitDataPack }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "submitDataPack")
-    public JAXBElement<SubmitDataPack> createSubmitDataPack(SubmitDataPack value) {
-        return new JAXBElement<SubmitDataPack>(_SubmitDataPack_QNAME, SubmitDataPack.class, null, value);
-    }
+//    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "submitDataPack")
+//    public JAXBElement<SubmitDataPack> createSubmitDataPack(SubmitDataPack value) {
+//        return new JAXBElement<SubmitDataPack>(_SubmitDataPack_QNAME, SubmitDataPack.class, null, value);
+//    }
 
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SubmitDataPackResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "submitDataPackResponse")
-    public JAXBElement<SubmitDataPackResponse> createSubmitDataPackResponse(SubmitDataPackResponse value) {
-        return new JAXBElement<SubmitDataPackResponse>(_SubmitDataPackResponse_QNAME, SubmitDataPackResponse.class, null, value);
-    }
+//    /**
+//     * Create an instance of {@link JAXBElement }{@code <}{@link SubmitDataPackResponse }{@code >}}
+//     * 
+//     */
+//    @XmlElementDecl(namespace = "http://service.webservice.cssrc.com/", name = "submitDataPackResponse")
+//    public JAXBElement<SubmitDataPackResponse> createSubmitDataPackResponse(SubmitDataPackResponse value) {
+//        return new JAXBElement<SubmitDataPackResponse>(_SubmitDataPackResponse_QNAME, SubmitDataPackResponse.class, null, value);
+//    }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ValidateUser }{@code >}}
