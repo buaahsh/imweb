@@ -10,6 +10,7 @@ import javax.xml.ws.WebFault;
  * Generated source version: 3.1.4
  */
 
+@SuppressWarnings("serial")
 @WebFault(name = "Exception", targetNamespace = "http://service.webservice.cssrc.com/")
 public class Exception_Exception extends java.lang.Exception {
     

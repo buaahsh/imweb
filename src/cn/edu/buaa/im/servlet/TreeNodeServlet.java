@@ -2,7 +2,6 @@ package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,10 +12,10 @@ import com.google.gson.Gson;
 
 import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.DataItem;
+import cn.edu.buaa.im.model.ExtTreeNode;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.service.DataExtractService;
 import cn.edu.buaa.im.service.TreeNodeService;
-import cn.edu.buaa.im.servlet.Util.ExtTreeNode;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
 
 public class TreeNodeServlet extends BaseServlet{

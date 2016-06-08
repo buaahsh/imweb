@@ -61,7 +61,7 @@ public class ViewService {
 			
 			SQLiteCRUD sqLiteCRUD = new SQLiteCRUD(sqLiteConn.getConnection());
 			String table = "SchemasDefinition";
-			String key = "Remark";
+//			String key = "Remark";
 			String sql = String.format("select * from SchemasDefinition where Remark='%s' and Type = 5;", this.cid);
 			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(sql);
 //			Vector<Vector<Object>> vectors = sqLiteCRUD.selectVector(table, key, this.cid);
@@ -71,7 +71,7 @@ public class ViewService {
 			int sidIdx = getIdx(names, "id");
 			int nameIdx = getIdx(names, "name");
 			
-			List<String> structureSid = new ArrayList<>();
+//			List<String> structureSid = new ArrayList<>();
 			
 			for (Vector<Object> vector : vectors) {
 				ViewItem viewItem = new ViewItem();

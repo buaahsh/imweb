@@ -1,10 +1,7 @@
 package cn.edu.buaa.im.data;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,9 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.service.Utility;
-import cn.edu.buaa.im.servlet.Util;
 
 public class TreeNodeReader {
+	@SuppressWarnings("resource")
 	public static List<TreeNode> ReadTreeNodes(){
 		List<TreeNode> treeNodes = new ArrayList<>();
 		

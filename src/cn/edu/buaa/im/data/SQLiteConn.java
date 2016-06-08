@@ -3,7 +3,6 @@ package cn.edu.buaa.im.data;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Vector;
 
 public class SQLiteConn implements Serializable {
 	private static final long serialVersionUID = 102400L;

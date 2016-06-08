@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
-import cn.edu.buaa.im.model.DPVersion;
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.wsdl.WSDLClient;
@@ -86,6 +85,7 @@ public class DataPacketService {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void init(String id, String version, String user, String pwd, String uid) {
 		WSDLClient w = new WSDLClient();
 		

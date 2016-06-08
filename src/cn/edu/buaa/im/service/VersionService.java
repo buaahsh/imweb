@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Vector;
 
 import org.dom4j.Attribute;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.DPVersion;
-import cn.edu.buaa.im.service.RelationService.MMResponse;
-import cn.edu.buaa.im.service.RelationService.RelationItem;
+//import cn.edu.buaa.im.service.RelationService.MMResponse;
+//import cn.edu.buaa.im.service.RelationService.RelationItem;
 import cn.edu.buaa.im.wsdl.WSDLClient;
 
 public class VersionService {
@@ -35,6 +32,7 @@ public class VersionService {
 		init(userId, passWord, nodeId);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void init(String userId, String passWord, String nodeId) {
 		WSDLClient w = new WSDLClient();
 		
@@ -131,11 +129,11 @@ public class VersionService {
 		}
 	}
 	
-	private static boolean checkBigVersion(MMResponse mResponse) {
-		for (RelationItem relaItem : mResponse.dataPacks) {
-			if (relaItem.techStatus.equals("已完成") == false)
-				return false;
-		}
-		return true;
-	}
+//	private static boolean checkBigVersion(MMResponse mResponse) {
+//		for (RelationItem relaItem : mResponse.dataPacks) {
+//			if (relaItem.techStatus.equals("已完成") == false)
+//				return false;
+//		}
+//		return true;
+//	}
 }

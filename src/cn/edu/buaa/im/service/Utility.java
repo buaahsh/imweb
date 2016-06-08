@@ -91,6 +91,7 @@ public class Utility {
 		System.out.println(str);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static Element getElementFromXml(String xml) {
 		try {
 	        Document document = DocumentHelper.parseText(xml);

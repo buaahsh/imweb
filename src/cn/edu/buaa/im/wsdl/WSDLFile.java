@@ -1,6 +1,5 @@
 package cn.edu.buaa.im.wsdl;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +13,8 @@ import cn.edu.buaa.im.model.DataPacketJson;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.model.BaseData.CurveDataItem;
 import cn.edu.buaa.im.model.BaseData.FloatDataItem;
-import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
 import cn.edu.buaa.im.model.BaseData.TableDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
-import cn.edu.buaa.im.model.BaseData.TitleDataItem;
-import cn.edu.buaa.im.service.Utility;
 import cn.edu.buaa.im.servlet.Util;
 
 public class WSDLFile {

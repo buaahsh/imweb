@@ -16,6 +16,7 @@ import cn.edu.buaa.im.model.BaseData.FloatDataItem;
 import cn.edu.buaa.im.model.BaseData.TableDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.DataItem;
+import cn.edu.buaa.im.model.ExtTreeNode;
 import cn.edu.buaa.im.model.TreeNode;
 
 public class Util {
@@ -76,7 +77,6 @@ public class Util {
 		try {
 			return new String(str.getBytes("GBK"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
 		return "";
@@ -103,7 +103,6 @@ public class Util {
 //			System.out.println(str);
 			return str;
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "";
@@ -157,38 +156,12 @@ public class Util {
 		public List<String> header; 
 	}
 	
-	public class ExtTreeNode{
-		 public String id;
-		 public String iconCls;
-		 public String cls;
-		 public String text;
-
-		 public List<ExtTreeNode> children;
-		 public boolean leaf;
-		 public boolean singleClickExpand;
-		 
-		 public ExtTreeNode(String id, String text) {
-			this.id = id;
-			this.text = text;
-			singleClickExpand = true;
-			leaf = true;
-		 }
-		 
-		 public void Add(ExtTreeNode extTreeNoede){
-			 if (children == null)
-				 children = new ArrayList<>();
-			 children.add(extTreeNoede);
-			 leaf = false;
-		 }
-	}
-	
 	public static List<ExtTreeNode> Convert2Ext(List<TreeNode> treeNodes){
-		Util util = new Util();
 		List<ExtTreeNode> extTreeNodes = new ArrayList<>();
 		
 		for (TreeNode treeNode : treeNodes) {
 			if (treeNode.parent.equals("#")){
-				ExtTreeNode extTreeNode = util.new ExtTreeNode(treeNode.id, treeNode.text);
+				ExtTreeNode extTreeNode = new ExtTreeNode(treeNode.id, treeNode.text);
 				extTreeNodes.add(extTreeNode);
 			}
 			else{
@@ -199,10 +172,9 @@ public class Util {
 	}
 	
 	public static boolean Insert(List<ExtTreeNode> extTreeNodes, TreeNode treeNode){
-		Util util = new Util();
 		for (ExtTreeNode extTreeNoede : extTreeNodes) {
 			if (treeNode.parent.equals(extTreeNoede.id)){
-				ExtTreeNode node = util.new ExtTreeNode(treeNode.id, treeNode.text);
+				ExtTreeNode node = new ExtTreeNode(treeNode.id, treeNode.text);
 				extTreeNoede.Add(node);
 				return true;
 			}

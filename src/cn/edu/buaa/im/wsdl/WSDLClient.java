@@ -3,14 +3,9 @@ package cn.edu.buaa.im.wsdl;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.namespace.QName;
-
-import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
-import com.cssrc.webservice.service.Exception_Exception;
-import com.cssrc.webservice.service.GetNodeDetail;
 import com.cssrc.webservice.service.IDataService;
 import com.cssrc.webservice.service.impl.DataServiceService;
 
@@ -58,6 +53,7 @@ public class WSDLClient {
 		return reHashMap;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void BuildHashMap(Element root, HashMap<String, String> reHashMap, String nowPath) {
 		
 		List<Element> elements = root.elements("node");
@@ -83,11 +79,11 @@ public class WSDLClient {
 	}
 	
 	public static void main(String[] args) {
-		WSDLClient wsdlClient = new WSDLClient();
-//		String[] argsStrings = new String[]{"pdd", "123456", "1822"};
-		String[] argsStrings = new String[]{"222", "123456", "2083", "6", "-1"};
-//		System.out.println(wsdlClient.getS("getSonnodes", argsStrings));
-		wsdlClient.getFilePaths("222", "123456", "2083", "6", null);
+//		WSDLClient wsdlClient = new WSDLClient();
+////		String[] argsStrings = new String[]{"pdd", "123456", "1822"};
+//		String[] argsStrings = new String[]{"222", "123456", "2083", "6", "-1"};
+////		System.out.println(wsdlClient.getS("getSonnodes", argsStrings));
+//		wsdlClient.getFilePaths("222", "123456", "2083", "6", null);
 	}
 
 }

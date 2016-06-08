@@ -5,21 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
-import cn.edu.buaa.im.servlet.Util;
 
 import com.google.gson.Gson;
 
-import cn.edu.buaa.im.data.SQLiteCRUD;
-import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.BaseData;
-import cn.edu.buaa.im.model.DataItem;
-import cn.edu.buaa.im.model.TreeNode;
-import cn.edu.buaa.im.model.BaseData.SubtitleDataItem;
-import cn.edu.buaa.im.model.BaseData.TitleDataItem;
 import cn.edu.buaa.im.service.Utility;
 
 
@@ -53,6 +45,7 @@ public class WSDLHttpClient {
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void getOneNode(List<TreeNode> treeNodes, 
 			List<DataItem> dataItems, String pid, WSDLNode wsdlnode) {
 		// 如果为数据包

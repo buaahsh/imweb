@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.ListModel;
-
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.TreeNode;
