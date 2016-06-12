@@ -387,18 +387,29 @@ Ext.onReady(function(){
 //    addPanel(mainPanel);
     
     var viewport = new Ext.Viewport({
-        layout:'border',
-        items:[ {
-            cls: 'docs-header',
-            height: 44,
-            region:'north',
-            xtype:'box',
-            el:'header',
-            border:false,
-            margins: '0 0 5 0'
-        }, api, mainPanel ]
+//        layout:'border',
+//        items:[ {
+//            cls: 'docs-header',
+//            height: 44,
+//            region:'north',
+//            xtype:'box',
+//            el:'header',
+//            border:false,
+//            margins: '0 0 5 0'
+//        }, api, mainPanel ]
+
+    	items:[ {
+	        cls: 'docs-header',
+	        height: 44,
+	        region:'north',
+	        xtype:'box',
+	        el:'header',
+	        border:false,
+	        margins: '0 0 5 0'
+        }]
     });
     
+    /*
  // 如果是数据提取的模板，只显示左边的树和右边的数据项
     var dataext = getUrlParam('dataext');
 	if (dataext == 1){
@@ -454,6 +465,8 @@ Ext.onReady(function(){
         }
     });
 	
+	*/
+    
 	addView(api);
 	
     viewport.doLayout();  

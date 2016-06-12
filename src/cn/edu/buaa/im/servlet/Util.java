@@ -17,6 +17,7 @@ import cn.edu.buaa.im.model.BaseData.TableDataItem;
 import cn.edu.buaa.im.model.BaseData.TextDataItem;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.ExtTreeNode;
+import cn.edu.buaa.im.model.PersonalTreeNode;
 import cn.edu.buaa.im.model.TreeNode;
 
 public class Util {
@@ -180,6 +181,36 @@ public class Util {
 			}
 			if (extTreeNoede.children != null)
 				if (Insert(extTreeNoede.children, treeNode)) {
+					return true;
+				}
+		}
+		return false;
+	}
+	
+	public static List<PersonalTreeNode> Convert2PersonalTreeNode(List<TreeNode> treeNodes){
+		List<PersonalTreeNode> extTreeNodes = new ArrayList<>();
+		
+		for (TreeNode treeNode : treeNodes) {
+			if (treeNode.parent.equals("#")){
+				PersonalTreeNode extTreeNode = new PersonalTreeNode(treeNode.id, treeNode.text);
+				extTreeNodes.add(extTreeNode);
+			}
+			else{
+				InsertPersonalTreeNode(extTreeNodes, treeNode);
+			}
+		}
+		return extTreeNodes;
+	}
+	
+	public static boolean InsertPersonalTreeNode(List<PersonalTreeNode> extTreeNodes, TreeNode treeNode){
+		for (PersonalTreeNode extTreeNoede : extTreeNodes) {
+			if (treeNode.parent.equals(extTreeNoede.id)){
+				PersonalTreeNode node = new PersonalTreeNode(treeNode.id, treeNode.text);
+				extTreeNoede.Add(node);
+				return true;
+			}
+			if (extTreeNoede.children != null)
+				if (InsertPersonalTreeNode(extTreeNoede.children, treeNode)) {
 					return true;
 				}
 		}

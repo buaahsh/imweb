@@ -21,7 +21,7 @@ public class WSDLHttpClient {
 	private HttpClientUtils client;
 	
 	public WSDLHttpClient(){
-		baseURL = Utility.getParameter("httpclienturl");;
+		baseURL = Utility.getParameter("httpclienturl");
 		
 		client = new HttpClientUtils();
 	}
