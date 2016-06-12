@@ -387,26 +387,26 @@ Ext.onReady(function(){
 //    addPanel(mainPanel);
     
     var viewport = new Ext.Viewport({
-//        layout:'border',
-//        items:[ {
-//            cls: 'docs-header',
-//            height: 44,
-//            region:'north',
-//            xtype:'box',
-//            el:'header',
-//            border:false,
-//            margins: '0 0 5 0'
-//        }, api, mainPanel ]
+        layout:'border',
+        items:[ {
+            cls: 'docs-header',
+            height: 44,
+            region:'north',
+            xtype:'box',
+            el:'header',
+            border:false,
+            margins: '0 0 5 0'
+        }, api, mainPanel ]
 
-    	items:[ {
-	        cls: 'docs-header',
-	        height: 44,
-	        region:'north',
-	        xtype:'box',
-	        el:'header',
-	        border:false,
-	        margins: '0 0 5 0'
-        }]
+//    	items:[ {
+//	        cls: 'docs-header',
+//	        height: 44,
+//	        region:'north',
+//	        xtype:'box',
+//	        el:'header',
+//	        border:false,
+//	        margins: '0 0 5 0'
+//        }]
     });
     
     

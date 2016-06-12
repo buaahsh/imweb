@@ -29,8 +29,13 @@ function ChangePNode(node, flag){
 
 function NewList(){
 	var store = [];
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	
 //	//update the views
-	$.getJSON("/imweb/PerTemServlet?arg=list", function(data){
+	$.getJSON("/imweb/PerTemServlet?arg=list" + "&id=" + id 
+			+ "&version=" + version + "&user=" + user, function(data){
 		$.each(data, function(idx, item){
 			store.push([item, item]);
 		});
@@ -51,13 +56,18 @@ function NewList(){
 	    listeners: {
 	        select: function(combo, record, index){
 	        	var data;
+	        	var id = getUrlParam('id');
+            	var version = getUrlParam('version');
+            	var user = getUrlParam('user');
                 $.getJSON("/imweb/PerTemServlet?arg=get" + "&name="
-                		+ stringToBytes(combo.getValue()), function(data1){
+                		+ stringToBytes(combo.getValue())
+                		+ "&id=" + id + "&version=" + version + "&user=" + user, function(data1){
             		data = data1;
             	});
                 DocsTem.classData.children = data;
                 tree.setTitle(combo.getValue());
                 tree.getRootNode().reload();
+                tree.getRootNode().expand(true);
 	        }
 	    }
 	});
@@ -68,7 +78,7 @@ function SaveTem(){
 	
 }
 
-Ext.onReady(function(){
+function ShowPersonTemplate(){
 	tree = new Ext.tree.TreePanel({
         id:'template-tree',
         title: '个人数据模板',
@@ -107,8 +117,14 @@ Ext.onReady(function(){
 	            width: 50,
 	            handler: function(){
 	            	var data;
-	                
-	                $.getJSON("/imweb/PerTemServlet?arg=new", function(data1){
+	            	var id = getUrlParam('id');
+	            	var version = getUrlParam('version');
+	            	var user = getUrlParam('user');
+	            	var pwd = getUrlParam('pwd');
+	            	
+	                $.getJSON("/imweb/PerTemServlet?arg=new" + "&id=" + id
+	                		+ "&version=" + version + "&user=" + user
+	                		+ "&pwd=" + pwd, function(data1){
 	            		data = data1;
 	            	});
 	                Ext.MessageBox.prompt('模板名字', '请输入模板名字:', function (btn, txt) {
@@ -118,7 +134,7 @@ Ext.onReady(function(){
 	                
 	                DocsTem.classData.children = data;
 	                tree.getRootNode().reload();
-	                //TODO: 输入模板名字
+	                tree.getRootNode().expand(true);
 	            }
 	        },
 	        {
@@ -133,11 +149,19 @@ Ext.onReady(function(){
 	                    msg += node.id;
 	                });
 	                var name = stringToBytes(tree.title);
-	                $.post("/imweb/PerTemServlet?name=" + name, msg, function(){
+	                var id = getUrlParam('id');
+	            	var version = getUrlParam('version');
+	            	var user = getUrlParam('user');
+	            	var pwd = getUrlParam('pwd');
+	            	
+	                $.post("/imweb/PerTemServlet?name=" + name + "&id=" + id
+	                		+ "&version=" + version + "&user=" + user
+	                		+ "&pwd=" + pwd, msg, function(){
 	                	alert("保存成功");
 	                	var store = [];
 //	                	//update the views
-	                	$.getJSON("/imweb/PerTemServlet?arg=list", function(data){
+	                	$.getJSON("/imweb/PerTemServlet?arg=list" + "&id=" + id
+		                		+ "&version=" + version + "&user=" + user, function(data){
 	                		$.each(data, function(idx, item){
 	                			store.push([item, item]);
 	                		});
@@ -153,11 +177,18 @@ Ext.onReady(function(){
 	            width: 50,
 	            handler: function(){
 	            	var name = stringToBytes(tree.title);
-	            	$.get("/imweb/PerTemServlet?arg=del" + "&name=" + name, function(){
+	            	var id = getUrlParam('id');
+	            	var version = getUrlParam('version');
+	            	var user = getUrlParam('user');
+	            	var pwd = getUrlParam('pwd');
+	            	
+	            	$.get("/imweb/PerTemServlet?arg=del" + "&name=" + name + "&id=" + id
+	                		+ "&version=" + version + "&user=" + user, function(){
 	            		alert("删除成功");
 	            		var store = [];
 //	                	//update the views
-	                	$.getJSON("/imweb/PerTemServlet?arg=list", function(data){
+	                	$.getJSON("/imweb/PerTemServlet?arg=list"+ "&id=" + id
+		                		+ "&version=" + version + "&user=" + user, function(data){
 	                		$.each(data, function(idx, item){
 	                			store.push([item, item]);
 	                		});
@@ -186,10 +217,17 @@ Ext.onReady(function(){
     win.show(this);
     
     var data;
-    
-    $.getJSON("/imweb/PerTemServlet?arg=new", function(data1){
+	var id = getUrlParam('id');
+	var version = getUrlParam('version');
+	var user = getUrlParam('user');
+	var pwd = getUrlParam('pwd');
+	
+    $.getJSON("/imweb/PerTemServlet?arg=new" + "&id=" + id
+    		+ "&version=" + version + "&user=" + user
+    		+ "&pwd=" + pwd, function(data1){
 		data = data1;
 	});
 	
     DocsTem.classData.children = data;
-});
+    tree.getRootNode().expand(true);
+};

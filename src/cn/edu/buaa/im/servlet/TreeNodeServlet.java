@@ -2,7 +2,9 @@ package cn.edu.buaa.im.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +15,11 @@ import com.google.gson.Gson;
 import cn.edu.buaa.im.data.TreeNodeReader;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.ExtTreeNode;
+import cn.edu.buaa.im.model.PersonalTreeNode;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.service.DataExtractService;
 import cn.edu.buaa.im.service.TreeNodeService;
+import cn.edu.buaa.im.service.UserTemplateService;
 import cn.edu.buaa.im.wsdl.WSDLHttpClient;
 
 public class TreeNodeServlet extends BaseServlet{
@@ -31,7 +35,7 @@ public class TreeNodeServlet extends BaseServlet{
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws  IOException {
-		List<TreeNode> treeNodes;
+		List<TreeNode> treeNodes = null;
 	
 		String arg = request.getParameter("arg");
 		if (arg == null)
@@ -160,34 +164,50 @@ public class TreeNodeServlet extends BaseServlet{
 			sid = Util.byte2str(sid);
 			
 			WSDLHttpClient client = new WSDLHttpClient();
-			
 			client.login(username, password);
-			
 			HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
 			
-			TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
-			treeNodes = treeNodeService.geTreeNodes();
-
-			List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));
-			
-			HashMap<String, Object> result = new HashMap<String, Object>();
-			result.put("TreeNode", treeNodes);
-			result.put("DataItem", dataItems);
-			
-			//加上获取文件
-			if (returnFile(request, response, dataItems))
-				return;
-			
-			String ext = request.getParameter("ext");
-			if (ext != null)
+			if (sid.endsWith("_pertem"))
 			{
-				List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
-				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+				HashSet<String> idSet = geTreeNodesByPertem(sid.substring(0, sid.length() - 7), sid_702, username);
+				List<DataItem> dataItems = FilterDataItem(idSet,  (List<DataItem>)hashMap.get("DataItem"));
+				List<TreeNode> treeItems = FilterTreeNode(idSet,  (List<TreeNode>)hashMap.get("TreeNode"));
+				
+				HashMap<String, Object> result = new HashMap<String, Object>();
+				
+//				List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
+				List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(treeItems);
+
 				result.put("TreeNode", treeNodes2);
+				result.put("DataItem", dataItems);
+
+				Gson gson = new Gson();
+				responseString(response, gson.toJson(result));
 			}
-			
-			Gson gson = new Gson();
-			responseString(response, gson.toJson(result));
+			else {
+				TreeNodeService treeNodeService = new TreeNodeService(sid, sid_702);
+				treeNodes = treeNodeService.geTreeNodes();
+				List<DataItem> dataItems = client.buildDataItems(treeNodes, (List<DataItem>)hashMap.get("DataItem"));
+				
+				HashMap<String, Object> result = new HashMap<String, Object>();
+				result.put("TreeNode", treeNodes);
+				result.put("DataItem", dataItems);
+				
+				//加上获取文件
+				if (returnFile(request, response, dataItems))
+					return;
+				
+				String ext = request.getParameter("ext");
+				if (ext != null)
+				{
+					List<TreeNode> tnodes = (List<TreeNode>) result.get("TreeNode");
+					List<ExtTreeNode> treeNodes2 = Util.Convert2Ext(tnodes);
+					result.put("TreeNode", treeNodes2);
+				}
+				
+				Gson gson = new Gson();
+				responseString(response, gson.toJson(result));
+			}
 		}
 	}
 	
@@ -218,5 +238,34 @@ public class TreeNodeServlet extends BaseServlet{
 		}
 		
 		return true;
+	}
+	
+	private HashSet<String> geTreeNodesByPertem(String name, String nodeId, String userId){
+//		name = Util.byte2str(name);
+		UserTemplateService userTem = new UserTemplateService(nodeId, userId);
+		List<PersonalTreeNode> treeNodes = userTem.GetTemplate(name);
+		HashSet<String> idSet = new HashSet<>();
+		
+		Util.GetTreeNodeIds(idSet, treeNodes);
+		
+		return idSet;
+	}
+	
+	private List<TreeNode> FilterTreeNode(HashSet<String> idSet, List<TreeNode> tnodes) {
+		List<TreeNode> newNodes = new ArrayList<>();
+		for (TreeNode treeNode : tnodes) {
+			if (idSet.contains(treeNode.id))
+				newNodes.add(treeNode);
+		}
+		return newNodes;
+	}
+	
+	private List<DataItem> FilterDataItem(HashSet<String> idSet, List<DataItem> tnodes) {
+		List<DataItem> newNodes = new ArrayList<>();
+		for (DataItem treeNode : tnodes) {
+			if (idSet.contains(treeNode.id.subSequence(0, treeNode.id.length() - 7)))
+				newNodes.add(treeNode);
+		}
+		return newNodes;
 	}
 }

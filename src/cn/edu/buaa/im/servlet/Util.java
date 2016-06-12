@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -217,12 +219,57 @@ public class Util {
 		return false;
 	}
 	
+	public static void GetTreeNodeIds(HashSet<String> idSet, List<PersonalTreeNode> personalTreeNodes){
+		for (Iterator it = personalTreeNodes.iterator(); it.hasNext();) {
+			
+			PersonalTreeNode treeNode = (PersonalTreeNode) it.next();
+			if (treeNode.checked == false)
+				continue;
+			idSet.add(treeNode.id);
+			if (treeNode.children != null && treeNode.children.size() > 0){
+				GetTreeNodeIds(idSet, treeNode.children);
+			}
+		}
+	}
+	
+	public static List<TreeNode> Convert2TreeNode(List<PersonalTreeNode> personalTreeNodes){
+		List<TreeNode> treeNodes = new ArrayList<>();
+		
+		for (Iterator it = personalTreeNodes.iterator(); it.hasNext();) {
+			PersonalTreeNode treeNode = (PersonalTreeNode) it.next();
+			if (treeNode.checked == false)
+				continue;
+			TreeNode treeN = new TreeNode(treeNode.id, "#", treeNode.text, "");
+			if (treeNode.children.size() > 0){
+				treeN.type = "16";
+			}
+			treeNodes.add(treeN);
+			if (treeNode.children.size() > 0){
+				InsertTreeNode(treeNode.children, treeNode.id, treeNodes);
+			}
+		}
+		return treeNodes;
+	}
+	
+	public static boolean InsertTreeNode(List<PersonalTreeNode> extTreeNodes,
+			String pid, List<TreeNode> treeNodes){
+		for (PersonalTreeNode treeNode : extTreeNodes) {
+			if (treeNode.checked == false)
+				continue;
+			TreeNode treeN = new TreeNode(treeNode.id, pid, treeNode.text, "");
+			treeNodes.add(treeN);
+			if (treeNode.children != null && treeNode.children.size() > 0){
+				InsertTreeNode(treeNode.children, treeNode.id, treeNodes);
+			}
+		}
+		return false;
+	}
+	
 	public static void AddParents(List<TreeNode> nodes, List<DataItem> dataItems)
 	{
 		for (DataItem dataitem : dataItems) {
 			if (dataitem.type.equals("SubtitleDataItem") )
 			{
-				
 				List<String> parents = new ArrayList<String>();
 				getParentList(nodes, dataitem.id.split("_")[0], parents);
 				dataitem.parents = parents;

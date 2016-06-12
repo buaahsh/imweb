@@ -176,11 +176,19 @@ function addView(api){
 		});
 	});
 	
+	// 采用 _pertem作为标识
+	if (id == sid)
+		$.getJSON("/imweb/PerTemServlet?arg=list&id=" + id + "&user=" + user, function(data){
+			$.each(data, function(idx, item){
+				store.push([item + "_pertem", item]);
+			});
+		});
+	
 	var combo1 = new Ext.form.ComboBox({
 	    store: store,
 	    mode: 'loacl',
 	    valueField: 'value',
-	    width: 210,
+	    width: 180,
 	    typeAhead : true,  
         triggerAction : 'all',  
         lazyRender : true, 
@@ -189,7 +197,6 @@ function addView(api){
 //	    renderTo : api.tbar,
 	    listeners: {
 	        select: function(combo, record, index){
-	        	
 	        	location.href = window.location.href.split('&vid=')[0] + "&vid=" + encodeURIComponent(combo.getValue());
 	        }
 	    }
@@ -202,8 +209,12 @@ function addView(api){
 	var fourTbar = new Ext.Toolbar({
 		id:'view',
 		renderTo : api.tbar,
-		items : [combo1,"", "",
-		         {
+		items : [combo1,"", {
+            iconCls: 'icon-expand-all',
+			tooltip: '个人数据模板',
+            handler: function(){ ShowPersonTemplate(); },
+            scope: this
+        }, '-', {
             iconCls: 'icon-expand-all',
 			tooltip: 'Expand All',
             handler: function(){ api.root.expand(true); },

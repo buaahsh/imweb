@@ -46,14 +46,18 @@ public class PerTemServlet extends HttpServlet {
 		Gson gson = new Gson();
 		
 		String arg = request.getParameter("arg");
-		String nodeId = request.getParameter("sid");
-		String userId = request.getParameter("uid");
+		String nodeId = request.getParameter("id");
+		String userId = request.getParameter("user");
 		
 		UserTemplateService userTem = new UserTemplateService(nodeId, userId);
 		
 		// 新建一个模板
 		if (arg.equals("new")){
-			List<PersonalTreeNode> treeNodes = userTem.NewTemplate();
+			String id_702 = request.getParameter("id");
+			String v_702 = request.getParameter("version");
+			String username = request.getParameter("user");
+			String password = request.getParameter("pwd");
+			List<PersonalTreeNode> treeNodes = userTem.NewTemplate(id_702, v_702, username, password);
 			responseString(response, gson.toJson(treeNodes));
 		}
 		// 获取模板列表
@@ -74,25 +78,6 @@ public class PerTemServlet extends HttpServlet {
 			List<PersonalTreeNode> treeNodes = userTem.GetTemplate(name);
 			responseString(response, gson.toJson(treeNodes));
 		}
-		
-//		String id_702 = request.getParameter("id");
-//		String v_702 = request.getParameter("version");
-//		String username = request.getParameter("user");
-//		String password = request.getParameter("pwd");
-//		
-//		WSDLHttpClient client = new WSDLHttpClient();
-//		
-//		client.login(username, password);
-//		
-//		HashMap<String, Object> hashMap = client.getMMDataItems(id_702, v_702);
-//		
-//		if (hashMap != null)
-//		{
-//			List<TreeNode> tnodes = (List<TreeNode>) hashMap.get("TreeNode");
-//			List<PersonalTreeNode> treeNodes2 = Util.Convert2PersonalTreeNode(tnodes);
-//			Gson gson = new Gson();
-//			responseString(response, gson.toJson(treeNodes2));
-//		}
 	}
 
 	/**
@@ -102,12 +87,16 @@ public class PerTemServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
 		String line = reader.readLine();
-		String nodeId = request.getParameter("sid");
-		String userId = request.getParameter("uid");
 		String name = request.getParameter("name");
 		name = Util.byte2str(name);
-		UserTemplateService userTem = new UserTemplateService(nodeId, userId);
-		userTem.SaveTemplate(line, name);
+		
+		String id_702 = request.getParameter("id");
+		String v_702 = request.getParameter("version");
+		String username = request.getParameter("user");
+		String password = request.getParameter("pwd");
+		
+		UserTemplateService userTem = new UserTemplateService(id_702, username);
+		userTem.SaveTemplate(line, name, id_702, v_702, username, password);
 	}
 
 	public void responseString(HttpServletResponse response, String json){
