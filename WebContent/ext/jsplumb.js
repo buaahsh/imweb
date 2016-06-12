@@ -271,10 +271,11 @@ function addDataExtract(data_e){
 			var href = "/imweb/ie.html?cid=" + cid + "&id=" + id + "&version=" + version
 			+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + item.sid + "&dataext=1";
 			html += "<p>" 
-					+ "<a target=\"_blank\" href='"+href+"'>" + item.name + "</a>"
+					+ "<span class='dataext-span' style='cursor:hand; color:blue;' onclick='spanClick(\""+href+"\")'>" + item.name + "</span>"
 					+ "</p>";
 		});
 		Ext.MessageBox.show({
+			id: 'dataext-msg',
             title: '数据传递关系列表',
             msg: html,
             width: 200 ,
@@ -320,14 +321,20 @@ function addDownDataExtract(data_e){
 			var href = "/imweb/ie.html?cid=" + raw_cid + "&id=" + id + "&version=" + version
 			+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + item.sid + "&dataext=1";
 			html += "<p>" 
-					+ "<a target=\"_blank\" href='"+href+"'>" + item.name + "</a>"
-					+ "</p>";
+				+ "<span class='dataext-span' style='cursor:hand; color:blue;' onclick='spanClick(\""+href+"\")'>" + item.name + "</span>"
+				+ "</p>";
 		});
 		Ext.MessageBox.show({
+			id: 'dataext-msg',
             title: '数据传递关系列表',
             msg: html,
             width: 200 ,
             buttons: Ext.MessageBox.OK
         });                
 	});
+}
+
+function spanClick(href){
+//	alert(href);
+	window.open(href,'_blank','');	
 }

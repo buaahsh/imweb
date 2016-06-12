@@ -2,3 +2,7 @@ span.float span{
 	margin-right: 4px;
     font-size: 13px;
 }
+
+#template-tree .x-panel-mc{
+	background-color: #ffffff;
+}

@@ -106,8 +106,7 @@ public class UserTemplateService {
 		String url = baseURL + "/genericFile/downloadFile.mm?nodeId=" + nodeId
 				+"&type=usertem&userId=" + userId;
 		String jsonString = httpClientUtils.getDoGetURL(url, "utf8");
-		if (jsonString.length() == 0)
-			
+		if (jsonString.length() == 0)		
 			return new HashMap<String, List<PersonalTreeNode>>();
 		pHashMap = gson.fromJson(jsonString, new TypeToken<HashMap<String, List<PersonalTreeNode>>>(){}.getType());
 		return pHashMap;

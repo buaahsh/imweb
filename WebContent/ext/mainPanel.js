@@ -185,6 +185,7 @@ function addView(api){
 		});
 	
 	var combo1 = new Ext.form.ComboBox({
+		id: 'view-combo',
 	    store: store,
 	    mode: 'loacl',
 	    valueField: 'value',
@@ -227,7 +228,7 @@ function addView(api){
 	        }]
 		});
 	}
-	else if (sid == id){
+	else if (sid != id){
 		var fourTbar = new Ext.Toolbar({
 			id:'view',
 			renderTo : api.tbar,
@@ -249,7 +250,7 @@ function addView(api){
 			id:'view',
 			renderTo : api.tbar,
 			items : [combo1,"", {
-	            iconCls: 'icon-expand-all',
+	            iconCls: 'icon-expand-members',
 				tooltip: '个人数据模板',
 	            handler: function(){ ShowPersonTemplate(); },
 	            scope: this
