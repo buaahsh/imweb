@@ -409,7 +409,7 @@ Ext.onReady(function(){
         }]
     });
     
-    /*
+    
  // 如果是数据提取的模板，只显示左边的树和右边的数据项
     var dataext = getUrlParam('dataext');
 	if (dataext == 1){
@@ -464,8 +464,6 @@ Ext.onReady(function(){
             body.scrollTo('top', top-25, {duration:0.1});
         }
     });
-	
-	*/
     
 	addView(api);
 	
