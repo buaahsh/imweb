@@ -206,27 +206,66 @@ function addView(api){
 		combo1.setValue('-1');
 	else
 		combo1.setValue(decodeURIComponent(vid));
-	var fourTbar = new Ext.Toolbar({
-		id:'view',
-		renderTo : api.tbar,
-		items : [combo1,"", {
-            iconCls: 'icon-expand-all',
-			tooltip: '个人数据模板',
-            handler: function(){ ShowPersonTemplate(); },
-            scope: this
-        }, '-', {
-            iconCls: 'icon-expand-all',
-			tooltip: 'Expand All',
-            handler: function(){ api.root.expand(true); },
-            scope: this
-        }, '-', {
-            iconCls: 'icon-collapse-all',
-            tooltip: 'Collapse All',
-            handler: function(){ api.root.collapse(true); },
-            scope: this
-        }
-		         ]
-	});
+	
+	// 对数据提取的形式进行判断
+	var dataext = getUrlParam('dataext');
+	
+	if (dataext == 1){
+		var fourTbar = new Ext.Toolbar({
+			id:'view',
+			renderTo : api.tbar,
+			items : [{
+	            iconCls: 'icon-expand-all',
+				tooltip: 'Expand All',
+	            handler: function(){ api.root.expand(true); },
+	            scope: this
+	        }, '-', {
+	            iconCls: 'icon-collapse-all',
+	            tooltip: 'Collapse All',
+	            handler: function(){ api.root.collapse(true); },
+	            scope: this
+	        }]
+		});
+	}
+	else if (sid == id){
+		var fourTbar = new Ext.Toolbar({
+			id:'view',
+			renderTo : api.tbar,
+			items : [combo1,"", "", {
+	            iconCls: 'icon-expand-all',
+				tooltip: 'Expand All',
+	            handler: function(){ api.root.expand(true); },
+	            scope: this
+	        }, '-', {
+	            iconCls: 'icon-collapse-all',
+	            tooltip: 'Collapse All',
+	            handler: function(){ api.root.collapse(true); },
+	            scope: this
+	        } ]
+		});
+	}
+	else{
+		var fourTbar = new Ext.Toolbar({
+			id:'view',
+			renderTo : api.tbar,
+			items : [combo1,"", {
+	            iconCls: 'icon-expand-all',
+				tooltip: '个人数据模板',
+	            handler: function(){ ShowPersonTemplate(); },
+	            scope: this
+	        }, '-', {
+	            iconCls: 'icon-expand-all',
+				tooltip: 'Expand All',
+	            handler: function(){ api.root.expand(true); },
+	            scope: this
+	        }, '-', {
+	            iconCls: 'icon-collapse-all',
+	            tooltip: 'Collapse All',
+	            handler: function(){ api.root.collapse(true); },
+	            scope: this
+	        }]
+		});
+	}
 }
 
 function addPuxi(){

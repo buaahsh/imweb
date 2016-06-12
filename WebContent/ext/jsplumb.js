@@ -178,7 +178,7 @@ function ConvertItem2Html(item, oldName, dataext){
 				if (ite != ""){
 					var data_e = tcid + "_" + item.id + "_" + ite;
 //					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
-					dataext_html = "<span style='float: right;cursor:hand; color:blue;' onclick='addDataExtract(\""+data_e+"\")'>浏览数据</span>"; 
+					dataext_html = "<span style='float: right;cursor:hand; color:blue;' onclick='addDataExtract(\""+data_e+"\")'>传递下游数据</span>"; 
 				}
 			});
 		}
@@ -187,7 +187,7 @@ function ConvertItem2Html(item, oldName, dataext){
 				if (ite != ""){
 					var data_e = tcid + "_" + item.id + "_" + ite;
 //					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid;
-					dataext_html = "<span style='cursor:hand; color:blue;' onclick='addDownDataExtract(\""+data_e+"\")'>浏览数据</span>"; 
+					dataext_html = "<span style='cursor:hand; color:blue;' onclick='addDownDataExtract(\""+data_e+"\")'>来自上游数据</span>"; 
 				}
 			});
 		}
@@ -275,7 +275,7 @@ function addDataExtract(data_e){
 					+ "</p>";
 		});
 		Ext.MessageBox.show({
-            title: '数据列表',
+            title: '数据传递关系列表',
             msg: html,
             width: 200 ,
             buttons: Ext.MessageBox.OK
@@ -324,7 +324,7 @@ function addDownDataExtract(data_e){
 					+ "</p>";
 		});
 		Ext.MessageBox.show({
-            title: '数据列表',
+            title: '数据传递关系列表',
             msg: html,
             width: 200 ,
             buttons: Ext.MessageBox.OK
