@@ -106,8 +106,8 @@ function AddMMHtml(data){
 		top += 10.5;
 		left += 17.5;
 	});
-	$("#statemachine-demo").css("height", 110 * dps.length);
-	$("#statemachine-demo").parent().css("height", 110 * dps.length + 35);
+	$("#statemachine-demo").css("height", 130 * dps.length);
+	$("#statemachine-demo").parent().css("height", 130 * dps.length + 10);
 	$("#statemachine-demo th").css("font-size", 13)
 }
 
