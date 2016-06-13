@@ -13,8 +13,8 @@
   background-color:#DFE8F6;    
   height:400px;
   overflow:auto;  
-  margin-top:20px;
-  margin-bottom:15px;
+  margin-top:5px;
+  margin-bottom:5px;
 }
 
 path, ._jsPlumb_endpoint { cursor:pointer; }
