@@ -46,7 +46,7 @@ function NewList(){
 	    store: store,
 	    mode: 'loacl',
 	    valueField: 'value',
-	    width: 120,
+	    width: 150,
 	    typeAhead : true,  
         triggerAction : 'all',  
         lazyRender : true, 
@@ -119,7 +119,7 @@ function ShowPersonTemplate(){
     var win = new Ext.Window({
         title: '个人数据模板管理',
         closable:true,
-        width:320,
+        width:350,
         height:430,
         //border:false,
         modal: true,

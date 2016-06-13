@@ -181,6 +181,10 @@ public class TreeNodeServlet extends BaseServlet{
 				result.put("TreeNode", treeNodes2);
 				result.put("DataItem", dataItems);
 
+				//加上获取文件
+				if (returnFile(request, response, dataItems))
+					return;
+				
 				Gson gson = new Gson();
 				responseString(response, gson.toJson(result));
 			}
