@@ -131,6 +131,7 @@ public class RelationService {
 	
 	/**
 	 * refine 上下游，找到真正属于该节点的上下游
+	 * 判断是否为大版本，如果为大版本，更新所有节点的技术状态
 	 * @param id
 	 * @param version
 	 */
@@ -250,6 +251,20 @@ public class RelationService {
 		for (RelationItem item : mmResponse.dataPacks) {
 			if (reHashMap.containsKey(String.valueOf(item.id)))
 				item.path = reHashMap.get(String.valueOf(item.id));
+		}
+		
+		WSDLClient w = new WSDLClient();
+		
+		String method = "getNodeDetail";
+		String[] arg = new String[]{userid, password, id, version};
+		String xml = w.getS(method, arg);
+		
+		//如果为大版本，更新所有节点的状态
+		if (xml.contains("allDpNewest=\"1\""))
+		{
+			for (RelationItem item : mmResponse.dataPacks) {
+				item.techStatus = "已完成";
+			}
 		}
 		
 		this.mmResponse = mmResponse;
