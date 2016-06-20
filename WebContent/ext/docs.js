@@ -54,7 +54,7 @@ Ext.extend(ApiPanel, Ext.tree.TreePanel, {
 			        }, 
 			        {
 			            iconCls: 'icon-config',
-						 tooltip: '导出',
+						 tooltip: '下载',
 			            handler: function(){ outputTxt();  },
 			            scope: this
 			        }, ' ' ,' ',
