@@ -148,7 +148,7 @@ public class WSDLHttpClient {
 	}
 	
 	public String download(String nodeId, String version) {
-		String urlstr = String.format("%s/file/download.mm?nodeId=%s&version=%s", 
+		String urlstr = String.format("%s/document/download.mm?nodeId=%s&version=%s", 
 				baseURL, nodeId, version);
 		byte[] bytes = client.getDoGetURL(urlstr);
 		if (bytes == null)
@@ -232,12 +232,12 @@ public class WSDLHttpClient {
 			for (WSDLNode node : wNodes.results) {
 				if (node.text.equals("json.txt"))
 				{
-					if (tempversion == -1 && node.version >= version)
+					if (tempversion == -1 && node.version <= version)
 					{
 						tempversion = node.version;
 						tempid = node.id;
 					}
-					else if (node.version >= version && node.version < tempversion) {
+					else if (node.version <= version && node.version > tempversion) {
 						tempversion = node.version;
 						tempid = node.id;
 					}

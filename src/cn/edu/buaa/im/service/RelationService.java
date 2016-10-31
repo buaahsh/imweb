@@ -62,17 +62,21 @@ public class RelationService {
 		params.put("version", version);
 		params.put("mmId", mmid);
 		params.put("mmVersion", version);
-		String url = "ancestry/getSrcAncestryDPs.mm";
+//		String url = "ancestry/getSrcAncestryDPs.mm";
+		String url = "dpAncestry/getSrcAncestryDataPacks.mm";
 		String json = client.getJsonResult(url, params);
 		RelationItem[] relationItems = gson.fromJson(json, RelationItem[].class);
 		this.pedigree.upper = relationItems;
-		url = "ancestry/getDestAncestryDPs.mm";
+		//url = "ancestry/getDestAncestryDPs.mm";
+		url = "dpAncestry/getDestAncestryDataPacks.mm";
 		json = client.getJsonResult(url, params);
 		relationItems = gson.fromJson(json, RelationItem[].class);
 		this.pedigree.down = relationItems;
 		String time = String.valueOf(new Date().getTime());
-		url = "ancestry/getAncestryDPInfo.mm?id=" + id + "&version=" + version + "&_=" + time; 
-		json = client.getJsonResult(url);
+		//url = "ancestry/getAncestryDPInfo.mm?id=" + id + "&version=" + version + "&_=" + time;
+		
+		url = "dpAncestry/getAncestryDataPack.mm";
+		json = client.getJsonResult(url, params);
 		RelationItem relationItem = gson.fromJson(json, RelationItem.class);
 		this.pedigree.self = relationItem;
 	}
@@ -82,7 +86,7 @@ public class RelationService {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", id);
 		params.put("version", version);
-		String url = "ancestry/getMainModelDPRelations.mm";
+		String url = "mmAncestry/getMmDpRelations.mm";
 		String json = client.getJsonResult(url, params);
 		this.jsonString = json;
 	}
