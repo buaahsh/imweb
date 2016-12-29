@@ -39,8 +39,7 @@ public class HttpClientUtils extends HttpClient {
 		url = toUtf8String(url);
 		GetMethod method = new GetMethod(url);
 
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 		// 设置请求的编码方式
 		try {
 			printHeader(method);
@@ -50,8 +49,7 @@ public class HttpClientUtils extends HttpClient {
 				// return null;
 			}
 			// 返回响应消息
-			byte[] responseBody = method.getResponseBodyAsString().getBytes(
-					method.getResponseCharSet());
+			byte[] responseBody = method.getResponseBodyAsString().getBytes(method.getResponseCharSet());
 			// 在返回响应消息使用编码(utf-8或gb2312)
 			String response = new String(responseBody, "utf-8");
 			return response;
@@ -82,8 +80,7 @@ public class HttpClientUtils extends HttpClient {
 		url = toUtf8String(url);
 		GetMethod method = new GetMethod(url);
 
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 		method.setRequestHeader("Accept", format);
 		// 设置请求的编码方式
 		try {
@@ -94,8 +91,7 @@ public class HttpClientUtils extends HttpClient {
 				// return null;
 			}
 			// 返回响应消息
-			byte[] responseBody = method.getResponseBodyAsString().getBytes(
-					method.getResponseCharSet());
+			byte[] responseBody = method.getResponseBodyAsString().getBytes(method.getResponseCharSet());
 			// 在返回响应消息使用编码(utf-8或gb2312)
 			String response = new String(responseBody, "utf-8");
 			return response;
@@ -113,8 +109,7 @@ public class HttpClientUtils extends HttpClient {
 		url = toUtf8String(url);
 		GetMethod method = new GetMethod(url);
 
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 		method.setRequestHeader("Accept", format);
 		try {
 			int statusCode = this.executeMethod(method);
@@ -123,8 +118,7 @@ public class HttpClientUtils extends HttpClient {
 				return null;
 			}
 			// 返回响应消息
-			byte[] responseBody = method.getResponseBodyAsString().getBytes(
-					method.getResponseCharSet());
+			byte[] responseBody = method.getResponseBodyAsString().getBytes(method.getResponseCharSet());
 			// 在返回响应消息使用编码(utf-8或gb2312)
 			return responseBody;
 		} catch (IOException e) {
@@ -139,8 +133,7 @@ public class HttpClientUtils extends HttpClient {
 		url = toUtf8String(url);
 		GetMethod method = new GetMethod(url);
 
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 
 		try {
 			int statusCode = this.executeMethod(method);
@@ -175,18 +168,15 @@ public class HttpClientUtils extends HttpClient {
 		StringBuffer response = new StringBuffer();
 		PutMethod putMethod = new PutMethod(url);
 
-		putMethod.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		putMethod.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 
 		try {
-			StringRequestEntity requestEntity = new StringRequestEntity(params,
-					"application/json", "UTF-8");
+			StringRequestEntity requestEntity = new StringRequestEntity(params,"application/json", "UTF-8");
 			putMethod.setRequestEntity(requestEntity);
 			this.executeMethod(putMethod);
 			// 读取为 InputStream，在网页内容数据量大时候推荐使用
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					putMethod.getResponseBodyAsStream(), "utf-8"));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(putMethod.getResponseBodyAsStream(), "utf-8"));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				response.append(line);
@@ -215,10 +205,8 @@ public class HttpClientUtils extends HttpClient {
 	public String getDoDeleteResponseDataByURL(String url) {
 		DeleteMethod method = new DeleteMethod(url);
 
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
-		method.addRequestHeader("Content-Type",
-				"application/x-www-form-urlencoded; charset=" + "utf-8");
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
+		method.addRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=" + "utf-8");
 		try {
 			int statusCode = this.executeMethod(method);
 
@@ -226,8 +214,7 @@ public class HttpClientUtils extends HttpClient {
 				return null;
 			}
 			// 返回响应消息
-			byte[] responseBody = method.getResponseBodyAsString().getBytes(
-					method.getResponseCharSet());
+			byte[] responseBody = method.getResponseBodyAsString().getBytes(method.getResponseCharSet());
 			// 在返回响应消息使用编码(utf-8或gb2312)
 			String response = new String(responseBody, "utf-8");
 			return response;
@@ -255,17 +242,13 @@ public class HttpClientUtils extends HttpClient {
 		StringBuffer response = new StringBuffer();
 		PostMethod postMethod = new PostMethod(url);
 
-		postMethod.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		postMethod.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 		try {
-			StringRequestEntity requestEntity = new StringRequestEntity(params,
-					"application/json", "UTF-8");
+			StringRequestEntity requestEntity = new StringRequestEntity(params,"application/json", "UTF-8");
 			postMethod.setRequestEntity(requestEntity);
 			this.executeMethod(postMethod);
 			if (postMethod.getStatusCode() == HttpStatus.SC_OK) {
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(
-								postMethod.getResponseBodyAsStream(), "utf-8"));
+				BufferedReader reader = new BufferedReader(new InputStreamReader(postMethod.getResponseBodyAsStream(), "utf-8"));
 				String line;
 				while ((line = reader.readLine()) != null) {
 					response.append(line);
@@ -285,16 +268,14 @@ public class HttpClientUtils extends HttpClient {
 		try {
 			PostMethod postMethod = new PostMethod(url);
 
-			postMethod.setRequestHeader("Cookie", Convert2Str(this.getState()
-					.getCookies()));
+			postMethod.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 
 			File file = new File(filePath);
 			FilePart fp = new FilePart("eml1", file);
 			Part[] parts = { fp };
 
 			// 对于MIME类型的请求，httpclient建议全用MulitPartRequestEntity进行包装
-			MultipartRequestEntity mre = new MultipartRequestEntity(parts,
-					postMethod.getParams());
+			MultipartRequestEntity mre = new MultipartRequestEntity(parts,postMethod.getParams());
 
 			postMethod.setRequestEntity(mre);
 
@@ -303,8 +284,7 @@ public class HttpClientUtils extends HttpClient {
 			//int statusCode = postMethod.getStatusCode();
 
 			StringBuffer response = new StringBuffer();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					postMethod.getResponseBodyAsStream(), "utf-8"));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(postMethod.getResponseBodyAsStream(), "utf-8"));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				response.append(line);
@@ -341,34 +321,32 @@ public class HttpClientUtils extends HttpClient {
 	 *            是否美化
 	 * @return 返回请求响应的HTML
 	 */
-	public String getDoPostResponseDataByURL(String url,
-			Map<String, String> params, String charset, boolean pretty) {
+	public String getDoPostResponseDataByURL(String url,Map<String, String> params, String charset, boolean pretty) {
 		StringBuffer response = new StringBuffer();
 		PostMethod method = new PostMethod(url);
-		System.out.println(url);
+		//System.out.println(url);
 		if (params != null) {
 			for (Map.Entry<String, String> entry : params.entrySet()) {
 				method.addParameter(entry.getKey(), entry.getValue());
 			}
 		}
-		method.setRequestHeader("Cookie", Convert2Str(this.getState()
-				.getCookies()));
+		method.setRequestHeader("Cookie", Convert2Str(this.getState().getCookies()));
 		try {
 			this.executeMethod(method);
-			System.out.println(method.getStatusCode());
+			//System.out.println(method.getStatusCode());
 			Header[] headers = method.getResponseHeaders();
 			AddCookie(headers);
 			// if (method.getStatusCode() == HttpStatus.SC_OK) {
 			// 读取为 InputStream，在网页内容数据量大时候推荐使用
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					method.getResponseBodyAsStream(), charset));
-			String line;
+			BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), charset));
+
+			String line = "";
 			while ((line = reader.readLine()) != null) {
-				if (pretty)
-					response.append(line).append(
-							System.getProperty("line.separator"));
-				else
+				if (pretty){
+					response.append(line).append(System.getProperty("line.separator"));
+				}else{
 					response.append(line);
+				}
 			}
 			reader.close();
 			return response.toString();
@@ -410,8 +388,7 @@ public class HttpClientUtils extends HttpClient {
 		if (cookies != null) {
 			String result = "";
 			for (int i = 0; i < cookies.length; i++) {
-				result += cookies[i].getName() + "=" + cookies[i].getValue()
-						+ ";";
+				result += cookies[i].getName() + "=" + cookies[i].getValue() + ";";
 			}
 			return result;
 		}
@@ -423,10 +400,8 @@ public class HttpClientUtils extends HttpClient {
 			HttpState state = new HttpState();
 			for (int i = 0; i < headers.length; i++) {
 				if (headers[i].getName().equals("Set-Cookie")) {
-					String name = headers[i].getValue().split(";")[0]
-							.split("=")[0];
-					String value = headers[i].getValue().split(";")[0]
-							.split("=")[1];
+					String name = headers[i].getValue().split(";")[0].split("=")[0];
+					String value = headers[i].getValue().split(";")[0].split("=")[1];
 					Cookie cookie = new Cookie();
 					cookie.setName(name);
 					cookie.setValue(value);

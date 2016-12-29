@@ -1,7 +1,9 @@
 package cn.edu.buaa.im.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.dom4j.Attribute;
@@ -50,6 +52,35 @@ public class VersionService {
 				if (attribute.getName().equals("version"))
 				{
 					version.setId(attribute.getValue());
+			
+					BaseLineService baseLineService = new BaseLineService(nodeId, userId);
+					
+					List<HashMap<String, String>> lll = baseLineService.getBaseLines(nodeId,attribute.getValue());
+					
+					for (int i = 0; i < lll.size(); i++) {
+						
+						HashMap<String, String> map = lll.get(i);
+						
+						if(map != null && map.size() > 0){
+
+							if(map.get("version").equals(attribute.getValue())){
+							
+							for(Entry<String, String> entry : map.entrySet()) {
+								
+								if (entry.getKey().equals("基线标题")){
+									
+								version.setTitle(entry.getValue());
+								}else if(entry.getKey().equals("基线说明")){
+									version.setDesc(entry.getValue());
+								}
+							}
+							//设置基线版本（就是前台显示）
+							version.baseLineVersion = 1;
+							}
+					}
+						
+					}
+
 					version.setName(attribute.getValue());
 				}
 				else if (attribute.getName().equals("versionRemark"))

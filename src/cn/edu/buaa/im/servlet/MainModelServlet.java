@@ -36,6 +36,7 @@ public class MainModelServlet extends BaseServlet{
 			List<DataPacketAbs> dataPacket = dataPacketService.getDataPacketAbs();
 			
 			Gson gson = new Gson();
+			
 			responseString(response, gson.toJson(dataPacket));
 		}
 		else if (arg.equals("version")){
@@ -48,9 +49,9 @@ public class MainModelServlet extends BaseServlet{
 			String uid = request.getParameter("uid");
 			String sid = request.getParameter("sid");
 			//如果uid不为空，表示为主模型的版本，需要考虑大版本的问题
-			if (uid != null && sid != null && sid.equals(nodeId)){
-				VersionService.updateBigVersion(versions, user, uid, pwd, nodeId);
-			}
+//			if (uid != null && sid != null && sid.equals(nodeId)){
+//				VersionService.updateBigVersion(versions, user, uid, pwd, nodeId);
+//			}
 			
 			Gson gson = new Gson();
 			responseString(response, gson.toJson(versions));

@@ -62,19 +62,15 @@ public class RelationService {
 		params.put("version", version);
 		params.put("mmId", mmid);
 		params.put("mmVersion", version);
-//		String url = "ancestry/getSrcAncestryDPs.mm";
 		String url = "dpAncestry/getSrcAncestryDataPacks.mm";
 		String json = client.getJsonResult(url, params);
 		RelationItem[] relationItems = gson.fromJson(json, RelationItem[].class);
 		this.pedigree.upper = relationItems;
-		//url = "ancestry/getDestAncestryDPs.mm";
 		url = "dpAncestry/getDestAncestryDataPacks.mm";
 		json = client.getJsonResult(url, params);
 		relationItems = gson.fromJson(json, RelationItem[].class);
 		this.pedigree.down = relationItems;
 		String time = String.valueOf(new Date().getTime());
-		//url = "ancestry/getAncestryDPInfo.mm?id=" + id + "&version=" + version + "&_=" + time;
-		
 		url = "dpAncestry/getAncestryDataPack.mm";
 		json = client.getJsonResult(url, params);
 		RelationItem relationItem = gson.fromJson(json, RelationItem.class);

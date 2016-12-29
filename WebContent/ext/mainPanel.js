@@ -15,9 +15,9 @@ function addPanel(){
 	if (dataext == 1)
 		return [dataItems];
 	
+	//return [addHistory()];
 	return [addAbs(), addPuxi(), addHistory(), dataItems];
 	
-//	return [addPuxi()]
 	//Ext.get('welcome-panel').add(p);
 }
 
@@ -47,13 +47,17 @@ function addHistory()
 			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid + "&sid=" + sid , function(data){
 		jsonstore = new Ext.data.JsonStore({
 	        data: data,
-	        fields: ['id', 'date', 'person', 'abs', 'bigversion'],
+	        fields: ['id', 'date', 'person', 'abs','title','desc', 'bigversion', 'baseLineVersion'],
 	    });
 	});
     //定义列
-    var column = new Ext.grid.ColumnModel({
+	
+	var sm = new Ext.grid.CheckboxSelectionModel({singleSelect:false});
+
+	var column = new Ext.grid.ColumnModel({
     	id : "versionCol",
         columns: [
+             sm,
              { header: '版本', dataIndex: 'id', sortable: true,
             	 renderer: function (val, meta, record) {
             		 tcid = encodeURIComponent(cid);
@@ -62,12 +66,15 @@ function addHistory()
      				+ "&user=" + user + "&pwd=" + pwd + "&sid=" + sid  + "&uid=" + uid + "&vid=" + tvid;
             		 return "<span style='cursor:hand; color:blue;' onclick='clickHistory(\""+href+"\")'>"+val+"</span>";
                  },
-                 width: 120
+                 width: 80
              },
              { header: '完成日期	', dataIndex: 'date', sortable: true,width: 150  },
-             { header: '完成人', dataIndex: 'person', sortable: true, width: 150 },
+             { header: '完成人', dataIndex: 'person', sortable: true, width: 100 },
              { header: '版本说明', dataIndex: 'abs', sortable: true, width: 300 },
-             { header: '大版本', hidden: true , dataIndex: 'bigversion'}
+             { header: '基线标题', dataIndex: 'title', sortable: true, width: 300 },
+             { header: '基线说明', dataIndex: 'desc', sortable: true, width: 300 },
+             //{ header: '大版本', hidden: true , dataIndex: 'bigversion'},
+             { header: '基线版本', hidden: true , dataIndex: 'baseLineVersion'}
         ],
         autoHeight : true,
         viewConfig: {
@@ -77,10 +84,11 @@ function addHistory()
     //列表
     var grid = new Ext.grid.GridPanel({
     	frame: true,
+    	sm:sm,
     	id : "docs-history",
     	style : "margin: 10px",
     	height: 300,
-        title: '历史版本',
+        title: '历史版本 <span style="cursor:pointer;float:right;" title="选择版本分析" onclick="openAnalysisAndMonitoring('+id+','+sid+');">版本分析</span>',
         store: jsonstore,
         autoHeight : true,
         colModel: column
@@ -89,8 +97,255 @@ function addHistory()
     return grid;
 }
 
+
+function loadProperties(){  
+    jQuery.i18n.properties({// 加载properties文件  
+    name:'url', // properties文件名称  
+    path:'/imweb/resources/', // properties文件路径  
+    mode:'map', // 用 Map 的方式使用资源文件中的值  
+    callback: function() {// 加载成功后设置显示内容  
+        $.i18n.prop("analysisAndMonitoring_url");//其中isp_index为properties文件中需要查找到的数据的key值  
+    }  
+    });  
+}  
+
+function openAnalysisAndMonitoring(id,sid){
+
+	loadProperties();
+	
+	var selectionModel = Ext.getCmp('docs-history').getSelectionModel();
+	
+	var ids = '';
+	
+	if (selectionModel.hasSelection()){
+		var rows = selectionModel.getSelections(); //获取所有选中行
+
+		var n = rows.length - 1;
+		
+		for(var i=0;i<rows.length;i++){
+
+			if(i == n){
+				ids = ids + rows[i].get('id');
+			}else{
+				ids = ids + rows[i].get('id') + ',';
+			}
+		}
+	
+	//待汪逵那边功能实现
+	//url = $.i18n.prop("analysisAndMonitoring_url")+"mainModel&id="+sid+"&ids="+ids;
+
+	if(id == sid){
+		url = $.i18n.prop("analysisAndMonitoring_url")+"mainModel&id="+id;
+	}else{
+		url = $.i18n.prop("analysisAndMonitoring_url")+"package&id="+id;
+	}
+
+	window.open (url,'newwindow');
+		
+	}else{
+		alert('请选择要分析的版本！');
+	}
+
+}
+
 function clickHistory(obj){
 	location.href = obj;
+}
+
+function createBaseLine(sid,version,user,pwd){
+
+	var win=new Ext.Window({
+	width:600,
+	height:300,
+	title:"设置基线",
+	closable:true,
+	layout:'fit',//布局方式
+	//maximizable:true,//显示最大化按钮,点击最大化按钮,窗口自动扩展充满整个浏览器,并且窗口右上角的最大化按钮变为回复原状的按钮
+	//minimizable:true,//显示最小化按钮,并未对这个按钮做任何处理,可以添加监听事件minimizable或重写minimizable()函数
+	closeAction:'close',
+	constrainHeader:true,//设置窗口的顶部不会超出浏览器边界
+	//constrain:true,//设置整个窗口都不回超出浏览器边界
+	defaultButton:0,//默认选中的按钮
+	resizable:false,//控制窗口是否可以通过拖拽改变大小
+	resizeHandles:'se',//控制拖拽方式,必须是在设置了resizable的情况下,
+	modal:true,//弹出窗口后立刻屏蔽掉其他的组件,只有关闭窗口后才能操作其他组件,
+	plain:true,//对窗口内部内容惊醒美化,可以看到整齐的边框
+	animateTarget:'target',//可以使窗口展示弹并缩回效果的动画
+	buttonAlign:'center',
+	items:[{
+		layout:'form',
+		defaultType:'textfield',
+		defaults:{width:300},
+		style:{
+			marginTop:10,
+			marginLeft:10
+		},
+		labelWidth:60,
+		labelAlign:'right',
+		items:[
+			{
+				style:{
+					marginTop:12,
+					marginLeft:12
+				},
+				id:'title', 
+				labelStyle:'margin-Top:10px',
+				fieldLabel:'基线标题',
+				maxLength:20
+			},
+			{
+				style:{
+					marginTop:12,
+					marginLeft:12
+				},
+				id:'desc',
+				xtype: "textarea",
+				labelStyle:'margin-Top:10px',
+				fieldLabel:'基线说明',
+				maxLength:100
+			}	  
+		]
+	}],
+	buttons:[
+		{
+			text:'保存',
+			style: {
+                marginBottom: '11px' //修改自己定义的样式
+            },
+			handler:function(){
+				
+				var title = Ext.getCmp('title').getValue();
+				var desc = Ext.getCmp('desc').getValue();
+
+				if (title !== null && title !== undefined && title !== ''){
+				
+					$.post("/imweb/BaseLineServlet?arg=create&sid=" + sid +"&version=" + version + "&user=" + user +"&pwd=" + pwd +"&title=" + title +"&desc=" + desc, function(){
+	                	alert("保存成功！");
+					});
+					
+					win.close();
+				}else{
+					alert("请输入基线标题！");
+				}
+			}
+		},{
+			text:'取消',
+			style: {
+                marginBottom: '11px' //修改自己定义的样式
+            },
+			handler:function(){
+				win.close();	
+			}
+		}	 
+	]
+});
+
+    win.show();
+}
+
+
+function editBaseLine(sid,version,user,pwd,title,desc){
+
+	var win=new Ext.Window({
+	width:600,
+	height:300,
+	title:"设置基线",
+	closable:true,
+	layout:'fit',//布局方式
+	//maximizable:true,//显示最大化按钮,点击最大化按钮,窗口自动扩展充满整个浏览器,并且窗口右上角的最大化按钮变为回复原状的按钮
+	//minimizable:true,//显示最小化按钮,并未对这个按钮做任何处理,可以添加监听事件minimizable或重写minimizable()函数
+	closeAction:'close',
+	constrainHeader:true,//设置窗口的顶部不会超出浏览器边界
+	//constrain:true,//设置整个窗口都不回超出浏览器边界
+	defaultButton:0,//默认选中的按钮
+	resizable:false,//控制窗口是否可以通过拖拽改变大小
+	resizeHandles:'se',//控制拖拽方式,必须是在设置了resizable的情况下,
+	modal:true,//弹出窗口后立刻屏蔽掉其他的组件,只有关闭窗口后才能操作其他组件,
+	plain:true,//对窗口内部内容惊醒美化,可以看到整齐的边框
+	animateTarget:'target',//可以使窗口展示弹并缩回效果的动画
+	buttonAlign:'center',
+	items:[{
+		layout:'form',
+		defaultType:'textfield',
+		defaults:{width:300},
+		style:{
+			marginTop:10,
+			marginLeft:10
+		},
+		labelWidth:60,
+		labelAlign:'right',
+		items:[
+			{
+				style:{
+					marginTop:12,
+					marginLeft:12
+				},
+				id:'title', 
+				labelStyle:'margin-Top:10px',
+				fieldLabel:'基线标题',
+				maxLength:20,
+				value:title
+			},
+			{
+				style:{
+					marginTop:12,
+					marginLeft:12
+				},
+				id:'desc',
+				xtype: "textarea",
+				labelStyle:'margin-Top:10px',
+				fieldLabel:'基线说明',
+				maxLength:100,
+				value:desc
+			}	  
+		]
+	}],
+	buttons:[
+		{
+			text:'修改',
+			style: {
+                marginBottom: '11px' //修改自己定义的样式
+            },
+			handler:function(){
+				
+				var title = Ext.getCmp('title').getValue();
+				var desc = Ext.getCmp('desc').getValue();
+
+				if (title !== null && title !== undefined && title !== ''){
+				
+					$.post("/imweb/BaseLineServlet?arg=edit&sid=" + sid +"&version=" + version + "&user=" + user +"&pwd=" + pwd +"&title=" + title +"&desc=" + desc, function(){
+	                	alert("修改成功！");
+					});
+					
+					win.close();
+				}else{
+					alert("请输入基线标题！");
+				}
+			}
+		},{
+			text:'取消',
+			style: {
+                marginBottom: '11px' //修改自己定义的样式
+            },
+			handler:function(){
+				win.close();	
+			}
+		}	 
+	]
+});
+
+    win.show();
+}
+
+function delBaseLine(sid,version,user,pwd){
+	
+	var flag = confirm('确定要删除该基线？');
+	if(flag){
+		$.post("/imweb/BaseLineServlet?arg=del&sid=" + sid +"&version=" + version + "&user=" + user +"&pwd=" + pwd, function(){
+        	alert("删除成功！");
+		});
+	}
+	
 }
 
 //返回概要panel
@@ -110,10 +365,12 @@ function addAbs(){
 	var uid = getUrlParam('uid');
 	var sid = getUrlParam('sid');
 	
-	var items = new Array();
+	var arritem = new Array();
 	//update the abstraction
-	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version
-			+ "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
+	$.getJSON("/imweb/MainModel?arg=abs&id=" + id + "&version=" + version + "&user=" + user + "&pwd=" + pwd + "&uid=" + uid, function(data){
+		
+		var isbaseLine = true;
+		
 		$.each(data, function(idx, item){
 			var txtusername = new Ext.form.TextField({
 				cls : "abs-item", 
@@ -121,8 +378,10 @@ function addAbs(){
 		        maxLength: 20,
 		        name: 'username',
 		        fieldLabel: item.name,
+		        id: "aba-item"+idx,
 		        readOnly: true
 		    });
+			
 			if (item.name == "技术状态"){
 				if (item.value == "3")
 					item.value = "已完成";
@@ -131,21 +390,71 @@ function addAbs(){
 				if (item.value == "1")
 					item.value = "等待中";
 			}
-				
-			txtusername.setValue(item.value);
-			items.push(txtusername);
 			
+			if(item.name == "基线标题"){
+				isbaseLine = false;
+			}
+
+			txtusername.setValue(item.value);
+
+			arritem.push(txtusername);
+			
+			if(item.name == "基线说明"){
+				
+				var baseLineDesc = new Ext.form.TextArea({
+					cls : "abs-item", 
+			        width: 150,
+			        grow:true,
+			        preventScrollbars:true,
+			        fieldLabel: item.name,
+			        id: "aba-item"+idx,
+			        allowBlank:true,
+			        readOnly: true
+			    });
+
+				baseLineDesc.setValue(item.value);
+				
+				
+				arritem.push(baseLineDesc);
+				
+			}
+
 			if (item.name=="名称")
 				$("#doc-body span.icon-docs").text(item.value);
-		});		
-	}); 
+		});	
+		
+		var createBaseLine_html = {
+				html: '<span style="margin:10px;cursor:pointer;color:blue;" title="点击设置基线" onclick="createBaseLine('+id+','+version+',\''+user+'\',\''+pwd+'\');">	基线设置</span>'
+				};
+		
+		
 
+		if(isbaseLine){
+			if(id == sid){
+				arritem.push(createBaseLine_html);
+			}
+		}else{
+			
+			var title = Ext.getCmp('aba-item2').getValue();
+
+			var desc = Ext.getCmp('aba-item3').getValue();
+			
+			var editBaseLine_html = {
+					html: '<span style="margin:10px;cursor:pointer;color:blue;" title="点击修改基线" onclick="editBaseLine('+id+','+version+',\''+user+'\',\''+pwd+'\',\''+title+'\',\''+desc+'\');">基线修改</span>'+
+					'<span style="margin:10px;cursor:hand;color:blue;" title="点击删除基线" onclick="delBaseLine('+id+','+version+',\''+user+'\',\''+pwd+'\');">基线删除</span>'
+					};
+			
+			arritem.push(editBaseLine_html);
+		}
+
+	}); 
+	
 	var form = new Ext.form.FormPanel({
 		id : 'docs-abs',
         frame: true,
         title: '概要',
         style: 'margin:10px',
-        items: items
+        items: arritem
     });
 	return form;
 }
@@ -408,7 +717,7 @@ function showMoreVersion()
 		$.each($("#docs-history div.x-grid3-body div.x-grid3-row"), function(idx, item){
 			$(item).show();
 		});
-		$(obj).text("显示大版本");
+		$(obj).text("显示基线版本");
 	}
 	else{
 		$(obj).text("显示所有版本");

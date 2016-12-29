@@ -9,6 +9,8 @@ import java.util.Map;
 import cn.edu.buaa.im.model.DataItem;
 import cn.edu.buaa.im.model.TreeNode;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 
 import cn.edu.buaa.im.model.BaseData;
@@ -44,6 +46,49 @@ public class WSDLHttpClient {
 		
 		return result;
 	}
+	
+	public HashMap<String, String> getVersionDataItems(String nodeId, String version){
+		
+		int start = 0;
+		int limit = 25;
+
+		//hisVersion/getHisVersion.mm?start=0&limit=10&nodeId=2956
+		String urlstr = String.format("%s/hisVersion/getHisVersion.mm",baseURL);
+		
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("start", String.valueOf(start));
+		params.put("limit", String.valueOf(limit));
+		params.put("nodeId", String.valueOf(nodeId));
+
+		String resultString = client.getDoPostResponseDataByURL(urlstr, params,"utf-8", false);
+		
+		JSONObject json = JSONObject.parseObject(resultString);
+
+		JSONArray results = json.getJSONArray("results");
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		for (int i = 0; i < results.size(); i++) {
+
+			JSONObject fileJson = results.getJSONObject(i);
+
+			String resultVersion = fileJson.getString("version");
+			
+			if(resultVersion.equals(version)){
+				map.put("id", fileJson.getString("id"));
+				map.put("rootid", fileJson.getString("rootid"));
+				map.put("version", fileJson.getString("version"));
+				map.put("remark", fileJson.getString("remark"));
+				map.put("baseLine", fileJson.getString("baseLine"));
+				map.put("versionFlag", fileJson.getString("versionFlag"));
+				
+				break;
+			}
+		}
+		
+		return map;
+	}
+
 	
 	@SuppressWarnings("unchecked")
 	private void getOneNode(List<TreeNode> treeNodes, 
@@ -125,9 +170,8 @@ public class WSDLHttpClient {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userName", username);
 		params.put("password", password);
-		System.out.println(urlstr);
-		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
-				"utf-8", false);
+		//System.out.println(urlstr);
+		String resultString = client.getDoPostResponseDataByURL(urlstr, params,"utf-8", false);
 		System.out.println(resultString);
 		loginFlag = true;
 	}
@@ -164,16 +208,14 @@ public class WSDLHttpClient {
 	}
 	
 	private String getJsonStr(String nodeId, int start, int limit, int version) {
-		String urlstr = String.format("%s/hisNode/loadHisNodeGrid.mm",
-				baseURL);
+		String urlstr = String.format("%s/hisNode/loadHisNodeGrid.mm",baseURL);
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("start", String.valueOf(start));
 		params.put("limit", String.valueOf(limit));
 		params.put("pid", String.valueOf(nodeId));
 		params.put("version", String.valueOf(version));
 		
-		String resultString = client.getDoPostResponseDataByURL(urlstr, params,
-				"utf-8", false);
+		String resultString = client.getDoPostResponseDataByURL(urlstr, params,"utf-8", false);
 		Gson gson = new Gson();
 		WSDLNodes wNodes = gson.fromJson(resultString, WSDLNodes.class);
 		// 首先下载history，如果没有查找最新
@@ -182,10 +224,8 @@ public class WSDLHttpClient {
 			return null;
 		
 		if (wNodes.totalProperty == 0){
-			urlstr = String.format("%s/node/loadNodeGrid.mm",
-				baseURL);
-			resultString = client.getDoPostResponseDataByURL(urlstr, params,
-				"utf-8", false);
+			urlstr = String.format("%s/node/loadNodeGrid.mm",baseURL);
+			resultString = client.getDoPostResponseDataByURL(urlstr, params,"utf-8", false);
 		}
 		return resultString;
 	}

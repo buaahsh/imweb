@@ -1,20 +1,22 @@
 package cn.edu.buaa.im.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
-
-import com.google.gson.Gson;
 
 import cn.edu.buaa.im.data.SQLiteCRUD;
 import cn.edu.buaa.im.data.SQLiteConn;
 import cn.edu.buaa.im.model.DataPacketAbs;
 import cn.edu.buaa.im.model.TreeNode;
 import cn.edu.buaa.im.wsdl.WSDLClient;
+
+import com.google.gson.Gson;
 
 public class DataPacketService {
 	private String cid;
@@ -164,6 +166,32 @@ public class DataPacketService {
 				this.pedigree.down = downList;
 			}
 		}
+
+		BaseLineService baseLineService = new BaseLineService(id, uid);
+		
+		List<HashMap<String, String>> lll = baseLineService.getBaseLines(id,version);
+		
+		for(HashMap<String, String> map : lll){
+			if(map != null && map.size() > 0){
+				
+					
+					if(map.get("version").equals(version)){
+					
+					for(Entry<String, String> entry : map.entrySet()) {
+						
+						if(!entry.getKey().equals("version")){
+							DataPacketAbs item = new DataPacketAbs();
+							item.name = entry.getKey();
+							item.value = entry.getValue();
+							dataPacket.add(item);
+						}
+						
+					}
+					}
+			}
+		}
+		
+		
 	}
 	
 	
