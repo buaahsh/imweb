@@ -7,7 +7,8 @@ function addPanel(){
 	var dataItems = new Ext.Panel({
 		id : 'docs-data',
         title: "数据列表",
-        html : initwelcome(),
+//        html : initwelcome(),
+        html: '',
         autoScroll: true
 	});
 	

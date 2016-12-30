@@ -4,9 +4,46 @@
 	@author: Shaohan
 */
 
+function loadData(){
+ 	var info = Ext.getCmp("docs-data");
+    if(info){
+        info.destroy();             //销毁掉原来的ITEM，发生了作用
+    }
+    else{
+    	initwelcome();
+     }
+} 
+
+function initDateItems(data){
+	var html = "";
+	if (data == null){
+//		alert("没有数据");
+		return;
+	}
+	
+    Docs.classData.children = data.TreeNode;
+	
+	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" 
+		+"<table id='docs-table' cellspacing=\"0\" class=\"member-table\"><tbody>";
+	$.each(data.DataItem, function(idx, item){
+		html += ExtDataItemProc(item);
+	});
+	html += "</tbody></table></div>";
+	
+	var dataItems = new Ext.Panel({
+  		id : 'docs-data',
+        title: "数据列表",
+        html : html,
+        autoScroll: true
+      });
+     Ext.getCmp("welcome-panel").add(dataItems).show(); 
+     Ext.getCmp("welcome-panel").doLayout();
+     Ext.getCmp("api-tree").doLayout();
+}
+
 function initwelcome(){
 	$.ajaxSetup({
-		async : false
+		async : true
 	});
 	$("#welcome-panel").empty();
 	var cid = getUrlParam('cid');
@@ -32,12 +69,14 @@ function initwelcome(){
 			$.getJSON("/imweb/TreeNode?ext=1&arg=mm&id=" + id + "&version=" + version
 					+ "&user=" + user + "&pwd=" + pwd, function(data1){
 				data = data1;
+				initDateItems(data);
 			});
 		}
 		else{
 			$.getJSON("/imweb/TreeNode?ext=1&arg=all&id=" + id + "&version=" + version
 					+ "&user=" + user + "&pwd=" + pwd, function(data1){
 				data = data1;
+				initDateItems(data);
 			});
 		}
 		
@@ -50,33 +89,17 @@ function initwelcome(){
 			$.getJSON("/imweb/TreeNode?ext=1&arg=mmview&id=" + id + "&version=" + version 
 					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
 				data = data1;
+				initDateItems(data);
 			});
 		}
 		else{
 			$.getJSON("/imweb/TreeNode?ext=1&arg=view&id=" + id + "&version=" + version + "&cid=" + cid + "&dataext=" + dataext
 					+ "&user=" + user + "&pwd=" + pwd + "&sid=" + vid  + "&sid_702=" + sid, function(data1){
 				data = data1;
+				initDateItems(data);
 			});
 		}
 	}
-	
-	var html = "";
-	if (data == null){
-		alert("没有数据");
-		return html;
-	}
-		
-	Docs.classData.children = data.TreeNode;
-	
-	html = "<div xmlns:ext='http://www.extjs.com' class='body-wrap'>" 
-		+"<table id='docs-table' cellspacing=\"0\" class=\"member-table\"><tbody>";
-	$.each(data.DataItem, function(idx, item){
-		html += ExtDataItemProc(item);
-	});
-	html += "</tbody></table></div>";
-	
-	return html;
-	
  }
 
 function outputTxt(){

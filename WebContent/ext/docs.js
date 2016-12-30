@@ -140,49 +140,6 @@ DocPanel = Ext.extend(Ext.Panel, {
     autoScroll:true,
     
     initComponent : function(){
-//        var ps = this.cclass.split('.');
-//        this.title = ps[ps.length-1];
-//        Ext.apply(this,{
-//            tbar: ['->',{
-//                text: 'Config Options',
-//                handler: this.scrollToMember.createDelegate(this, ['configs']),
-//                iconCls: 'icon-config'
-//            },'-',{
-//                text: 'Properties',
-//                handler: this.scrollToMember.createDelegate(this, ['props']),
-//                iconCls: 'icon-prop'
-//            }, '-',{
-//                text: 'Methods',
-//                handler: this.scrollToMember.createDelegate(this, ['methods']),
-//                iconCls: 'icon-method'
-//            }, '-',{
-//                text: 'Events',
-//                handler: this.scrollToMember.createDelegate(this, ['events']),
-//                iconCls: 'icon-event'
-//            }, '-',{
-//                text: 'Direct Link',
-//                handler: this.directLink,
-//                scope: this,
-//                iconCls: 'icon-fav'
-//            }, '-',{
-//                tooltip:'Hide Inherited Members',
-//                iconCls: 'icon-hide-inherited',
-//                enableToggle: true,
-//                scope: this,
-//                toggleHandler : function(b, pressed){
-//                     this.body[pressed ? 'addClass' : 'removeClass']('hide-inherited');
-//                }
-//            }, '-', {
-//                tooltip:'Expand All Members',
-//                iconCls: 'icon-expand-members',
-//                enableToggle: true,
-//                scope: this,
-//                toggleHandler : function(b, pressed){
-//                    this.body[pressed ? 'addClass' : 'removeClass']('full-details');
-//                }
-//            }]
-//        });
-//        DocPanel.superclass.initComponent.call(this);
     },
 
     directLink : function(){
@@ -379,6 +336,7 @@ Ext.onReady(function(){
             
         }
     });
+ 
 
 //    mainPanel.on('tabchange', function(tp, tab){
 //        api.selectClass(tab.cclass); 
@@ -396,17 +354,7 @@ Ext.onReady(function(){
             el:'header',
             border:false,
             margins: '0 0 5 0'
-        }, api, mainPanel ]
-
-//    	items:[ {
-//	        cls: 'docs-header',
-//	        height: 44,
-//	        region:'north',
-//	        xtype:'box',
-//	        el:'header',
-//	        border:false,
-//	        margins: '0 0 5 0'
-//        }]
+        }, api, mainPanel]
     });
     
     
@@ -469,6 +417,9 @@ Ext.onReady(function(){
 	
     viewport.doLayout();  
    
+//    Ext.getCmp("viewport").add(info).show(); 
+//    Ext.getCmp("viewport").doLayout(); 
+    
 	setTimeout(function(){
         Ext.get('loading').remove();
         addBigVersion();
