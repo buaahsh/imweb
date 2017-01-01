@@ -100,6 +100,7 @@ function initwelcome(){
 			});
 		}
 	}
+	return '数据加载中...';
  }
 
 function outputTxt(){

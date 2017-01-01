@@ -1,4 +1,4 @@
-/*
+﻿/*
 	构造右边4个模型，包括：概要、谱系、历史版本和数据内容
 	@author: Shaohan
 */
@@ -7,8 +7,8 @@ function addPanel(){
 	var dataItems = new Ext.Panel({
 		id : 'docs-data',
         title: "数据列表",
-//        html : initwelcome(),
-        html: '',
+        html : initwelcome(),
+//        html: '',
         autoScroll: true
 	});
 	
